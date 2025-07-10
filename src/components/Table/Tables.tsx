@@ -1,13 +1,14 @@
 import { View, Heading, ScrollView, Button, Flex } from "@aws-amplify/ui-react";
 import BasicTable from "./BasicTable";
-import { TableType } from "types/pageType";
+import { FetchDataType, TableType } from "types/pageType";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
   tableData: TableType;
+  fetchData: FetchDataType[];
 };
 
-const Tables = ({ tableData }: Props) => {
+const Tables = ({ tableData, fetchData }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -31,10 +32,9 @@ const Tables = ({ tableData }: Props) => {
             </Button>
           )}
         </Flex>
-
         <br></br>
         <ScrollView width="100%">
-          <BasicTable headerData={tableData.tableHeaders} />
+          <BasicTable headerData={tableData.tableHeaders} rowData={fetchData} />
         </ScrollView>
       </View>
     </>

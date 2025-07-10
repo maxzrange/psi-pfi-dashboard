@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import HeaderNav from "./HeaderNav";
 import HeaderSearchBar from "./HeaderSearchBar";
 import Logo from "@components/Logo";
-import { baseConfig } from "@constants/config";
+import { baseConfig } from "@utils/constants/config";
 
 const Header = () => {
   return (

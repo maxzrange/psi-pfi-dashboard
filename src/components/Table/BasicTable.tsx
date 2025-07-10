@@ -4,20 +4,17 @@ import {
   TableBody,
   TableHead,
   TableRow,
-  Button,
 } from "@aws-amplify/ui-react";
-import { mockSongsData } from "@data/mock";
-import { useNavigate } from "react-router-dom";
+import { FetchDataType } from "types/pageType";
+import CustomTableRow from "./CustomTableRow";
+import CustomTableFunc from "./CustomTableFunc";
 
 type Props = {
   headerData: string[];
+  rowData: FetchDataType[];
 };
 
-const data = mockSongsData(10);
-
-const BasicTable = ({ headerData }: Props) => {
-  const navigate = useNavigate();
-
+const BasicTable = ({ headerData, rowData }: Props) => {
   return (
     <>
       <Table caption="" highlightOnHover={false}>
@@ -34,15 +31,12 @@ const BasicTable = ({ headerData }: Props) => {
         </TableHead>
 
         <TableBody>
-          {data?.map((item) => {
+          {rowData.map((item) => {
             return (
-              <TableRow key={item._id}>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.description}</TableCell>
-                <TableCell>{item.genre}</TableCell>
-                <TableCell>
-                  <Button onClick={() => navigate("/edit-form")}>Edit</Button>
-                </TableCell>
+              <TableRow key={item.id}>
+                <CustomTableRow rowData={item.row} />
+
+                <CustomTableFunc funcData={item.functions} />
               </TableRow>
             );
           })}

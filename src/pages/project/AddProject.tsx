@@ -1,5 +1,5 @@
 import { Form } from "@components/Form";
-import { projectForm } from "@constants/form";
+import { projectForm } from "src/utils/constants/form";
 
 const AddProject = () => {
   return <Form formData={projectForm} />;

@@ -1,8 +1,13 @@
 import { Tables } from "@components/Table";
-import { buildingData } from "@constants/page";
+import useProjectController from "@controllers/projectController";
+import { buildingData } from "@utils/constants/page";
 
 const Building = () => {
-  return <Tables tableData={buildingData} />;
+  const { useGetProjectsService } = useProjectController();
+
+  const { finalData } = useGetProjectsService();
+
+  return <Tables tableData={buildingData} fetchData={finalData} />;
 };
 
 export default Building;

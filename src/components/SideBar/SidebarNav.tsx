@@ -1,7 +1,7 @@
 import "./SideBar.css";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@aws-amplify/ui-react";
-import { appNavs } from "@constants/config";
+import { appNavs } from "@utils/constants/config";
 
 const SideBarNav = () => {
   let activeClassName = "active";

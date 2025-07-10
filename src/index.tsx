@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import reportWebVitals from "./reportWebVitals";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./configs/client";
+import { queryClient } from "@utils/configs/client";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 

@@ -1,5 +1,5 @@
-import { errorResponse } from "@helpers/responseHandler";
 import { LoginOneMapDTO } from "@interfaces/oneMapInterface";
+import { errorResponse } from "@utils/helpers/responseHandler";
 import axios from "axios";
 import { MapType } from "types/formType";
 

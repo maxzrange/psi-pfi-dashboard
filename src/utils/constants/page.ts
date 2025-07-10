@@ -4,7 +4,7 @@ import { TableType } from "types/pageType";
 export const buildingData: TableType = {
   title: "Building",
   subTitle: "Building List",
-  addDest: "/building/add",
+  addDest: "/building/form",
   tableHeaders: ["Table", "Description", "Category"],
 };
 
@@ -12,6 +12,6 @@ export const buildingData: TableType = {
 export const projectData: TableType = {
   title: "Project",
   subTitle: "Project List",
-  addDest: "/project/add",
-  tableHeaders: ["Table", "Description", "Category"],
+  addDest: "/project/form",
+  tableHeaders: ["Title", "Description", "Status"],
 };

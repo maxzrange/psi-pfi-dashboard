@@ -1,7 +1,7 @@
 import { Menu, MenuItem, MenuButton, Link } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { AiFillGithub } from "react-icons/ai";
-import { baseConfig } from "@constants/config";
+import { baseConfig } from "@utils/constants/config";
 
 const HeaderNav = () => {
   const navigate = useNavigate();

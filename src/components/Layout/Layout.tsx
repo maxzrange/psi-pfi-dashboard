@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import "./Layout.css";
 import { ReactNode } from "react";
-import { baseConfig } from "@constants/config";
 import Header from "@components/Header";
 import SideBar from "@components/SideBar";
 import Footer from "@components/Footer";
+import { baseConfig } from "@utils/constants/config";
+import { DetailModal } from "@components/Modal";
 
 export interface LayoutProps {
   children?: ReactNode;
@@ -13,6 +14,8 @@ export interface LayoutProps {
 const Layout = () => {
   return (
     <div className="layout-container">
+      <DetailModal />
+
       {baseConfig.header && <Header />}
 
       <SideBar />
