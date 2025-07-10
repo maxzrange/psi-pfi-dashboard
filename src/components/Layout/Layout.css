@@ -1,31 +1,24 @@
-
 .layout-container {
-background-color: var(--amplify-colors-background-secondary);
+  background-color: var(--amplify-colors-background-secondary);
 }
 
-
 .page-container {
-    padding: 30px;
-    padding-left: 290px;
-    padding-top: 50px;
-    transition: padding 0.5s;
-    overflow-x: hidden;
+  padding: 30px;
+  padding-left: 290px;
+  padding-top: 50px;
+  transition: padding 0.5s;
+  overflow-x: hidden;
 }
 
 @media (max-width: 1024px) {
-    .page-container {
-        padding: 30px;
-        padding-left: 20px;
-        padding-top: 50px;
-        transition: padding 0.5s;
-    }
+  .page-container {
+    padding: 30px;
+    padding-left: 20px;
+    padding-top: 50px;
+    transition: padding 0.5s;
+  }
 }
-
-
 
 .card-title {
-font-weight: 600;
+  font-weight: 600;
 }
-
-    
-

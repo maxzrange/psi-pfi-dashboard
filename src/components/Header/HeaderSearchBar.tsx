@@ -1,10 +1,6 @@
-import React from "react";
 import { Autocomplete } from "@aws-amplify/ui-react";
 
-//import { baseConfig } from "../../config";
-
 const HeaderSearchBar = () => {
-  // const navigate = useNavigate();
   return (
     <div className="header-search-bar">
       <Autocomplete

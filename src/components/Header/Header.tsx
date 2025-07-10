@@ -1,12 +1,10 @@
-import React from "react";
 import "./Header.css";
-import { baseConfig } from "../../config";
 import { Flex } from "@aws-amplify/ui-react";
 import { Link } from "react-router-dom";
-
-import Logo from "../Logo";
 import HeaderNav from "./HeaderNav";
 import HeaderSearchBar from "./HeaderSearchBar";
+import Logo from "@components/Logo";
+import { baseConfig } from "@constants/config";
 
 const Header = () => {
   return (
@@ -24,11 +22,11 @@ const Header = () => {
               <Logo />
             </Link>
           </div>
-          <span>{baseConfig.headerText}</span>
+          <span>{baseConfig.header}</span>
         </div>
 
         <div className="header-right">
-          {baseConfig.search ? <HeaderSearchBar /> : <></>}
+          {baseConfig.search && <HeaderSearchBar />}
 
           <HeaderNav />
         </div>

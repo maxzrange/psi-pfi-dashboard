@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Flex,
   Text,
@@ -6,6 +5,7 @@ import {
   TextAreaField,
   SelectField,
 } from "@aws-amplify/ui-react";
+import { useState } from "react";
 
 interface Fields {
   title: string;
@@ -20,7 +20,7 @@ interface FormFieldProps {
 }
 
 const FormFields = (props: FormFieldProps) => {
-  const [titleHasError, setTitleHasError] = React.useState(true);
+  const [titleHasError, setTitleHasError] = useState(true);
   const { values, formFieldChange, formFieldIsValid } = props;
 
   const handleInputChange = (e) => {

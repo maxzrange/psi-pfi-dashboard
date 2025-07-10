@@ -1,63 +1,39 @@
-import React from "react";
-import { Icon } from "@aws-amplify/ui-react";
-
 import {
   MdDashboard,
   MdModeEditOutline,
   MdAccountBox,
   MdOutlineTableChart,
 } from "react-icons/md";
+import { BaseConfigType, SidebarType } from "types/configType";
 
-export const baseConfig = {
+// Base config
+export const baseConfig: BaseConfigType = {
   projectLink: "/", // GitHub link in the navbar
   docsRepositoryBase: "", // base URL for the docs repository
   titleSuffix: "",
   search: true,
-  header: true,
-  headerText: "MaxZRange",
+  header: "MaxZRange",
   footer: true,
-  footerText: (
-    <>
-      <span>
-        © MaxzRange {new Date().getFullYear()}, Made by {""}
-        <a href="https://github.com/maxrange" target="_blank" rel="noreferrer">
-          maxrange
-        </a>
-      </span>
-    </>
-  ),
-
-  logo: (
-    <>
-      <img
-        src={process.env.PUBLIC_URL + "/logo.png"}
-        alt="logo"
-        width="30"
-        height="22"
-      />
-    </>
-  ),
 };
 
-/// Navigation sidebar
-export const appNavs = [
+// Navigation sidebar
+export const appNavs: SidebarType[] = [
   {
     eventKey: "dashboard",
-    icon: <Icon as={MdDashboard} />,
+    icon: MdDashboard,
     title: "Dashboard",
     to: "/",
   },
-
   {
     eventKey: "projects",
-    icon: <Icon as={MdOutlineTableChart} />,
+    icon: MdOutlineTableChart,
     title: "Project",
-    to: "/tables",
+    to: "/project",
     children: [
       {
         eventKey: "project-list",
         title: "Project List",
-        to: "/tables",
+        to: "",
       },
       {
         eventKey: "users",
@@ -68,14 +44,14 @@ export const appNavs = [
   },
   {
     eventKey: "buildings",
-    icon: <Icon as={MdOutlineTableChart} />,
+    icon: MdOutlineTableChart,
     title: "Building",
-    to: "/project",
+    to: "/building",
     children: [
       {
-        eventKey: "project-list",
+        eventKey: "building-list",
         title: "Building List",
-        to: "/tables",
+        to: "",
       },
       {
         eventKey: "users",
@@ -86,7 +62,7 @@ export const appNavs = [
   },
   {
     eventKey: "forms",
-    icon: <Icon as={MdModeEditOutline} />,
+    icon: MdModeEditOutline,
     title: "Annotation",
     to: "/forms",
     children: [
@@ -104,7 +80,7 @@ export const appNavs = [
   },
   {
     eventKey: "profile",
-    icon: <Icon as={MdAccountBox} />,
+    icon: MdAccountBox,
     title: "Profile",
     to: "/profile",
   },

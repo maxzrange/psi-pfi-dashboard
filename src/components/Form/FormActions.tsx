@@ -1,6 +1,5 @@
-import React from "react";
-
 import { Button } from "@aws-amplify/ui-react";
+import { MouseEvent } from "react";
 
 interface FormActionsProps {
   formOnSubmit: () => void;
@@ -11,9 +10,9 @@ interface FormActionsProps {
 const FormActions = (props: FormActionsProps) => {
   const { formOnSubmit, isLoading, isDisabled } = props;
 
-  const handleSubmit = (e) => {
-    formOnSubmit();
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    formOnSubmit();
   };
 
   return (
@@ -21,6 +20,7 @@ const FormActions = (props: FormActionsProps) => {
       <Button width="100%" marginTop="20px">
         Preview
       </Button>
+
       <Button
         type="submit"
         variation="primary"

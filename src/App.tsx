@@ -1,17 +1,26 @@
-import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import "@aws-amplify/ui-react/styles.css";
 import "./App.css";
 import { ThemeProvider } from "@aws-amplify/ui-react";
 import theme from "./theme";
 
-import Layout from "./components/Layout";
-import Dashboard from "./pages/dashboard";
-import Profile from "./pages/profile";
-import Tables from "./pages/tables";
-import UsersTable from "./pages/tables/UsersTablePage";
-import Forms from "./pages/forms";
-import EditForm from "./pages/forms/EditForm";
+import Layout from "@components/Layout";
+import Dashboard from "@pages/dashboard";
+import Forms from "@pages/forms";
+import EditForm from "@pages/forms/EditForm";
+import Profile from "@pages/profile";
+import UsersTable from "@pages/tables/UsersTable";
+import { AddProject, Project } from "@pages/project";
+import { AddBuilding, Building } from "@pages/building";
+
+import "@tanstack/react-query";
+import { ErrResType } from "types/resType";
+
+declare module "@tanstack/react-query" {
+  interface Register {
+    defaultError: ErrResType;
+  }
+}
 
 export default function App() {
   return (
@@ -25,8 +34,8 @@ export default function App() {
             <Route index element={<Dashboard />} />
             <Route path="forms" element={<Forms />} />
             <Route path="edit-form" element={<EditForm />} />
-            <Route path="tables" element={<Tables />} />
-            <Route path="users-table" element={<UsersTable />} />
+            <Route path="project/*" element={<ProjectRoute />} />
+            <Route path="building/*" element={<BuildingRoute />} />
             <Route path="profile" element={<Profile />} />
 
             {/* Using path="*"" means "match anything", so this route
@@ -37,6 +46,28 @@ export default function App() {
         </Routes>
       </div>
     </ThemeProvider>
+  );
+}
+
+function BuildingRoute() {
+  return (
+    <Routes>
+      <Route index element={<Building />} />
+      <Route path="add" element={<AddBuilding />} />
+      <Route path="users-table" element={<UsersTable />} />
+      <Route path="*" element={<Navigate to="/not-found" />} />
+    </Routes>
+  );
+}
+
+function ProjectRoute() {
+  return (
+    <Routes>
+      <Route index element={<Project />} />
+      <Route path="add" element={<AddProject />} />
+      <Route path="users-table" element={<UsersTable />} />
+      <Route path="*" element={<Navigate to="/not-found" />} />
+    </Routes>
   );
 }
 

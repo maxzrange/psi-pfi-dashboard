@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableCell,
@@ -7,23 +6,29 @@ import {
   TableRow,
   Button,
 } from "@aws-amplify/ui-react";
-
-import { mockSongsData } from "../../data/mock";
-
+import { mockSongsData } from "@data/mock";
 import { useNavigate } from "react-router-dom";
+
+type Props = {
+  headerData: string[];
+};
 
 const data = mockSongsData(10);
 
-const BasicTable = () => {
+const BasicTable = ({ headerData }: Props) => {
   const navigate = useNavigate();
+
   return (
     <>
       <Table caption="" highlightOnHover={false}>
         <TableHead>
           <TableRow>
-            <TableCell as="th">Title</TableCell>
-            <TableCell as="th">Description</TableCell>
-            <TableCell as="th">Category</TableCell>
+            {headerData.map((header, index) => (
+              <TableCell key={index.toString()} as="th">
+                {header}
+              </TableCell>
+            ))}
+
             <TableCell as="th"></TableCell>
           </TableRow>
         </TableHead>

@@ -1,4 +1,3 @@
-import React from "react";
 import { View, Flex, useTheme } from "@aws-amplify/ui-react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileInformation from "./ProfileInformation";

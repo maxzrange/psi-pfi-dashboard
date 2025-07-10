@@ -1,19 +1,20 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
-import { baseConfig } from "../../config";
-import SideBar from "../SideBar";
-import Header from "../Header";
-import Footer from "../Footer";
 import "./Layout.css";
+import { ReactNode } from "react";
+import { baseConfig } from "@constants/config";
+import Header from "@components/Header";
+import SideBar from "@components/SideBar";
+import Footer from "@components/Footer";
 
 export interface LayoutProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 const Layout = () => {
   return (
     <div className="layout-container">
-      {baseConfig.header ? <Header /> : <></>}
+      {baseConfig.header && <Header />}
+
       <SideBar />
 
       {/* An <Outlet> renders whatever child route is currently active,
@@ -22,7 +23,8 @@ const Layout = () => {
       <div className="page-container">
         <Outlet />
       </div>
-      {baseConfig.footer ? <Footer /> : <></>}
+
+      {baseConfig.footer && <Footer />}
     </div>
   );
 };

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Button } from "@aws-amplify/ui-react";
 
 interface FormActionsProps {

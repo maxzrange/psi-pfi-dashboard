@@ -1,9 +1,9 @@
-import React from "react";
+import { ReactNode } from "react";
 import Chart from "react-apexcharts";
 
 interface BarChartProps {
-  title?: React.ReactNode;
-  actions?: React.ReactNode;
+  title?: ReactNode;
+  actions?: ReactNode;
   data: any;
   type?:
     | "line"

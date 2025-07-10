@@ -1,50 +1,39 @@
-import React from "react";
 import "./SideBar.css";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@aws-amplify/ui-react";
+import { appNavs } from "@constants/config";
 
-export interface NavItemData {
-  eventKey?: string;
-  title?: string;
-  icon?: any;
-  to?: any;
-  target?: string;
-  children?: NavItemData[];
-}
-
-export interface SidebarNavProps {
-  navs?: NavItemData[];
-}
-
-const SideBarNav = (props: SidebarNavProps) => {
-  const { navs } = props;
-
+const SideBarNav = () => {
   let activeClassName = "active";
 
   return (
     <div className="sidebar-nav">
       <ul>
-        {navs?.map((item) => {
+        {appNavs.map((item) => {
           const { children, ...rest } = item;
 
-          if (children) {
-            return (
-              <li key={item.eventKey}>
-                <NavLink
-                  to={item.to}
-                  className={({ isActive }) =>
-                    isActive ? activeClassName : undefined
-                  }
-                >
-                  <Icon>{item.icon}</Icon>
-                  {item.title}
-                </NavLink>
+          if (rest.target === "_blank") return <></>;
+
+          return (
+            <li key={item.eventKey}>
+              <NavLink
+                to={item.to}
+                className={({ isActive }) =>
+                  isActive ? activeClassName : undefined
+                }
+              >
+                <Icon as={item.icon} />
+
+                {item.title}
+              </NavLink>
+
+              {children && (
                 <ul>
                   {children.map((child) => {
                     return (
                       <li key={child.eventKey}>
                         <NavLink
-                          to={child.to}
+                          to={item.to + child.to}
                           className={({ isActive }) =>
                             isActive ? activeClassName : undefined
                           }
@@ -55,25 +44,7 @@ const SideBarNav = (props: SidebarNavProps) => {
                     );
                   })}
                 </ul>
-              </li>
-            );
-          }
-
-          if (rest.target === "_blank") {
-            return <></>;
-          }
-
-          return (
-            <li key={item.eventKey}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  isActive ? activeClassName : undefined
-                }
-              >
-                <Icon>{item.icon}</Icon>
-                {item.title}
-              </NavLink>
+              )}
             </li>
           );
         })}
