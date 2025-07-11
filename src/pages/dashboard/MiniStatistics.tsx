@@ -1,5 +1,5 @@
-import React from "react";
 import { Card } from "@aws-amplify/ui-react";
+import { JSX } from "react";
 
 interface MiniStatisticProps {
   title: string;

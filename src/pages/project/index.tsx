@@ -1,3 +1,2 @@
-import Tables from "./Tables";
-
-export default Tables;
+export { default as Project } from "./Project";
+export { default as AddProject } from "./AddProject";

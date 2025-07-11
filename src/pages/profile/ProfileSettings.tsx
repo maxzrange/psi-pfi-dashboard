@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, SwitchField } from "@aws-amplify/ui-react";
 
 const ProfileSettings = () => {

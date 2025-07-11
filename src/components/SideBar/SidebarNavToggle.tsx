@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@aws-amplify/ui-react";
 import { MdMenu, MdMenuOpen } from "react-icons/md";
 

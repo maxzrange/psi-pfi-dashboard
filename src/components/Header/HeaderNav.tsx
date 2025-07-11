@@ -1,14 +1,14 @@
-import React from "react";
 import { Menu, MenuItem, MenuButton, Link } from "@aws-amplify/ui-react";
 import { useNavigate } from "react-router-dom";
 import { AiFillGithub } from "react-icons/ai";
-import { baseConfig } from "../../config";
+import { baseConfig } from "@utils/constants/config";
 
 const HeaderNav = () => {
   const navigate = useNavigate();
+
   return (
     <>
-      {baseConfig.projectLink ? (
+      {baseConfig.projectLink && (
         <div className="github-link">
           <Link
             href={baseConfig.projectLink}
@@ -18,8 +18,6 @@ const HeaderNav = () => {
             <AiFillGithub />
           </Link>
         </div>
-      ) : (
-        <></>
       )}
 
       <Menu
