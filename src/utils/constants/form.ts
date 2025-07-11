@@ -42,12 +42,27 @@ export const projectForm: FormType<ProjectInput> = {
         required: "Customer must be picked!",
       },
     },
+    {
+      type: "dropdown",
+      name: "status",
+      label: "Status",
+      required: true,
+      items: [
+        { label: "Pending", id: "1" },
+        { label: "Rejected", id: "2" },
+        { label: "Accepted", id: "3" },
+      ],
+      rules: {
+        required: "Status must be picked!",
+      },
+    },
   ],
   defaultValues: {
-    title: "",
+    name: "",
     description: "",
     location: null,
     customer: null,
+    status: null,
   },
 };
 

@@ -14,6 +14,7 @@ const DropdownInput = ({ inputData, control }: Props) => {
   } = useController({
     name: inputData.name,
     control,
+    rules: inputData.rules,
   });
 
   return (
