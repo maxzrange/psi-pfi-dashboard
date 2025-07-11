@@ -18,3 +18,9 @@ export type DetailModalType = {
   showModal: (data: DetailType) => void;
   hideModal: () => void;
 };
+
+export type SearchType = {
+  value: string;
+  changeSearch: (val: string) => void;
+  resetSearch: () => void;
+};

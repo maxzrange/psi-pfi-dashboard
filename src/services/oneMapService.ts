@@ -1,17 +1,14 @@
-import { LoginOneMapDTO } from "@interfaces/oneMapInterface";
+import { LoginOneMapDTO, SearchAddressDTO } from "@interfaces/oneMapInterface";
+import { ONE_API_ENDPOINT } from "@utils/configs/api";
+import { axiosOneInstance } from "@utils/configs/axios";
 import { errorResponse } from "@utils/helpers/responseHandler";
-import axios from "axios";
-import { MapType } from "types/formType";
 
 export const loginOneMap = async (): Promise<LoginOneMapDTO> => {
   try {
-    const response = await axios.post(
-      "https://www.onemap.gov.sg/api/auth/post/getToken",
-      {
-        email: process.env.REACT_APP_ONE_MAP_EMAIL,
-        password: process.env.REACT_APP_ONE_MAP_PASS,
-      }
-    );
+    const response = await axiosOneInstance.post(ONE_API_ENDPOINT.login, {
+      email: process.env.REACT_APP_ONE_MAP_EMAIL,
+      password: process.env.REACT_APP_ONE_MAP_PASS,
+    });
 
     return response.data as LoginOneMapDTO;
   } catch (error) {
@@ -19,18 +16,15 @@ export const loginOneMap = async (): Promise<LoginOneMapDTO> => {
   }
 };
 
-export const getDroneQuery = async (body: MapType, token: string) => {
+export const searchAddress = async (
+  search: string
+): Promise<SearchAddressDTO> => {
   try {
-    const response = await axios.get(
-      `https://www.onemap.gov.sg/api/public/revamp/commonsvc/DroneQuery?latitude=${body.lat}&longitude=${body.lng}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const response = await axiosOneInstance.get(
+      `${ONE_API_ENDPOINT.search}?searchVal=${search}&returnGeom=Y&getAddrDetails=Y&pageNum=1`
     );
 
-    return response.data;
+    return response.data as SearchAddressDTO;
   } catch (error) {
     throw errorResponse(error);
   }

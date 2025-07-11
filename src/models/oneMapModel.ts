@@ -1,13 +1,14 @@
 import useHelper from "@hooks/useHelper";
-import { getDroneQuery, loginOneMap } from "@services/oneMapService";
+import { loginOneMap, searchAddress } from "@services/oneMapService";
 import { useOneAuth } from "@stores/authStore";
-import { useMutation } from "@tanstack/react-query";
-import { MapType } from "types/formType";
+import { useSearch } from "@stores/pageStore";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useOneMapModel = () => {
   const setOneToken = useOneAuth((state) => state.setToken);
+  const search = useSearch((state) => state.value);
 
-  const { oneToken, onMutate, onSettled } = useHelper();
+  const { onMutate, onSettled } = useHelper();
 
   const useLoginOneMap = () =>
     useMutation({
@@ -21,25 +22,15 @@ const useOneMapModel = () => {
       },
     });
 
-  const useGetDroneQuery = () =>
-    useMutation({
-      mutationKey: ["getDroneQuery"],
-      mutationFn: (body: MapType) => getDroneQuery(body, oneToken),
-      onMutate,
-      onSettled,
-      onSuccess: (response) => console.log(response),
-      onError: async (error) => {
-        if (error.status === 403) {
-          const response = await loginOneMap();
-          localStorage.setItem("@one-token", response.access_token);
-          setOneToken(response.access_token);
-        }
-      },
+  const useSearchAddress = () =>
+    useQuery({
+      queryKey: ["searchAddress", search],
+      queryFn: () => searchAddress(search),
     });
 
   return {
     useLoginOneMap,
-    useGetDroneQuery,
+    useSearchAddress,
   };
 };
 
