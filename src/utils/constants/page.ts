@@ -5,7 +5,7 @@ export const buildingData: TableType = {
   title: "Building",
   subTitle: "Building List",
   addDest: "/building/form",
-  tableHeaders: ["Table", "Description", "Category"],
+  tableHeaders: ["Name", "Created At"],
 };
 
 // Project table
