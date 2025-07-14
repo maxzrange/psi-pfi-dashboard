@@ -1,11 +1,11 @@
 import { Tables } from "@components/Table";
-import useProjectController from "@controllers/projectController";
+import useBuildingController from "@controllers/buildingController";
 import { buildingData } from "@utils/constants/page";
 
 const Building = () => {
-  const { useGetProjectsService } = useProjectController();
+  const { useGetBuildingsService } = useBuildingController();
 
-  const { finalData } = useGetProjectsService();
+  const { finalData } = useGetBuildingsService();
 
   return <Tables tableData={buildingData} fetchData={finalData} />;
 };

@@ -20,7 +20,7 @@ const CustomTableRow = ({ rowData }: Props) => {
         >
           <Flex
             alignItems="center"
-            justifyContent="center"
+            justifyContent="flex-start"
             gap={5}
             color={
               row.type === "pending"
