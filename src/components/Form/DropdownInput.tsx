@@ -20,6 +20,7 @@ const DropdownInput = ({ inputData, control }: Props) => {
   return (
     <SelectField
       {...field}
+      value={field.value ? field.value.label : ""}
       label={inputData.label}
       onChange={field.onChange}
       name={inputData.name}

@@ -35,6 +35,7 @@ const SuggestionInput = ({ inputData, control }: Props) => {
       </Text>
 
       <Autocomplete
+        value={field.value ? field.value.label : ""}
         name={inputData.name}
         label={
           <Text>
@@ -48,6 +49,7 @@ const SuggestionInput = ({ inputData, control }: Props) => {
         }
         options={inputData.items!}
         onSelect={(option) => {
+          console.log(option);
           field.onChange(option);
           setSugg("");
         }}

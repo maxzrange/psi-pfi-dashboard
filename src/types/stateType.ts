@@ -1,4 +1,4 @@
-import { DetailType } from "./pageType";
+import { ConfirmationType, DetailType } from "./pageType";
 
 export type LoadingType = {
   show: boolean;
@@ -16,6 +16,13 @@ export type DetailModalType = {
   show: boolean;
   data: DetailType | null;
   showModal: (data: DetailType) => void;
+  hideModal: () => void;
+};
+
+export type ConfirmationModalType = {
+  show: boolean;
+  data: ConfirmationType | null;
+  showModal: (data: ConfirmationType) => void;
   hideModal: () => void;
 };
 

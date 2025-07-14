@@ -34,3 +34,8 @@ export type DetailType = {
   title: string;
   data: DetailItemType[];
 };
+
+export type ConfirmationType = {
+  title: string;
+  subTitle: string;
+};
