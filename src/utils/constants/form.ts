@@ -1,6 +1,35 @@
+import { LoginInput } from "@interfaces/authInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { FormType } from "types/formType";
+
+export const loginForm: FormType<LoginInput> = {
+  title: "",
+  inputs: [
+    {
+      type: "text",
+      name: "email",
+      label: "Email",
+      required: false,
+      rules: {
+        required: "Email must be filled!",
+      },
+    },
+    {
+      type: "password",
+      name: "password",
+      label: "Password",
+      required: false,
+      rules: {
+        required: "Password must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    email: "",
+    password: "",
+  },
+};
 
 export const projectForm: FormType<ProjectInput> = {
   title: "Add Project",
