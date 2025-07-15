@@ -38,4 +38,5 @@ export type DetailType = {
 export type ConfirmationType = {
   title: string;
   subTitle: string;
+  onConfirm?: () => void;
 };

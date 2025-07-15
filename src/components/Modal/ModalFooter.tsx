@@ -12,10 +12,20 @@ const ModalFooter = ({ onSubmit, onClose }: Props) => {
       padding="14px 24px"
       style={{ borderTop: "1px solid #E5E5E5" }}
     >
-      <Button onClick={onClose}>Batalkan</Button>
+      <Button onClick={onClose} colorTheme="overlay">
+        Cancel
+      </Button>
 
-      <Button onClick={onSubmit} colorTheme="error">
-        Lanjutkan
+      <Button
+        onClick={() => {
+          if (onClose && onSubmit) {
+            onSubmit();
+            onClose();
+          }
+        }}
+        colorTheme="info"
+      >
+        Confirm
       </Button>
     </Flex>
   );
