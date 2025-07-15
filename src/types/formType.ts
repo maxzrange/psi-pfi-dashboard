@@ -12,7 +12,7 @@ export type DropdownType = {
 };
 
 export type InputType = {
-  type: "text" | "textarea" | "dropdown" | "map" | "auto";
+  type: "text" | "textarea" | "dropdown" | "map" | "auto" | "password";
   name: string;
   label: string;
   required: boolean;

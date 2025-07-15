@@ -1,18 +1,17 @@
 import "@aws-amplify/ui-react/styles.css";
-import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import "ldrs/react/Reuleaux.css";
 import "@tanstack/react-query";
 
-import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { IconsProvider, ThemeProvider } from "@aws-amplify/ui-react";
+import { Flex, IconsProvider, ThemeProvider } from "@aws-amplify/ui-react";
 import theme from "./theme";
-
-import Layout from "@components/Layout";
-import Dashboard from "@pages/dashboard";
-import Profile from "@pages/profile";
-import { AddProject, Project } from "@pages/project";
-import { AddBuilding, Building } from "@pages/building";
 import { ErrResType } from "types/resType";
 import { BsThreeDots } from "react-icons/bs";
+import AppRoute from "@routes/AppRoute";
+import AuthRoute from "@routes/AuthRoute";
+import { Slide, ToastContainer } from "react-toastify";
+import usePrepare from "@hooks/usePrepare";
+import { Reuleaux } from "ldrs/react";
 
 declare module "@tanstack/react-query" {
   interface Register {
@@ -21,6 +20,8 @@ declare module "@tanstack/react-query" {
 }
 
 export default function App() {
+  const { isPreparing, isLoggedIn } = usePrepare();
+
   return (
     <ThemeProvider theme={theme}>
       <IconsProvider
@@ -30,49 +31,36 @@ export default function App() {
           },
         }}
       >
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="project/*" element={<ProjectRoute />} />
-            <Route path="building/*" element={<BuildingRoute />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="*" element={<NoMatch />} />
-          </Route>
-        </Routes>
+        {isPreparing ? (
+          <Flex
+            width="100vw"
+            height="100dvh"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Reuleaux
+              size="37"
+              stroke="5"
+              strokeLength="0.15"
+              bgOpacity="0.1"
+              speed="1.2"
+              color="#007EB9"
+            />
+          </Flex>
+        ) : isLoggedIn ? (
+          <AppRoute />
+        ) : (
+          <AuthRoute />
+        )}
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          pauseOnHover={false}
+          transition={Slide}
+          theme="light"
+        />
       </IconsProvider>
     </ThemeProvider>
-  );
-}
-
-function BuildingRoute() {
-  return (
-    <Routes>
-      <Route index element={<Building />} />
-      <Route path="form" element={<AddBuilding />} />
-      {/* <Route path="users-table" element={<UsersTable />} /> */}
-      <Route path="*" element={<Navigate to="/not-found" />} />
-    </Routes>
-  );
-}
-
-function ProjectRoute() {
-  return (
-    <Routes>
-      <Route index element={<Project />} />
-      <Route path="form" element={<AddProject />} />
-      {/* <Route path="users-table" element={<UsersTable />} /> */}
-      <Route path="*" element={<Navigate to="/not-found" />} />
-    </Routes>
-  );
-}
-
-function NoMatch() {
-  return (
-    <div>
-      <h2>Nothing to see here!</h2>
-      <p>
-        <Link to="/">Go to the home page</Link>
-      </p>
-    </div>
   );
 }

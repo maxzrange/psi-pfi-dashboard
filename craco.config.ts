@@ -10,10 +10,16 @@ module.exports = {
       "@interfaces": path.resolve(__dirname, "src/interfaces"),
       "@models": path.resolve(__dirname, "src/models"),
       "@pages": path.resolve(__dirname, "src/pages"),
+      "@routes": path.resolve(__dirname, "src/routes"),
       "@services": path.resolve(__dirname, "src/services"),
       "@stores": path.resolve(__dirname, "src/stores"),
       types: path.resolve(__dirname, "src/types"),
       "@utils": path.resolve(__dirname, "src/utils"),
     },
+  },
+  eslint: {
+    enable: true,
+    mode: "extends",
+    configure: undefined,
   },
 };

@@ -22,3 +22,41 @@ export interface SearchAddressDTO {
   pageNum: number;
   results: AddressDTO[];
 }
+
+export interface GeometryDTO {
+  type: string;
+  coordinates: number[][][];
+}
+
+export interface GeoJSONDTO {
+  type: string;
+  properties: Object;
+  geometry: GeometryDTO;
+}
+
+export interface SecondThemeDTO {
+  NAME: string;
+  DESCRIPTION: string;
+  HYPERLINK: string;
+  CASE_SIZE: string;
+  MAPTIP: string;
+  SYMBOLCOLOR: string;
+  Type: string;
+  LatLng: number[][];
+  GeoJSON: GeoJSONDTO;
+}
+
+export interface FirstThemeDTO {
+  FeatCount: number;
+  Theme_Name: string;
+  Category: string;
+  Owner: string;
+  DateTime: string;
+  Published_Date: string;
+  Formatted_DateTime: string;
+  Formatted_Published_Date: string;
+}
+
+export interface RetrieveThemeDTO {
+  SrchResults: [FirstThemeDTO, ...SecondThemeDTO[]];
+}

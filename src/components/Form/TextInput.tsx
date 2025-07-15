@@ -31,7 +31,7 @@ const TextInput = ({ inputData, control }: Props) => {
           )}
         </Text>
       }
-      type="text"
+      type={inputData.type}
       isRequired={inputData.required}
       hasError={!!error}
       errorMessage={error?.message as string}

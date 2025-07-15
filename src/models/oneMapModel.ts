@@ -28,9 +28,15 @@ const useOneMapModel = () => {
       queryFn: () => searchAddress(search),
     });
 
+  const useRetrieveTheme = () =>
+    useMutation({
+      mutationKey: ["retrieveTheme"],
+    });
+
   return {
     useLoginOneMap,
     useSearchAddress,
+    useRetrieveTheme,
   };
 };
 

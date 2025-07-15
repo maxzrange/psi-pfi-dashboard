@@ -1,4 +1,8 @@
-import { LoginOneMapDTO, SearchAddressDTO } from "@interfaces/oneMapInterface";
+import {
+  LoginOneMapDTO,
+  RetrieveThemeDTO,
+  SearchAddressDTO,
+} from "@interfaces/oneMapInterface";
 import { ONE_API_ENDPOINT } from "@utils/configs/api";
 import { axiosOneInstance } from "@utils/configs/axios";
 import { errorResponse } from "@utils/helpers/responseHandler";
@@ -25,6 +29,26 @@ export const searchAddress = async (
     );
 
     return response.data as SearchAddressDTO;
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
+export const retrieveTheme = async (
+  param: string,
+  token: string
+): Promise<RetrieveThemeDTO> => {
+  try {
+    const response = await axiosOneInstance.get(
+      `${ONE_API_ENDPOINT.theme}?queryName=${param}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data as RetrieveThemeDTO;
   } catch (error) {
     throw errorResponse(error);
   }
