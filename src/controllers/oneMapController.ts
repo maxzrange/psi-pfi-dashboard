@@ -1,9 +1,11 @@
 import { ComboBoxOption } from "@aws-amplify/ui-react";
 import useOneMapModel from "@models/oneMapModel";
 import { queryClient } from "@utils/configs/client";
+// import { toast } from "react-toastify";
 
 const useOneMapController = () => {
-  const { useLoginOneMap, useSearchAddress } = useOneMapModel();
+  const { useLoginOneMap, useSearchAddress, useRetrieveTheme } =
+    useOneMapModel();
 
   const loginOneMapMutation = useLoginOneMap();
 
@@ -38,9 +40,40 @@ const useOneMapController = () => {
     };
   };
 
+  const useRetrieveThemeService = (params: string[]) => {
+    const { data, isLoading } = useRetrieveTheme(params);
+
+    let finalData: any[] = [];
+
+    if (!isLoading) {
+      if (data) {
+        finalData = data.map((item) => ({
+          type: "FeatureCollection",
+          features: item
+            .filter((result) => result.GeoJSON && result.GeoJSON.geometry)
+            .map((item) => ({
+              type: "Feature",
+              geometry: item.GeoJSON.geometry,
+              properties: {
+                name: item.NAME,
+                description: item.DESCRIPTION,
+                type: item.Type,
+              },
+            })),
+        }));
+      }
+    }
+
+    return {
+      finalData,
+      isLoading,
+    };
+  };
+
   return {
     loginOneMapService: () => loginOneMapMutation.mutate(),
     useSearchAddressService,
+    useRetrieveThemeService,
   };
 };
 

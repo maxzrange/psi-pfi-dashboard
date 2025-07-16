@@ -1,5 +1,9 @@
 import useHelper from "@hooks/useHelper";
-import { loginOneMap, searchAddress } from "@services/oneMapService";
+import {
+  loginOneMap,
+  retrieveTheme,
+  searchAddress,
+} from "@services/oneMapService";
 import { useOneAuth } from "@stores/authStore";
 import { useSearch } from "@stores/pageStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -28,9 +32,10 @@ const useOneMapModel = () => {
       queryFn: () => searchAddress(search),
     });
 
-  const useRetrieveTheme = () =>
-    useMutation({
-      mutationKey: ["retrieveTheme"],
+  const useRetrieveTheme = (params: string[]) =>
+    useQuery({
+      queryKey: ["retrieveTheme"],
+      queryFn: () => retrieveTheme(params),
     });
 
   return {

@@ -1,9 +1,4 @@
-import Map, {
-  MapRef,
-  // Layer,
-  Marker,
-  // Source
-} from "react-map-gl/maplibre";
+import Map, { MapLayerMouseEvent, MapRef, Marker } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { InputType } from "types/formType";
 import { Control, useController } from "react-hook-form";
@@ -12,6 +7,9 @@ import useOneMapController from "@controllers/oneMapController";
 import { useSearch } from "@stores/pageStore";
 import { useCallback, useEffect, useRef } from "react";
 import debounce from "lodash.debounce";
+import { Reuleaux } from "ldrs/react";
+import maplibregl from "maplibre-gl";
+import GeoJSONLayer from "./GeoJSONLayer";
 
 type Props = {
   inputData: InputType;
@@ -32,9 +30,44 @@ const MapInput = ({ inputData, control }: Props) => {
     rules: inputData.rules,
   });
 
-  const { useSearchAddressService } = useOneMapController();
+  const { useSearchAddressService, useRetrieveThemeService } =
+    useOneMapController();
 
-  const { finalData, isLoading } = useSearchAddressService();
+  const searchAddress = useSearchAddressService();
+  const retrieveTheme = useRetrieveThemeService([
+    "boundary_5km",
+    "danger_areas",
+    // "prohibited_areas",
+    // "restricted_areaspoly",
+    // "tra_poly",
+    // "drone_no_fly",
+    // "mha_uav_2015",
+  ]);
+
+  const onMark = (e: MapLayerMouseEvent) => {
+    const features = mapRef.current?.queryRenderedFeatures(e.point, {
+      layers: retrieveTheme.finalData.map((_, index) => `theme-fill-${index}`),
+    });
+
+    if (features && features?.length > 0) {
+      const feature = features[0];
+
+      const map = mapRef.current?.getMap();
+
+      new maplibregl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(
+          `
+          <strong>${feature.properties.name}</strong><br/>
+          ${feature.properties.description}
+        `
+        )
+        .addTo(map!);
+    } else {
+      const location = e.lngLat;
+      field.onChange({ lat: location.lat, lng: location.lng });
+    }
+  };
 
   const debouncedSearch = useCallback(
     debounce((value) => {
@@ -60,7 +93,7 @@ const MapInput = ({ inputData, control }: Props) => {
   }, [field.value]);
 
   return (
-    <Flex direction="column" width="100%" height={450} gap="small">
+    <Flex direction="column" width="100%" height={550} gap="small">
       <Text>
         {inputData.label}
         {inputData.required && (
@@ -72,9 +105,9 @@ const MapInput = ({ inputData, control }: Props) => {
 
       <Autocomplete
         label="searchAddress"
-        options={finalData}
+        options={searchAddress.finalData}
         placeholder="Search address..."
-        isLoading={isLoading}
+        isLoading={searchAddress.isLoading}
         onChange={(e) => debouncedSearch(e.target.value)}
         onSelect={(option) => {
           const location = option.id.split("|");
@@ -82,38 +115,51 @@ const MapInput = ({ inputData, control }: Props) => {
         }}
       />
 
-      <Map
-        ref={mapRef}
-        initialViewState={{
-          latitude: field.value?.lat ?? 1.3521,
-          longitude: field.value?.lng ?? 103.8198,
-          zoom: 12,
-        }}
-        mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`}
-        style={{ width: "100%", height: "100%" }}
-        onClick={(e) => {
-          const location = e.lngLat;
-          field.onChange({ lat: location.lat, lng: location.lng });
-        }}
-      >
-        {/* <Source
-          id="onemap"
-          type="raster"
-          tiles={[
-            "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png",
-          ]}
+      {retrieveTheme.isLoading ? (
+        <Flex
+          flex={1}
+          backgroundColor="rgba(23, 23, 23, 0.3)"
+          alignItems="center"
+          justifyContent="center"
         >
-          <Layer id="onemap-layer" type="raster" /> */}
-
-        {field.value && (
-          <Marker
-            latitude={field.value.lat}
-            longitude={field.value.lng}
-            color="red"
+          <Reuleaux
+            size="37"
+            stroke="5"
+            strokeLength="0.15"
+            bgOpacity="0.1"
+            speed="1.2"
+            color="white"
           />
-        )}
-        {/* </Source> */}
-      </Map>
+        </Flex>
+      ) : (
+        <Map
+          ref={mapRef}
+          initialViewState={{
+            latitude: field.value?.lat ?? 1.3521,
+            longitude: field.value?.lng ?? 103.8198,
+            zoom: 9.5,
+          }}
+          mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`}
+          style={{ width: "100%", height: "100%" }}
+          onClick={onMark}
+        >
+          {retrieveTheme.finalData.map((item, index) => (
+            <GeoJSONLayer
+              key={index.toString()}
+              sourceData={item}
+              index={index}
+            />
+          ))}
+
+          {field.value && (
+            <Marker
+              latitude={field.value.lat}
+              longitude={field.value.lng}
+              color="red"
+            />
+          )}
+        </Map>
+      )}
 
       <Flex>
         <TextField
