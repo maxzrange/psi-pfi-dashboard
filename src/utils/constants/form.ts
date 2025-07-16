@@ -1,10 +1,11 @@
-import { LoginInput } from "@interfaces/authInterface";
+import { ForgotInput, LoginInput } from "@interfaces/authInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
-import { FormType } from "types/formType";
+import { AuthFormType, FormType } from "types/formType";
 
-export const loginForm: FormType<LoginInput> = {
-  title: "",
+export const loginForm: AuthFormType<LoginInput> = {
+  title: "Sign In",
+  subTitle: "Please input your registered email and password for signing in",
   inputs: [
     {
       type: "text",
@@ -29,6 +30,41 @@ export const loginForm: FormType<LoginInput> = {
     email: "",
     password: "",
   },
+  buttonLabel: "Sign In",
+};
+
+export const forgotForm: AuthFormType<ForgotInput> = {
+  title: "Forgot Password",
+  subTitle: "Input new password for your account",
+  inputs: [
+    {
+      type: "password",
+      name: "password",
+      label: "Password",
+      required: true,
+      rules: {
+        required: "Password must be filled!",
+        minLength: {
+          value: 8,
+          message: "Password at least 8 characters!",
+        },
+      },
+    },
+    {
+      type: "confirm",
+      name: "confirm_password",
+      label: "Confirm Password",
+      required: true,
+      rules: {
+        required: "Confirm password must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    password: "",
+    confirm_password: "",
+  },
+  buttonLabel: "Change Password",
 };
 
 export const projectForm: FormType<ProjectInput> = {

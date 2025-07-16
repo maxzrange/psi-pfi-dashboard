@@ -1,5 +1,5 @@
 import { Text, TextField } from "@aws-amplify/ui-react";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useWatch } from "react-hook-form";
 import { InputType } from "types/formType";
 
 type Props = {
@@ -8,13 +8,21 @@ type Props = {
 };
 
 const TextInput = ({ inputData, control }: Props) => {
+  const password = useWatch({ control, name: "password" });
+
   const {
     field,
     fieldState: { error },
   } = useController({
     name: inputData.name,
     control,
-    rules: inputData.rules,
+    rules: {
+      ...inputData.rules,
+      validate:
+        inputData.type === "confirm"
+          ? (val) => val === password || "Password confirmation failed!"
+          : undefined,
+    },
   });
 
   return (

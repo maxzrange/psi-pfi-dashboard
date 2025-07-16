@@ -12,7 +12,14 @@ export type DropdownType = {
 };
 
 export type InputType = {
-  type: "text" | "textarea" | "dropdown" | "map" | "auto" | "password";
+  type:
+    | "text"
+    | "textarea"
+    | "dropdown"
+    | "map"
+    | "auto"
+    | "password"
+    | "confirm";
   name: string;
   label: string;
   required: boolean;
@@ -22,6 +29,12 @@ export type InputType = {
 
 export type FormType<T> = {
   title: string;
+  subTitle?: string;
   inputs: InputType[];
   defaultValues: T;
+};
+
+export type AuthFormType<T> = FormType<T> & {
+  subTitle: string;
+  buttonLabel: string;
 };
