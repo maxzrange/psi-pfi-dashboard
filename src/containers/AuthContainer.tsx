@@ -16,8 +16,7 @@ const AuthContainer = ({ children }: Props) => {
       <Flex
         direction="column"
         alignItems="center"
-        minWidth={460}
-        maxHeight="calc(100dvh - 48px)"
+        minWidth={{ base: 0, medium: "460px" }}
         gap={48}
         padding="0 24px"
         overflow="auto"

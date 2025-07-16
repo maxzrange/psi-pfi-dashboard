@@ -1,4 +1,8 @@
-import { ForgotInput, LoginInput } from "@interfaces/authInterface";
+import {
+  ForgotInput,
+  LoginInput,
+  RegisterInput,
+} from "@interfaces/authInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
@@ -7,24 +11,26 @@ export const loginForm: AuthFormType<LoginInput> = {
   title: "Sign In",
   subTitle: "Please input your registered email and password for signing in",
   inputs: [
-    {
-      type: "text",
-      name: "email",
-      label: "Email",
-      required: false,
-      rules: {
-        required: "Email must be filled!",
+    [
+      {
+        type: "text",
+        name: "email",
+        label: "Email",
+        required: false,
+        rules: {
+          required: "Email must be filled!",
+        },
       },
-    },
-    {
-      type: "password",
-      name: "password",
-      label: "Password",
-      required: false,
-      rules: {
-        required: "Password must be filled!",
+      {
+        type: "password",
+        name: "password",
+        label: "Password",
+        required: false,
+        rules: {
+          required: "Password must be filled!",
+        },
       },
-    },
+    ],
   ],
   defaultValues: {
     email: "",
@@ -37,34 +43,116 @@ export const forgotForm: AuthFormType<ForgotInput> = {
   title: "Forgot Password",
   subTitle: "Input new password for your account",
   inputs: [
-    {
-      type: "password",
-      name: "password",
-      label: "Password",
-      required: true,
-      rules: {
-        required: "Password must be filled!",
-        minLength: {
-          value: 8,
-          message: "Password at least 8 characters!",
+    [
+      {
+        type: "password",
+        name: "password",
+        label: "Password",
+        required: true,
+        rules: {
+          required: "Password must be filled!",
+          minLength: {
+            value: 8,
+            message: "Password at least 8 characters!",
+          },
         },
       },
-    },
-    {
-      type: "confirm",
-      name: "confirm_password",
-      label: "Confirm Password",
-      required: true,
-      rules: {
-        required: "Confirm password must be filled!",
+      {
+        type: "confirm",
+        name: "confirm_password",
+        label: "Confirm Password",
+        required: true,
+        rules: {
+          required: "Confirm password must be filled!",
+        },
       },
-    },
+    ],
   ],
   defaultValues: {
     password: "",
     confirm_password: "",
   },
   buttonLabel: "Change Password",
+};
+
+export const registerForm: AuthFormType<RegisterInput> = {
+  title: "Sign Up",
+  subTitle: "Please input your information",
+  inputs: [
+    [
+      {
+        type: "text",
+        name: "fullName",
+        label: "Full Name",
+        required: true,
+        rules: {
+          required: "Full name must be filled!",
+          pattern: {
+            value: /^[A-Za-z]+$/,
+            message: "Full name must consist of alphabets only!",
+          },
+        },
+      },
+      {
+        type: "phone",
+        name: "phone",
+        label: "Phone Number",
+        required: true,
+        rules: {
+          required: "Phone number must be filled!",
+          pattern: {
+            value: /^((\+65)?[89]\d{7}|(\+62|0)8[1-9][0-9]{6,9})$/,
+            message: "Invalid phone number format! (SIN | IDN)",
+          },
+        },
+      },
+      {
+        type: "text",
+        name: "email",
+        label: "Email",
+        required: true,
+        rules: {
+          required: "Email must be filled!",
+          pattern: {
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            message: "Invalid email format!",
+          },
+        },
+      },
+    ],
+    [
+      {
+        type: "password",
+        name: "password",
+        label: "Password",
+        required: false,
+        rules: {
+          required: "Password must be filled!",
+          minLength: {
+            value: 8,
+            message: "Password at least 8 characters!",
+          },
+        },
+      },
+      {
+        type: "confirm",
+        name: "confirm_password",
+        label: "Confirm Password",
+        required: true,
+        rules: {
+          required: "Confirm password must be filled!",
+        },
+      },
+    ],
+  ],
+  defaultValues: {
+    fullName: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  },
+  buttonLabel: "Sign Up",
 };
 
 export const projectForm: FormType<ProjectInput> = {

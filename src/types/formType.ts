@@ -19,7 +19,8 @@ export type InputType = {
     | "map"
     | "auto"
     | "password"
-    | "confirm";
+    | "confirm"
+    | "phone";
   name: string;
   label: string;
   required: boolean;
@@ -34,7 +35,8 @@ export type FormType<T> = {
   defaultValues: T;
 };
 
-export type AuthFormType<T> = FormType<T> & {
+export type AuthFormType<T> = Omit<FormType<T>, "inputs"> & {
   subTitle: string;
+  inputs: InputType[][];
   buttonLabel: string;
 };

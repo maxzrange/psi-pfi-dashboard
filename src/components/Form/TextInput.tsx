@@ -39,7 +39,12 @@ const TextInput = ({ inputData, control }: Props) => {
           )}
         </Text>
       }
-      type={inputData.type}
+      type={
+        inputData.type === "password" || inputData.type === "confirm"
+          ? "password"
+          : "text"
+      }
+      inputMode={inputData.type === "phone" ? "tel" : "text"}
       isRequired={inputData.required}
       hasError={!!error}
       errorMessage={error?.message as string}

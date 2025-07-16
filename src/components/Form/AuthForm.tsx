@@ -29,7 +29,16 @@ const AuthForm = ({ formData, isLogin = false, onSubmit }: Props) => {
       </Flex>
 
       <Flex direction="column" gap={24} width="100%">
-        <FormFields control={control} inputData={formData.inputs} />
+        <Flex direction={{ base: "column", medium: "row" }}>
+          {formData.inputs.map((input, index) => (
+            <Flex
+              key={index.toString()}
+              width={{ base: "100%", medium: "460px" }}
+            >
+              <FormFields control={control} inputData={input} />
+            </Flex>
+          ))}
+        </Flex>
 
         {isLogin && (
           <Link to="/forgot" style={{ alignSelf: "end", color: "#737373" }}>
@@ -42,6 +51,8 @@ const AuthForm = ({ formData, isLogin = false, onSubmit }: Props) => {
         <Button
           variation="primary"
           width="100%"
+          maxWidth={460}
+          alignSelf="center"
           onClick={handleSubmit((data) => {
             if (onSubmit) onSubmit(data);
           })}
