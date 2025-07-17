@@ -4,6 +4,8 @@ import { RegisterOptions } from "react-hook-form";
 export type MapType = {
   lat: number;
   lng: number;
+  area: string;
+  description: string;
 };
 
 export type DropdownType = {

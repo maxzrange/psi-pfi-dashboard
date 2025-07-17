@@ -17,9 +17,15 @@ const Form = ({ formData }: Props) => {
 
   return (
     <>
-      <div>
+      <Flex alignItems="center" justifyContent="space-between">
         <h2>{formData.title}</h2>
-      </div>
+
+        <Flex>
+          <FormActions
+            formOnSubmit={handleSubmit((data) => console.log(data))}
+          />
+        </Flex>
+      </Flex>
 
       <Flex
         direction={{ base: "column", large: "row" }}
@@ -30,24 +36,20 @@ const Form = ({ formData }: Props) => {
         <View
           backgroundColor="var(--amplify-colors-white)"
           borderRadius="6px"
-          width={{ base: "100%", large: "70%" }}
+          width="100%"
           padding="1rem"
         >
           <br></br>
           <FormFields inputData={formData.inputs} control={control} />
         </View>
 
-        <View
+        {/* <View
           backgroundColor="var(--amplify-colors-white)"
           borderRadius="6px"
           width={{ base: "100%", large: "30%" }}
           padding="1rem"
           minHeight="40vh"
-        >
-          <FormActions
-            formOnSubmit={handleSubmit((data) => console.log(data))}
-          />
-        </View>
+        ></View> */}
       </Flex>
     </>
   );

@@ -17,15 +17,11 @@ const FormActions = (props: FormActionsProps) => {
 
   return (
     <>
-      <Button width="100%" marginTop="20px">
-        Preview
-      </Button>
+      <Button>Preview</Button>
 
       <Button
         type="submit"
         variation="primary"
-        width="100%"
-        marginTop="20px"
         onClick={handleSubmit}
         isLoading={isLoading}
         loadingText="Loading..."
