@@ -28,11 +28,11 @@ const useMapInput = (inputData: InputType, control: Control<any, any>) => {
 
   const searchAddress = useSearchAddressService();
   const retrieveTheme = useRetrieveThemeService([
+    "tra_poly",
     "boundary_5km",
     "danger_areas",
     "prohibited_areas",
     "restricted_areaspoly",
-    "tra_poly",
     "drone_no_fly",
     "mha_uav_2015",
   ]);
