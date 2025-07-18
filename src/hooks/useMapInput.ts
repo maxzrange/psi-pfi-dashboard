@@ -32,9 +32,9 @@ const useMapInput = (inputData: InputType, control: Control<any, any>) => {
     "danger_areas",
     "prohibited_areas",
     "restricted_areaspoly",
-    // "tra_poly",
-    // "drone_no_fly",
-    // "mha_uav_2015",
+    "tra_poly",
+    "drone_no_fly",
+    "mha_uav_2015",
   ]);
 
   const onFly = (lng: number, lat: number) => {
