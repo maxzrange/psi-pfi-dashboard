@@ -1,8 +1,8 @@
 import {
   MdDashboard,
   MdModeEditOutline,
-  MdAccountBox,
   MdOutlineTableChart,
+  MdContentPasteSearch,
 } from "react-icons/md";
 import { BaseConfigType, SidebarType } from "types/configType";
 
@@ -54,9 +54,27 @@ export const appNavs: SidebarType[] = [
         to: "",
       },
       {
-        eventKey: "users",
+        eventKey: "building-type",
         title: "Building Type",
-        to: "/users-table",
+        to: "/type",
+      },
+    ],
+  },
+  {
+    eventKey: "defects",
+    icon: MdContentPasteSearch,
+    title: "Defect",
+    to: "/defect",
+    children: [
+      {
+        eventKey: "defect-list",
+        title: "Defect List",
+        to: "",
+      },
+      {
+        eventKey: "defect-type",
+        title: "Defect Type",
+        to: "/type",
       },
     ],
   },
@@ -77,11 +95,5 @@ export const appNavs: SidebarType[] = [
         to: "/edit-form",
       },
     ],
-  },
-  {
-    eventKey: "profile",
-    icon: MdAccountBox,
-    title: "Profile",
-    to: "/profile",
   },
 ];

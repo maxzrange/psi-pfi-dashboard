@@ -42,14 +42,6 @@ const Form = ({ formData }: Props) => {
           <br></br>
           <FormFields inputData={formData.inputs} control={control} />
         </View>
-
-        {/* <View
-          backgroundColor="var(--amplify-colors-white)"
-          borderRadius="6px"
-          width={{ base: "100%", large: "30%" }}
-          padding="1rem"
-          minHeight="40vh"
-        ></View> */}
       </Flex>
     </>
   );

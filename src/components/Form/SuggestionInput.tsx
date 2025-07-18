@@ -1,5 +1,5 @@
 import { Autocomplete, Flex, Text } from "@aws-amplify/ui-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Control, useController } from "react-hook-form";
 import { InputType } from "types/formType";
 
@@ -23,6 +23,10 @@ const SuggestionInput = ({ inputData, control }: Props) => {
     },
   });
 
+  useEffect(() => {
+    if (field.value) setSugg(field.value.label);
+  }, []);
+
   return (
     <Flex direction="column" gap="small">
       <Text>
@@ -35,7 +39,7 @@ const SuggestionInput = ({ inputData, control }: Props) => {
       </Text>
 
       <Autocomplete
-        value={field.value ? field.value.label : ""}
+        value={sugg}
         name={inputData.name}
         label={
           <Text>
@@ -49,12 +53,14 @@ const SuggestionInput = ({ inputData, control }: Props) => {
         }
         options={inputData.items!}
         onSelect={(option) => {
-          console.log(option);
           field.onChange(option);
-          setSugg("");
+          setSugg(option.label);
         }}
         onChange={(e) => setSugg(e.target.value)}
-        onClear={() => field.onChange(null)}
+        onClear={() => {
+          field.onChange(null);
+          setSugg("");
+        }}
         isRequired={inputData.required}
         hasError={!!error}
         errorMessage={error?.message as string}

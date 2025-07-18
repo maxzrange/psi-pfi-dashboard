@@ -3,6 +3,7 @@ import {
   LoginInput,
   RegisterInput,
 } from "@interfaces/authInterface";
+import { DefectInput } from "@interfaces/defectInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
@@ -178,7 +179,7 @@ export const projectForm: FormType<ProjectInput> = {
       label: "Location",
       required: true,
       rules: {
-        required: "Location must be choose!",
+        required: "Location must be chosen!",
       },
     },
     {
@@ -192,7 +193,7 @@ export const projectForm: FormType<ProjectInput> = {
         { id: "3", label: "Putra" },
       ],
       rules: {
-        required: "Customer must be picked!",
+        required: "Customer must be chosen!",
       },
     },
     {
@@ -206,7 +207,7 @@ export const projectForm: FormType<ProjectInput> = {
         { label: "Accepted", id: "3" },
       ],
       rules: {
-        required: "Status must be picked!",
+        required: "Status must be chosen!",
       },
     },
   ],
@@ -228,7 +229,7 @@ export const buildingForm: FormType<BuildingInput> = {
       label: "Name",
       required: true,
       rules: {
-        required: "Building name must be filled!",
+        required: "Name must be filled!",
       },
     },
     {
@@ -237,12 +238,81 @@ export const buildingForm: FormType<BuildingInput> = {
       label: "Location",
       required: true,
       rules: {
-        required: "Location must be choose!",
+        required: "Location must be chosen!",
       },
     },
   ],
   defaultValues: {
     name: "",
     location: null,
+  },
+};
+
+export const buildingTypeForm: FormType<Omit<BuildingInput, "location">> = {
+  title: "Add Building Type",
+  inputs: [
+    {
+      type: "text",
+      name: "name",
+      label: "Name",
+      required: true,
+      rules: {
+        required: "Name must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    name: "",
+  },
+};
+
+export const defectForm: FormType<DefectInput> = {
+  title: "Add Defect",
+  inputs: [
+    {
+      type: "text",
+      name: "name",
+      label: "Name",
+      required: true,
+      rules: {
+        required: "Name must be filled!",
+      },
+    },
+    {
+      type: "auto",
+      name: "defectType",
+      label: "Defect Type",
+      required: true,
+      items: [
+        { id: "1", label: "Crack" },
+        { id: "2", label: "Leak" },
+        { id: "3", label: "Burst" },
+      ],
+      rules: {
+        required: "Defect type must be chosen!",
+      },
+    },
+  ],
+  defaultValues: {
+    name: "",
+    defectType: null,
+  },
+};
+
+export const defectTypeForm: FormType<Omit<DefectInput, "defectType">> = {
+  title: "Add Defect Type",
+  inputs: [
+    {
+      type: "text",
+      name: "name",
+      label: "Name",
+      required: true,
+      rules: {
+        required: "Name must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    name: "",
   },
 };

@@ -12,7 +12,7 @@ const ModalFooter = ({ onSubmit, onClose }: Props) => {
       padding="14px 24px"
       style={{ borderTop: "1px solid #E5E5E5" }}
     >
-      <Button onClick={onClose} colorTheme="overlay">
+      <Button variation="primary" onClick={onClose} colorTheme="overlay">
         Cancel
       </Button>
 

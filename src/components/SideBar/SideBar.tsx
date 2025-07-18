@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./SideBar.css";
 import SideBarNav from "./SidebarNav";
 import SidebarNavToggle from "./SidebarNavToggle";
+import { Flex } from "@aws-amplify/ui-react";
 
 const SideBar = () => {
   const [expand, setExpand] = useState(false);
@@ -19,9 +20,9 @@ const SideBar = () => {
         <SidebarNavToggle expand={expand} onChange={() => setExpand(!expand)} />
       </div>
 
-      <div className={"sidebar " + (expand ? "visible" : "")}>
+      <Flex direction="column" className={`sidebar ${expand && "visible"}`}>
         <SideBarNav />
-      </div>
+      </Flex>
     </>
   );
 };

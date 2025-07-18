@@ -17,7 +17,7 @@ const useBuildingController = () => {
 
     let finalData: FetchDataType[] = [];
 
-    if (data) {
+    if (data)
       finalData = data.map((item) => ({
         id: item.id,
         row: [
@@ -55,7 +55,6 @@ const useBuildingController = () => {
           },
         ],
       })) as FetchDataType[];
-    }
 
     return {
       finalData,

@@ -1,10 +1,9 @@
 import "./SideBar.css";
-import { NavLink } from "react-router-dom";
-import { Icon } from "@aws-amplify/ui-react";
+import { NavLink, useLocation } from "react-router-dom";
 import { appNavs } from "@utils/constants/config";
 
 const SideBarNav = () => {
-  let activeClassName = "active";
+  const location = useLocation();
 
   return (
     <div className="sidebar-nav">
@@ -14,15 +13,15 @@ const SideBarNav = () => {
 
           if (rest.target === "_blank") return <></>;
 
+          const Icon = item.icon;
+
           return (
             <li key={item.eventKey}>
               <NavLink
                 to={item.to}
-                className={({ isActive }) =>
-                  isActive ? activeClassName : undefined
-                }
+                className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                <Icon as={item.icon} />
+                <Icon viewBox="12" />
 
                 {item.title}
               </NavLink>
@@ -34,9 +33,12 @@ const SideBarNav = () => {
                       <li key={child.eventKey}>
                         <NavLink
                           to={item.to + child.to}
-                          className={({ isActive }) =>
-                            isActive ? activeClassName : undefined
-                          }
+                          style={{
+                            color:
+                              location.pathname === `${item.to}${child.to}`
+                                ? "var(--amplify-components-link-color)"
+                                : "var(--amplify-components-text-color)",
+                          }}
                         >
                           {child.title}
                         </NavLink>
