@@ -17,12 +17,14 @@ psi-pfi-dashboard/
 ├───public/             # Static files, served directly (index.html, favicon, etc.)
 ├───src/
 │   ├───components/     # Reusable, stateless UI components (e.g., Button, Sidebar)
+│   ├───containers/     # Reusable page wrapper, also smart components responsible for handling business logic, data fetching, and side effects for each feature or page
 │   ├───controllers/    # Orchestrates logic between views and models (calls services, handles data)
 │   ├───data/           # Temporary or mock (dummy) data used for prototyping or UI testing
 │   ├───hooks/          # Custom React hooks for encapsulating reusable stateful logic
 │   ├───interfaces/     # TypeScript interfaces for API responses or structured data
 │   ├───models/         # Data models (classes or structures) representing core entities
 │   ├───pages/          # Page-level components mapped to routes (e.g., Dashboard, Project)
+│   ├───routes/         # Centralized route definitions and guards for the application
 │   ├───services/       # Responsible for handling API calls and external data access
 │   ├───stores/         # State management (Zustand stores)
 │   ├───types/          # Global/custom TypeScript types (e.g., enums, unions, utility types)

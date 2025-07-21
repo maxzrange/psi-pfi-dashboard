@@ -1,23 +1,23 @@
 import { Form } from "@components/Form";
-import { buildingForm } from "@utils/constants/form";
+import { defectForm } from "@utils/constants/form";
 import { generateDecryption } from "@utils/helpers/generator";
 import { useSearchParams } from "react-router-dom";
 
-const AddBuilding = () => {
+const AddDefect = () => {
   const [searchParams] = useSearchParams();
 
   return (
     <Form
       formData={{
-        ...buildingForm,
+        ...defectForm,
         defaultValues: searchParams.get("data")
           ? JSON.parse(
               generateDecryption(decodeURIComponent(searchParams.get("data")!))
             )
-          : buildingForm.defaultValues,
+          : defectForm.defaultValues,
       }}
     />
   );
 };
 
-export default AddBuilding;
+export default AddDefect;

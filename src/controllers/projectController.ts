@@ -73,6 +73,8 @@ const useProjectController = () => {
                     value: {
                       lat: parseInt(data[0].latitude),
                       lng: parseInt(data[0].longtitude),
+                      area: "-",
+                      description: "-",
                     },
                   },
                 ],
@@ -90,6 +92,8 @@ const useProjectController = () => {
                 location: {
                   lat: Number(data[0].latitude),
                   lng: Number(data[0].longtitude),
+                  area: "",
+                  description: "",
                 },
                 customer: { id: "1", label: "Tio" },
                 status: {

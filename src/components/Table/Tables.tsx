@@ -26,9 +26,9 @@ const Tables = ({ tableData, fetchData }: Props) => {
       >
         <Flex alignItems="center" justifyContent="space-between">
           <Heading color="#333"> {tableData.subTitle} </Heading>
-          {tableData.addDest && (
+          {tableData.addDest && tableData.addLabel && (
             <Button onClick={() => navigate(tableData.addDest!)}>
-              Add {tableData.title}
+              Add {tableData.addLabel}
             </Button>
           )}
         </Flex>

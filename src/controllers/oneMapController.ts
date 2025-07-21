@@ -1,35 +1,54 @@
 import { ComboBoxOption } from "@aws-amplify/ui-react";
 import useOneMapModel from "@models/oneMapModel";
-import { queryClient } from "@utils/configs/client";
 
 const useOneMapController = () => {
-  const { useLoginOneMap, useSearchAddress } = useOneMapModel();
+  const { useLoginOneMap, useSearchAddress, useRetrieveTheme } =
+    useOneMapModel();
 
   const loginOneMapMutation = useLoginOneMap();
 
   const useSearchAddressService = () => {
-    const { data, isLoading, isError, error } = useSearchAddress();
+    const { data, isLoading } = useSearchAddress();
 
     let finalData: (ComboBoxOption & { description: string })[] = [];
 
-    if (!isLoading) {
-      if (isError) {
-        if (error.status === 403) {
-          loginOneMapMutation.mutate();
-          queryClient.invalidateQueries({ queryKey: ["searchAddress"] });
-        }
-      } else {
-        if (data) {
-          finalData = data.results.map(
-            (item) =>
-              ({
-                id: `${item.LATITUDE}|${item.LONGITUDE}`,
-                label: item.BUILDING,
-                description: item.ADDRESS,
-              } as ComboBoxOption & { description: string })
-          );
-        }
-      }
+    if (!isLoading && data) {
+      finalData = data.results.map(
+        (item) =>
+          ({
+            id: `${item.LATITUDE}|${item.LONGITUDE}`,
+            label: item.BUILDING,
+            description: item.ADDRESS,
+          } as ComboBoxOption & { description: string })
+      );
+    }
+
+    return {
+      finalData,
+      isLoading,
+    };
+  };
+
+  const useRetrieveThemeService = (params: string[]) => {
+    const { data, isLoading } = useRetrieveTheme(params);
+
+    let finalData: any[] = [];
+
+    if (!isLoading && data) {
+      finalData = data.map((item) => ({
+        type: "FeatureCollection",
+        features: item
+          .filter((result) => result.GeoJSON && result.GeoJSON.geometry)
+          .map((item) => ({
+            type: "Feature",
+            geometry: item.GeoJSON.geometry,
+            properties: {
+              name: item.NAME,
+              description: item.DESCRIPTION,
+              type: item.Type,
+            },
+          })),
+      }));
     }
 
     return {
@@ -41,6 +60,7 @@ const useOneMapController = () => {
   return {
     loginOneMapService: () => loginOneMapMutation.mutate(),
     useSearchAddressService,
+    useRetrieveThemeService,
   };
 };
 

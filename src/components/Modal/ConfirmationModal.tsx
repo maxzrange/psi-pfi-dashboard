@@ -27,7 +27,10 @@ const ConfirmationModal = () => {
             </Text>
           </Flex>
 
-          <ModalFooter onClose={confirmationModal.hideModal} />
+          <ModalFooter
+            onClose={confirmationModal.hideModal}
+            onSubmit={confirmationModal.data?.onConfirm}
+          />
         </ModalContainer>
       )}
     </AnimatePresence>

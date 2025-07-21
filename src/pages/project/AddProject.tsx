@@ -1,7 +1,7 @@
 import { Form } from "@components/Form";
+import { projectForm } from "@utils/constants/form";
 import { generateDecryption } from "@utils/helpers/generator";
 import { useSearchParams } from "react-router-dom";
-import { projectForm } from "src/utils/constants/form";
 
 const AddProject = () => {
   const [searchParams] = useSearchParams();

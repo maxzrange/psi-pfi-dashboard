@@ -1,7 +1,7 @@
 import {
   LoginOneMapDTO,
-  RetrieveThemeDTO,
   SearchAddressDTO,
+  SecondThemeDTO,
 } from "@interfaces/oneMapInterface";
 import { ONE_API_ENDPOINT } from "@utils/configs/api";
 import { axiosOneInstance } from "@utils/configs/axios";
@@ -35,20 +35,29 @@ export const searchAddress = async (
 };
 
 export const retrieveTheme = async (
-  param: string,
-  token: string
-): Promise<RetrieveThemeDTO> => {
+  params: string[]
+): Promise<SecondThemeDTO[][]> => {
   try {
-    const response = await axiosOneInstance.get(
-      `${ONE_API_ENDPOINT.theme}?queryName=${param}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const resLogin = await loginOneMap();
 
-    return response.data as RetrieveThemeDTO;
+    const resultData: SecondThemeDTO[][] = [];
+
+    for (const param of params) {
+      const response = await axiosOneInstance.get(
+        `${ONE_API_ENDPOINT.theme}?queryName=${param}`,
+        {
+          headers: {
+            Authorization: `Bearer ${resLogin.access_token}`,
+          },
+        }
+      );
+
+      const newData = response.data.SrchResults.slice(1) as SecondThemeDTO[];
+
+      resultData.push(newData);
+    }
+
+    return resultData;
   } catch (error) {
     throw errorResponse(error);
   }

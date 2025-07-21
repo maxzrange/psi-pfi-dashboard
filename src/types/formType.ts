@@ -4,6 +4,8 @@ import { RegisterOptions } from "react-hook-form";
 export type MapType = {
   lat: number;
   lng: number;
+  area: string;
+  description: string;
 };
 
 export type DropdownType = {
@@ -12,7 +14,15 @@ export type DropdownType = {
 };
 
 export type InputType = {
-  type: "text" | "textarea" | "dropdown" | "map" | "auto" | "password";
+  type:
+    | "text"
+    | "textarea"
+    | "dropdown"
+    | "map"
+    | "auto"
+    | "password"
+    | "confirm"
+    | "phone";
   name: string;
   label: string;
   required: boolean;
@@ -22,6 +32,13 @@ export type InputType = {
 
 export type FormType<T> = {
   title: string;
+  subTitle?: string;
   inputs: InputType[];
   defaultValues: T;
+};
+
+export type AuthFormType<T> = Omit<FormType<T>, "inputs"> & {
+  subTitle: string;
+  inputs: InputType[][];
+  buttonLabel: string;
 };

@@ -4,6 +4,7 @@ import { MapType } from "./formType";
 export type TableType = {
   title: string;
   subTitle: string;
+  addLabel?: string;
   addDest?: To;
   tableHeaders: string[];
 };
@@ -38,4 +39,5 @@ export type DetailType = {
 export type ConfirmationType = {
   title: string;
   subTitle: string;
+  onConfirm?: () => void;
 };
