@@ -2,6 +2,7 @@ import { ScrollView, Tabs, TabItem, Flex } from "@aws-amplify/ui-react";
 import BasicTable from "./BasicTable";
 import { FetchDataType, TableType } from "types/pageType";
 import { PageHeader } from "@components/Header";
+import "./Table.css";
 
 type Props = {
   tableData: TableType[];
@@ -11,7 +12,7 @@ type Props = {
 const Tables = ({ tableData, fetchData }: Props) => {
   return (
     <>
-      <Tabs defaultValue="tab1">
+      <Tabs defaultValue="tab1" className="table-tab">
         {tableData.map((item, index) => (
           <TabItem key={index.toString()} title={item.title} value="tab1">
             <Flex

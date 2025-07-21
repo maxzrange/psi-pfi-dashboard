@@ -7,7 +7,7 @@ const theme: Theme = {
       tabs: {
         item: {
           paddingVertical: { value: "5px" },
-          fontSize: { value: "16px" },
+          fontSize: { value: "18px" },
         },
       },
       field: {
