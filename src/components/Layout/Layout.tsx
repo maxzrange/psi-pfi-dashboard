@@ -1,7 +1,7 @@
 import "./Layout.css";
 import { Outlet } from "react-router-dom";
 import { ReactNode } from "react";
-import Header from "@components/Header";
+// import Header from "@components/Header";
 import SideBar from "@components/SideBar";
 import Footer from "@components/Footer";
 import { baseConfig } from "@utils/constants/config";
@@ -17,7 +17,7 @@ const Layout = () => {
       <DetailModal />
       <ConfirmationModal />
 
-      {baseConfig.header && <Header />}
+      {/* {baseConfig.header && <Header />} */}
 
       <SideBar />
 

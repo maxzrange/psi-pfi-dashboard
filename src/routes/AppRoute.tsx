@@ -1,12 +1,7 @@
 import Layout from "@components/Layout";
-import {
-  AddBuilding,
-  AddBuildingType,
-  Building,
-  BuildingType,
-} from "@pages/building";
+import { AddBuilding, AddBuildingType, Building } from "@pages/building";
 import Dashboard from "@pages/dashboard";
-import { AddDefect, AddDefectType, Defect, DefectType } from "@pages/master";
+import { AddDefect, AddDefectType, Defect } from "@pages/master";
 import Profile from "@pages/profile";
 import { AddProject, Project } from "@pages/project";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
@@ -41,7 +36,6 @@ function BuildingRoute() {
   return (
     <Routes>
       <Route index element={<Building />} />
-      <Route path="type" element={<BuildingType />} />
       <Route path="form" element={<AddBuilding />} />
       <Route path="type-form" element={<AddBuildingType />} />
       <Route path="*" element={<Navigate to="/not-found" />} />
@@ -53,7 +47,6 @@ function DefectRoute() {
   return (
     <Routes>
       <Route index element={<Defect />} />
-      <Route path="type" element={<DefectType />} />
       <Route path="form" element={<AddDefect />} />
       <Route path="/type-form" element={<AddDefectType />} />
       <Route path="*" element={<Navigate to="/not-found" />} />

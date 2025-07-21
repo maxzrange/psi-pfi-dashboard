@@ -21,7 +21,12 @@ const BasicTable = ({ headerData, rowData }: Props) => {
         <TableHead>
           <TableRow>
             {headerData.map((header, index) => (
-              <TableCell key={index.toString()} as="th">
+              <TableCell
+                key={index.toString()}
+                as="th"
+                textAlign={header === "Status" ? "center" : "left"}
+                color="#737373"
+              >
                 {header}
               </TableCell>
             ))}

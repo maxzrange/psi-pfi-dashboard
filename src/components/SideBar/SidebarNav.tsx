@@ -1,12 +1,11 @@
 import "./SideBar.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { appNavs } from "@utils/constants/config";
+import { Flex } from "@aws-amplify/ui-react";
 
 const SideBarNav = () => {
-  const location = useLocation();
-
   return (
-    <div className="sidebar-nav">
+    <Flex direction="column" flex={1} className="sidebar-nav">
       <ul>
         {appNavs.map((item) => {
           const { children, ...rest } = item;
@@ -19,39 +18,19 @@ const SideBarNav = () => {
             <li key={item.eventKey}>
               <NavLink
                 to={item.to}
-                className={({ isActive }) => (isActive ? "active" : undefined)}
+                className={({ isActive }) =>
+                  `${isActive ? "active" : undefined}`
+                }
               >
-                <Icon viewBox="12" />
+                <Icon size={24} />
 
-                {item.title}
+                <p className="body-md med">{item.title}</p>
               </NavLink>
-
-              {children && (
-                <ul>
-                  {children.map((child) => {
-                    return (
-                      <li key={child.eventKey}>
-                        <NavLink
-                          to={item.to + child.to}
-                          style={{
-                            color:
-                              location.pathname === `${item.to}${child.to}`
-                                ? "var(--amplify-components-link-color)"
-                                : "var(--amplify-components-text-color)",
-                          }}
-                        >
-                          {child.title}
-                        </NavLink>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
             </li>
           );
         })}
       </ul>
-    </div>
+    </Flex>
   );
 };
 

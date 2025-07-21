@@ -1,7 +1,15 @@
-import { Flex, Menu, MenuItem, TableCell, Text } from "@aws-amplify/ui-react";
+import {
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  TableCell,
+  Text,
+} from "@aws-amplify/ui-react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { RowFuncType } from "types/pageType";
+import { CiMenuKebab } from "react-icons/ci";
 
 type Props = {
   funcData: RowFuncType[];
@@ -10,7 +18,16 @@ type Props = {
 const CustomTableFunc = ({ funcData }: Props) => {
   return (
     <TableCell>
-      <Menu menuAlign="end">
+      <Menu
+        menuAlign="end"
+        trigger={
+          <MenuButton width="32px" height="32px">
+            <Flex>
+              <CiMenuKebab size={18} />
+            </Flex>
+          </MenuButton>
+        }
+      >
         {funcData.map((func, index) => (
           <MenuItem key={index.toString()} onClick={() => func.onClick()}>
             <Flex alignItems="center">

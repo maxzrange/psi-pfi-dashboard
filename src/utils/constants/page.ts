@@ -1,46 +1,57 @@
 import { TableType } from "types/pageType";
 
 // Building table
-export const buildingData: TableType = {
-  title: "Building",
-  subTitle: "Building List",
-  addLabel: "Building",
-  addDest: "/building/form",
-  tableHeaders: ["Name", "Created At"],
-};
-
-// Building type table
-export const buildingTypeData: TableType = {
-  title: "Building",
-  subTitle: "Building Type List",
-  addLabel: "Building Type",
-  addDest: "/building/type-form",
-  tableHeaders: ["Name", "Created At"],
-};
+export const buildingData: TableType[] = [
+  {
+    title: "Building",
+    addDest: "/building/form",
+    tableHeaders: [
+      "Name",
+      "Address",
+      "Year Built",
+      "Building Type",
+      "Area (sq meter)",
+      "Number of Levels",
+      "Number of Elevation",
+      "Created At",
+    ],
+  },
+  {
+    title: "Building Type",
+    addDest: "/building/type-form",
+    tableHeaders: ["Name", "Description", "Created At"],
+  },
+  {
+    title: "Building Side",
+    addDest: "/building/side-form",
+    tableHeaders: ["Name", "Building", "Orientation", "Created At"],
+  },
+  {
+    title: "Building Level",
+    addDest: "/building/level-form",
+    tableHeaders: ["Name", "Level Number", "Primary Usage", "Created At"],
+  },
+];
 
 // Project table
-export const projectData: TableType = {
-  title: "Project",
-  subTitle: "Project List",
-  addLabel: "Project",
-  addDest: "/project/form",
-  tableHeaders: ["Title", "Description", "Status"],
-};
+export const projectData: TableType[] = [
+  {
+    title: "Project",
+    addDest: "/project/form",
+    tableHeaders: ["Title", "Description", "Contact", "Status"],
+  },
+];
 
 // Defect table
-export const defectData: TableType = {
-  title: "Defect",
-  subTitle: "Defect List",
-  addLabel: "Defect",
-  addDest: "/defect/form",
-  tableHeaders: ["Name", "Created At"],
-};
-
-// Defect type table
-export const defectTypeData: TableType = {
-  title: "Defect",
-  subTitle: "Defect Type List",
-  addLabel: "Defect Type",
-  addDest: "/defect/type-form",
-  tableHeaders: ["Name", "Created At"],
-};
+export const defectData: TableType[] = [
+  {
+    title: "Defect",
+    addDest: "/defect/form",
+    tableHeaders: ["Name", "Created At"],
+  },
+  {
+    title: "Defect Type",
+    addDest: "/defect/type-form",
+    tableHeaders: ["Name", "Created AT"],
+  },
+];

@@ -1,77 +1,65 @@
 .sidebar {
   background-color: #fff;
-  color: #fff;
+  color: var(--amplify-components-text-color);
   position: fixed;
-  top: 0px;
-  height: 100vh;
+  top: 0;
+  height: 100dvh;
   z-index: 3;
   width: 260px;
-  padding: 51px 0;
-  overflow-y: auto;
+  gap: 0;
 }
 
 .sidebar::-webkit-scrollbar {
   display: none;
 }
 
+.sidebar .logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  text-decoration: none;
+  color: var(--amplify-components-text-color);
+}
+
 @media (max-width: 1024px) {
   .sidebar {
     width: 300px;
-    overflow: hidden;
-    top: 20px;
+    top: 0;
     transition: 0.2s ease;
     transform: translateX(-300px);
   }
   .sidebar.visible {
     width: 300px;
-    overflow: hidden;
     transform: translateX(0px);
+  }
+
+  .sidebar .logo {
+    padding: 16px 24px 16px 66px;
   }
 }
 
-.sidebar a {
-  color: var(--amplify-components-text-color);
-  text-decoration: none;
+.sidebar-nav {
+  overflow-y: auto;
 }
 
 .sidebar-nav ul {
   list-style: none;
-  padding: 0;
+  padding: 8px 14px;
   margin: 0;
 }
 
 .sidebar-nav ul li a {
-  display: block;
-  padding: 14px 36px 14px 56px;
-  font-weight: 600;
+  display: flex;
   color: var(--amplify-colors-brand-primary-100);
-  line-height: 1.25;
-  position: relative;
   transition: 0.2s ease all;
-}
-
-.sidebar-nav ul li ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-top: 0px;
-}
-
-.sidebar-nav ul li ul a {
-  padding: 10px 36px;
-  padding-left: 56px;
-  font-weight: 400;
-  font-size: 14px;
-}
-
-.sidebar-nav ul li a svg {
-  width: 30px;
-  height: 30px;
-  margin-right: 20px;
-  position: absolute;
-  left: 20px;
-  top: 14px;
-  line-height: 1.25;
+  align-items: center;
+  padding: 10px 12px;
+  gap: 12px;
+  text-decoration: none;
+  border-radius: 8px;
 }
 
 .sidebar-nav ul li a:hover {
@@ -84,9 +72,8 @@
 }
 
 .btn-sidebar-nav {
-  background-color: #fff;
   position: fixed;
-  top: 0px;
+  top: 7px;
   left: 0;
   height: 50px;
   z-index: 10;
