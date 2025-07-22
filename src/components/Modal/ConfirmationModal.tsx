@@ -20,7 +20,11 @@ const ConfirmationModal = () => {
               {confirmationModal.data?.subTitle
                 .split("|")
                 .map((data, index) => (
-                  <Text as="span" fontWeight={index === 1 ? 700 : 400}>
+                  <Text
+                    as="span"
+                    key={index.toString()}
+                    fontWeight={index === 1 ? 700 : 400}
+                  >
                     {data}
                   </Text>
                 ))}

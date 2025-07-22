@@ -10,16 +10,16 @@ import { AuthFormType, FormType } from "types/formType";
 
 export const loginForm: AuthFormType<LoginInput> = {
   title: "Sign In",
-  subTitle: "Please input your registered email and password for signing in",
+  subTitle: "Please input your registered username and password for signing in",
   inputs: [
     [
       {
         type: "text",
-        name: "email",
-        label: "Email",
+        name: "username",
+        label: "Username",
         required: false,
         rules: {
-          required: "Email must be filled!",
+          required: "Username must be filled!",
         },
       },
       {
@@ -34,7 +34,7 @@ export const loginForm: AuthFormType<LoginInput> = {
     ],
   ],
   defaultValues: {
-    email: "",
+    username: "",
     password: "",
   },
   buttonLabel: "Sign In",
@@ -83,27 +83,27 @@ export const registerForm: AuthFormType<RegisterInput> = {
     [
       {
         type: "text",
-        name: "fullName",
+        name: "name",
         label: "Full Name",
         required: true,
         rules: {
           required: "Full name must be filled!",
           pattern: {
-            value: /^[A-Za-z]+$/,
+            value: /^[a-zA-Z ]+$/,
             message: "Full name must consist of alphabets only!",
           },
         },
       },
       {
-        type: "phone",
-        name: "phone",
-        label: "Phone Number",
+        type: "text",
+        name: "username",
+        label: "Username",
         required: true,
         rules: {
-          required: "Phone number must be filled!",
+          required: "Username must be filled!",
           pattern: {
-            value: /^((\+65)?[89]\d{7}|(\+62|0)8[1-9][0-9]{6,9})$/,
-            message: "Invalid phone number format! (SIN | IDN)",
+            value: /^[a-zA-Z0-9]+$/,
+            message: "Username must consist of alphanumeric only!",
           },
         },
       },
@@ -147,8 +147,8 @@ export const registerForm: AuthFormType<RegisterInput> = {
     ],
   ],
   defaultValues: {
-    fullName: "",
-    phone: "",
+    name: "",
+    username: "",
     email: "",
     password: "",
     confirm_password: "",

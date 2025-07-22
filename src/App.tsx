@@ -5,17 +5,17 @@ import "@tanstack/react-query";
 
 import { Flex, IconsProvider, ThemeProvider } from "@aws-amplify/ui-react";
 import theme from "./theme";
-import { ErrResType } from "types/resType";
 import { BsThreeDots } from "react-icons/bs";
 import AppRoute from "@routes/AppRoute";
 import AuthRoute from "@routes/AuthRoute";
 import { Slide, ToastContainer } from "react-toastify";
 import usePrepare from "@hooks/usePrepare";
 import { Reuleaux } from "ldrs/react";
+import { ResType } from "types/resType";
 
 declare module "@tanstack/react-query" {
   interface Register {
-    defaultError: ErrResType;
+    defaultError: ResType;
   }
 }
 

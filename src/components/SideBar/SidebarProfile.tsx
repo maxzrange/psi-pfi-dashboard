@@ -1,14 +1,14 @@
 import { Button, Flex } from "@aws-amplify/ui-react";
-import { useAuth } from "@stores/authStore";
+import useAuthController from "@controllers/authController";
 import { useConfirmationModal } from "@stores/modalStore";
 import { IoLogOut } from "react-icons/io5";
-import { toast } from "react-toastify";
 
 const SidebarProfile = () => {
-  const resetAuth = useAuth((state) => state.resetToken);
   const showConfirmationModal = useConfirmationModal(
     (state) => state.showModal
   );
+
+  const { logoutService } = useAuthController();
 
   return (
     <Flex
@@ -41,11 +41,7 @@ const SidebarProfile = () => {
           showConfirmationModal({
             title: "Logout",
             subTitle: "Are you sure you want to logout?",
-            onConfirm: () => {
-              localStorage.removeItem("@token");
-              resetAuth();
-              toast.success("Logout success!");
-            },
+            onConfirm: logoutService,
           })
         }
       >

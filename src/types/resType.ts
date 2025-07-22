@@ -1,4 +1,5 @@
-export type ErrResType = {
+export type ResType<T = any> = {
   status: number;
-  data: any;
+  message: string;
+  data: T;
 };
