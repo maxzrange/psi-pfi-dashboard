@@ -1,5 +1,6 @@
 import { Flex } from "@aws-amplify/ui-react";
 import { ReactNode } from "react";
+import "./AuthContainer.css";
 
 type Props = {
   children: ReactNode;
@@ -20,6 +21,7 @@ const AuthContainer = ({ children }: Props) => {
         gap={48}
         padding="0 24px"
         overflow="auto"
+        className="form-container"
       >
         {children}
       </Flex>

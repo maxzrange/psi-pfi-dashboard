@@ -5,7 +5,7 @@ const Logo = () => {
         src={(process.env.REACT_APP_PUBLIC_URL || "") + "/logo.png"}
         alt="logo"
         width="30"
-        height="22"
+        height="28"
       />
     </>
   );

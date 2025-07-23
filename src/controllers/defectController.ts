@@ -13,105 +13,54 @@ const useDefectController = () => {
   const nav = useNavigate();
 
   const useGetDefectsService = () => {
-    const data: DefectDTO[] = mockDefectData(10);
+    const defect: DefectDTO[] = mockDefectData(10);
 
-    let finalData: FetchDataType[] = [];
+    let finalData: FetchDataType[][] = [];
 
-    if (data)
-      finalData = data.map(
-        (item) =>
-          ({
-            id: item.id,
-            row: [
-              { type: "text", value: item.name },
-              { type: "text", value: item.created_at },
-            ],
-            functions: [
-              {
-                type: "edit",
-                onClick: () => {
-                  const data = mockDefectData(1);
+    if (defect)
+      finalData = [
+        defect.map((item) => ({
+          id: item.id,
+          row: [
+            { type: "text", value: item.name },
+            { type: "text", value: item.created_at },
+          ],
+          functions: [
+            {
+              type: "edit",
+              onClick: () => {
+                const data = mockDefectData(1);
 
-                  const defaultValues: DefectInput = {
-                    name: data[0].name,
-                    defectType: {
-                      id: "1",
-                      label: "Cracked",
-                    },
-                  };
+                const defaultValues: DefectInput = {
+                  name: data[0].name,
+                  defectType: {
+                    id: "1",
+                    label: "Cracked",
+                  },
+                };
 
-                  nav(
-                    `/defect/form?data=${encodeURIComponent(
-                      generateEncryption(JSON.stringify(defaultValues))
-                    )}`
-                  );
-                },
+                nav(
+                  `/defect/form?data=${encodeURIComponent(
+                    generateEncryption(JSON.stringify(defaultValues))
+                  )}`
+                );
               },
-              {
-                type: "delete",
-                onClick: () => {
-                  const data = mockDefectData(1);
+            },
+            {
+              type: "delete",
+              onClick: () => {
+                const data = mockDefectData(1);
 
-                  showConfirmationModal({
-                    title: "Delete Defect",
-                    subTitle: `Are you sure you want to delete |"${data[0].name}"|? This action cannot be undo!`,
-                  });
-                },
+                showConfirmationModal({
+                  title: "Delete Defect",
+                  subTitle: `Are you sure you want to delete |"${data[0].name}"|? This action cannot be undo!`,
+                });
               },
-            ],
-          } as FetchDataType)
-      );
-
-    return {
-      finalData,
-    };
-  };
-
-  const useGetDefectTypesService = () => {
-    const data: DefectDTO[] = mockDefectData(10);
-
-    let finalData: FetchDataType[] = [];
-
-    if (data)
-      finalData = data.map(
-        (item) =>
-          ({
-            id: item.id,
-            row: [
-              { type: "text", value: item.name },
-              { type: "text", value: item.created_at },
-            ],
-            functions: [
-              {
-                type: "edit",
-                onClick: () => {
-                  const data = mockDefectData(1);
-
-                  const defaultValues: Omit<DefectInput, "defectType"> = {
-                    name: data[0].name,
-                  };
-
-                  nav(
-                    `/defect/type-form?data=${encodeURIComponent(
-                      generateEncryption(JSON.stringify(defaultValues))
-                    )}`
-                  );
-                },
-              },
-              {
-                type: "delete",
-                onClick: () => {
-                  const data = mockDefectData(1);
-
-                  showConfirmationModal({
-                    title: "Delete Defect Type",
-                    subTitle: `Are you sure you want to delete |"${data[0].name}"|? This action cannot be undo!`,
-                  });
-                },
-              },
-            ],
-          } as FetchDataType)
-      );
+            },
+          ],
+        })),
+        [],
+      ] as FetchDataType[][];
 
     return {
       finalData,
@@ -120,7 +69,6 @@ const useDefectController = () => {
 
   return {
     useGetDefectsService,
-    useGetDefectTypesService,
   };
 };
 

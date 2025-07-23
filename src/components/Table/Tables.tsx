@@ -1,42 +1,41 @@
-import { View, Heading, ScrollView, Button, Flex } from "@aws-amplify/ui-react";
+import { ScrollView, Tabs, TabItem, Flex } from "@aws-amplify/ui-react";
 import BasicTable from "./BasicTable";
 import { FetchDataType, TableType } from "types/pageType";
-import { useNavigate } from "react-router-dom";
+import { PageHeader } from "@components/Header";
+import "./Table.css";
 
 type Props = {
-  tableData: TableType;
-  fetchData: FetchDataType[];
+  tableData: TableType[];
+  fetchData: FetchDataType[][];
 };
 
 const Tables = ({ tableData, fetchData }: Props) => {
-  const navigate = useNavigate();
-
   return (
     <>
-      <div>
-        <h2>{tableData.title}</h2>
-      </div>
+      <Tabs defaultValue="tab1" className="table-tab">
+        {tableData.map((item, index) => (
+          <TabItem key={index.toString()} title={item.title} value="tab1">
+            <Flex
+              direction="column"
+              backgroundColor="var(--amplify-colors-white)"
+              borderRadius="6px"
+              maxWidth="100%"
+              padding="1rem"
+              minHeight="80vh"
+              gap={14}
+            >
+              <PageHeader label={item.title} dest={item.addDest} />
 
-      <View
-        backgroundColor="var(--amplify-colors-white)"
-        borderRadius="6px"
-        maxWidth="100%"
-        padding="1rem"
-        minHeight="80vh"
-      >
-        <Flex alignItems="center" justifyContent="space-between">
-          <Heading color="#333"> {tableData.subTitle} </Heading>
-          {tableData.addDest && tableData.addLabel && (
-            <Button onClick={() => navigate(tableData.addDest!)}>
-              Add {tableData.addLabel}
-            </Button>
-          )}
-        </Flex>
-        <br></br>
-        <ScrollView width="100%">
-          <BasicTable headerData={tableData.tableHeaders} rowData={fetchData} />
-        </ScrollView>
-      </View>
+              <ScrollView width="100%">
+                <BasicTable
+                  headerData={item.tableHeaders}
+                  rowData={fetchData[index]}
+                />
+              </ScrollView>
+            </Flex>
+          </TabItem>
+        ))}
+      </Tabs>
     </>
   );
 };

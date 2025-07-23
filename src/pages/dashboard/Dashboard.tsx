@@ -86,9 +86,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>
-        <h2>Dashboard</h2>
-      </div>
       <View borderRadius="6px" maxWidth="100%" padding="0rem" minHeight="100vh">
         <Grid
           templateColumns={{ base: "1fr", large: "1fr 1fr 1fr" }}

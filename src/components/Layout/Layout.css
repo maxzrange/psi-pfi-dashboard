@@ -6,9 +6,7 @@
 }
 
 .page-container {
-  padding: 30px;
-  padding-left: 290px;
-  padding-top: 50px;
+  padding: 14px 24px 14px 284px;
   transition: padding 0.5s;
   overflow-y: auto;
   height: 100dvh;
@@ -16,9 +14,7 @@
 
 @media (max-width: 1024px) {
   .page-container {
-    padding: 30px;
-    padding-left: 20px;
-    padding-top: 50px;
+    padding: 14px 24px;
     transition: padding 0.5s;
   }
 }

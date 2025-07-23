@@ -3,8 +3,6 @@ import { MapType } from "./formType";
 
 export type TableType = {
   title: string;
-  subTitle: string;
-  addLabel?: string;
   addDest?: To;
   tableHeaders: string[];
 };

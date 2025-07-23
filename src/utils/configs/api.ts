@@ -3,3 +3,9 @@ export const ONE_API_ENDPOINT = {
   search: "/common/elastic/search",
   theme: "/public/themesvc/retrieveTheme",
 };
+
+export const API_ENDPOINT = {
+  login: "/login",
+  register: "/user",
+  logout: "/logout",
+};

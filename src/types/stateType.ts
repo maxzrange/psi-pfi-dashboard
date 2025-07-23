@@ -6,10 +6,16 @@ export type LoadingType = {
   hideLoading: () => void;
 };
 
-export type AuthType = {
+export type OneAuthType = {
   token: string;
   setToken: (value: string) => void;
   resetToken: () => void;
+};
+
+export type AuthType = Omit<OneAuthType, "setToken"> & {
+  username: string;
+  setToken: (token: string, username: string) => void;
+  checkIsLoggedIn: () => void;
 };
 
 export type DetailModalType = {

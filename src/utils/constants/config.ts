@@ -1,9 +1,9 @@
 import {
   MdDashboard,
-  MdModeEditOutline,
   MdOutlineTableChart,
   MdContentPasteSearch,
 } from "react-icons/md";
+import { HiOutlineAnnotation, HiOutlineOfficeBuilding } from "react-icons/hi";
 import { BaseConfigType, SidebarType } from "types/configType";
 
 // Base config
@@ -29,71 +29,23 @@ export const appNavs: SidebarType[] = [
     icon: MdOutlineTableChart,
     title: "Project",
     to: "/project",
-    children: [
-      {
-        eventKey: "project-list",
-        title: "Project List",
-        to: "",
-      },
-      {
-        eventKey: "users",
-        title: "Project Status",
-        to: "/users-table",
-      },
-    ],
   },
   {
     eventKey: "buildings",
-    icon: MdOutlineTableChart,
+    icon: HiOutlineOfficeBuilding,
     title: "Building",
     to: "/building",
-    children: [
-      {
-        eventKey: "building-list",
-        title: "Building List",
-        to: "",
-      },
-      {
-        eventKey: "building-type",
-        title: "Building Type",
-        to: "/type",
-      },
-    ],
   },
   {
     eventKey: "defects",
     icon: MdContentPasteSearch,
     title: "Defect",
     to: "/defect",
-    children: [
-      {
-        eventKey: "defect-list",
-        title: "Defect List",
-        to: "",
-      },
-      {
-        eventKey: "defect-type",
-        title: "Defect Type",
-        to: "/type",
-      },
-    ],
   },
   {
     eventKey: "forms",
-    icon: MdModeEditOutline,
+    icon: HiOutlineAnnotation,
     title: "Annotation",
     to: "/forms",
-    children: [
-      {
-        eventKey: "form-basic",
-        title: "Annotation",
-        to: "/forms",
-      },
-      {
-        eventKey: "form-wizard",
-        title: "Report",
-        to: "/edit-form",
-      },
-    ],
   },
 ];
