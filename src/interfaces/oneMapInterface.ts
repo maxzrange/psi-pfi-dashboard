@@ -57,6 +57,7 @@ export interface FirstThemeDTO {
   Formatted_Published_Date: string;
 }
 
-export interface RetrieveThemeDTO {
-  SrchResults: [FirstThemeDTO, ...SecondThemeDTO[]];
+export interface ThemeDTO {
+  noColor: boolean;
+  data: SecondThemeDTO[];
 }

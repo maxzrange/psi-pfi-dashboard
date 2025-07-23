@@ -4,7 +4,13 @@ import {
   RegisterInput,
 } from "@interfaces/authInterface";
 import { DefectInput } from "@interfaces/defectInterface";
-import { BuildingInput } from "src/interfaces/buildingInterface";
+import moment from "moment";
+import {
+  BuildingInput,
+  BuildingLevelInput,
+  BuildingSideInput,
+  BuildingTypeInput,
+} from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
 
@@ -233,6 +239,64 @@ export const buildingForm: FormType<BuildingInput> = {
       },
     },
     {
+      type: "text",
+      name: "address",
+      label: "Address",
+      required: true,
+      rules: {
+        required: "Address must be filled!",
+      },
+    },
+    {
+      type: "number",
+      name: "area",
+      label: "Area (sq meter)",
+      required: true,
+      rules: {
+        required: "Area must be filled!",
+        pattern: {
+          value: /^\d+(\.\d{2})?$/,
+          message: "Area must be a number or decimal!",
+        },
+      },
+    },
+    {
+      type: "number",
+      name: "levels",
+      label: "Number of Levels",
+      required: true,
+      rules: {
+        required: "Number of levels must be filled!",
+      },
+    },
+    {
+      type: "number",
+      name: "elevation",
+      label: "Number of Elevations",
+      required: true,
+      rules: {
+        required: "Number of elevations must be filled!",
+      },
+    },
+    {
+      type: "text",
+      name: "facade",
+      label: "Facade",
+      required: false,
+    },
+    {
+      type: "auto",
+      name: "user_id",
+      label: "Owner",
+      required: false,
+      items: [
+        { id: "0", label: "" },
+        { id: "1", label: "Tio" },
+        { id: "2", label: "Novriadi" },
+        { id: "3", label: "Putra" },
+      ],
+    },
+    {
       type: "map",
       name: "location",
       label: "Location",
@@ -241,14 +305,52 @@ export const buildingForm: FormType<BuildingInput> = {
         required: "Location must be chosen!",
       },
     },
+    {
+      type: "number",
+      name: "cons_status",
+      label: "Construction Status (%)",
+      required: true,
+      rules: {
+        required: "Construction status must be filled!",
+      },
+    },
+    {
+      type: "date",
+      name: "cons_start",
+      label: "Construction Start Date",
+      required: true,
+      rules: {
+        required: "Construction start date must be filled!",
+      },
+    },
+    {
+      type: "date",
+      name: "cons_end",
+      label: "Construction End Date",
+      required: true,
+      rules: {
+        required: "Construction end date must be filled!",
+      },
+    },
   ],
   defaultValues: {
     name: "",
+    address: "",
+    year_built: "",
+    building_type_id: null,
+    area: 0,
+    levels: 0,
+    elevation: 0,
+    facade: "",
+    user_id: null,
     location: null,
+    cons_status: 0,
+    cons_start: moment().format("YYYY-MM-DD"),
+    cons_end: moment().format("YYYY-MM-DD"),
   },
 };
 
-export const buildingTypeForm: FormType<Omit<BuildingInput, "location">> = {
+export const buildingTypeForm: FormType<BuildingTypeInput> = {
   title: "Add Building Type",
   inputs: [
     {
@@ -260,9 +362,125 @@ export const buildingTypeForm: FormType<Omit<BuildingInput, "location">> = {
         required: "Name must be filled!",
       },
     },
+    {
+      type: "textarea",
+      name: "decription",
+      label: "Decription",
+      required: true,
+      rules: {
+        required: "Description must be filled!",
+      },
+    },
   ],
   defaultValues: {
     name: "",
+    description: "",
+  },
+};
+
+export const buildingSideForm: FormType<BuildingSideInput> = {
+  title: "Add Building Side",
+  inputs: [
+    {
+      type: "auto",
+      name: "building_id",
+      label: "Building",
+      required: true,
+      rules: {
+        required: "Building must be chosen!",
+      },
+      items: [
+        { id: "1", label: "Building A" },
+        { id: "2", label: "Building B" },
+        { id: "3", label: "Building C" },
+      ],
+    },
+    {
+      type: "text",
+      name: "name",
+      label: "Name",
+      required: true,
+      rules: {
+        required: "Name must be filled!",
+      },
+    },
+    {
+      type: "textarea",
+      name: "description",
+      label: "Description",
+      required: true,
+      rules: {
+        required: "Description must be filled!",
+      },
+    },
+    {
+      type: "number",
+      name: "orientation",
+      label: "Orientation Degree",
+      required: true,
+      rules: {
+        required: "Orientation degree must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    building_id: null,
+    name: "",
+    description: "",
+    orientation: 0,
+  },
+};
+
+export const buildingLevelForm: FormType<BuildingLevelInput> = {
+  title: "Add Building Level",
+  inputs: [
+    {
+      type: "auto",
+      name: "building_id",
+      label: "Building",
+      required: true,
+      rules: {
+        required: "Building must be chosen!",
+      },
+      items: [
+        { id: "1", label: "Building A" },
+        { id: "2", label: "Building B" },
+        { id: "3", label: "Building C" },
+      ],
+    },
+    {
+      type: "number",
+      name: "level_num",
+      label: "Level Number",
+      required: true,
+      rules: {
+        required: "Level number must be filled!",
+      },
+    },
+    {
+      type: "textarea",
+      name: "description",
+      label: "Description",
+      required: true,
+      rules: {
+        required: "Description must be filled!",
+      },
+    },
+    {
+      type: "text",
+      name: "usage",
+      label: "Primary Usage",
+      required: true,
+      rules: {
+        required: "Primary usage must be filled!",
+      },
+    },
+  ],
+  defaultValues: {
+    building_id: null,
+    level_num: 0,
+    description: "",
+    usage: "",
   },
 };
 

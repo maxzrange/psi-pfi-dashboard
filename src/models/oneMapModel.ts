@@ -5,12 +5,13 @@ import {
   searchAddress,
 } from "@services/oneMapService";
 import { useOneAuth } from "@stores/authStore";
-import { useSearch } from "@stores/pageStore";
+import { useOneTheme, useSearch } from "@stores/pageStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 const useOneMapModel = () => {
   const setOneToken = useOneAuth((state) => state.setToken);
   const search = useSearch((state) => state.value);
+  const oneTheme = useOneTheme((state) => state.data);
 
   const { onMutate, onSettled } = useHelper();
 
@@ -32,10 +33,13 @@ const useOneMapModel = () => {
       queryFn: () => searchAddress(search),
     });
 
-  const useRetrieveTheme = (params: string[]) =>
+  const useRetrieveTheme = () =>
     useQuery({
-      queryKey: ["retrieveTheme"],
-      queryFn: () => retrieveTheme(params),
+      queryKey: ["retrieveTheme", oneTheme],
+      queryFn: () =>
+        retrieveTheme(
+          oneTheme.filter((item) => item.active).map((item) => item.value)
+        ),
     });
 
   return {

@@ -1,7 +1,8 @@
-import { Autocomplete, Flex, Text } from "@aws-amplify/ui-react";
+import { Autocomplete, Flex } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { Control, useController } from "react-hook-form";
 import { InputType } from "types/formType";
+import Label from "./Label";
 
 type Props = {
   inputData: InputType;
@@ -29,28 +30,11 @@ const SuggestionInput = ({ inputData, control }: Props) => {
 
   return (
     <Flex direction="column" gap="small">
-      <Text>
-        {inputData.label}
-        {inputData.required && (
-          <Text as="span" fontSize="0.8rem" color="red" marginLeft={5}>
-            (required)
-          </Text>
-        )}
-      </Text>
-
       <Autocomplete
         value={sugg}
         name={inputData.name}
-        label={
-          <Text>
-            {inputData.label}
-            {inputData.required && (
-              <Text as="span" fontSize="0.8rem" color="red" marginLeft={5}>
-                (required)
-              </Text>
-            )}
-          </Text>
-        }
+        label={<Label label={inputData.label} required={inputData.required} />}
+        labelHidden={false}
         options={inputData.items!}
         onSelect={(option) => {
           field.onChange(option);

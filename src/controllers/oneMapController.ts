@@ -29,25 +29,28 @@ const useOneMapController = () => {
     };
   };
 
-  const useRetrieveThemeService = (params: string[]) => {
-    const { data, isLoading } = useRetrieveTheme(params);
+  const useRetrieveThemeService = () => {
+    const { data, isLoading } = useRetrieveTheme();
 
     let finalData: any[] = [];
 
     if (!isLoading && data) {
       finalData = data.map((item) => ({
-        type: "FeatureCollection",
-        features: item
-          .filter((result) => result.GeoJSON && result.GeoJSON.geometry)
-          .map((item) => ({
-            type: "Feature",
-            geometry: item.GeoJSON.geometry,
-            properties: {
-              name: item.NAME,
-              description: item.DESCRIPTION,
-              type: item.Type,
-            },
-          })),
+        noColor: item.noColor,
+        data: {
+          type: "FeatureCollection",
+          features: item.data
+            .filter((result) => result.GeoJSON && result.GeoJSON.geometry)
+            .map((item) => ({
+              type: "Feature",
+              geometry: item.GeoJSON.geometry,
+              properties: {
+                name: item.NAME,
+                description: item.DESCRIPTION,
+                type: item.Type,
+              },
+            })),
+        },
       }));
     }
 

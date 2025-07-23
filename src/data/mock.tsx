@@ -1,5 +1,10 @@
 import { faker } from "@faker-js/faker/locale/en";
-import { BuildingDTO, BuildingTypeDTO } from "@interfaces/buildingInterface";
+import {
+  BuildingDTO,
+  BuildingLevelDTO,
+  BuildingSideDTO,
+  BuildingTypeDTO,
+} from "@interfaces/buildingInterface";
 import { DefectDTO } from "@interfaces/defectInterface";
 import { ProjectDTO } from "@interfaces/projectInterface";
 import moment from "moment";
@@ -33,6 +38,16 @@ export const mockBuildingData = (length: number): BuildingDTO[] => {
       area: faker.number.float(),
       levels: faker.number.int(),
       elevation: faker.number.int(),
+      facade: faker.word.noun(),
+      location: {
+        lat: faker.location.latitude(),
+        lng: faker.location.longitude(),
+        area: "-",
+        description: "-",
+      },
+      cons_status: faker.number.int({ min: 0, max: 100 }),
+      cons_start: moment(faker.date.past()).format("YYYY-MM-DD"),
+      cons_end: moment(faker.date.future()).format("YYYY-MM-DD"),
       created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
     } as BuildingDTO;
   };
@@ -50,6 +65,36 @@ export const mockBuildingTypeData = (length: number) => {
     } as BuildingTypeDTO);
 
   return Array.from({ length }).map(() => createRowData()) as BuildingTypeDTO[];
+};
+
+export const mockBuildingSideData = (length: number) => {
+  const createRowData = () =>
+    ({
+      id: faker.string.uuid(),
+      name: faker.company.name(),
+      building: faker.company.name(),
+      description: faker.lorem.paragraph(1),
+      orientation: faker.number.float(),
+      created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
+    } as BuildingSideDTO);
+
+  return Array.from({ length }).map(() => createRowData()) as BuildingSideDTO[];
+};
+
+export const mockBuildingLevelData = (length: number) => {
+  const createRowData = () =>
+    ({
+      id: faker.string.uuid(),
+      building: faker.company.name(),
+      level_num: faker.number.int(),
+      description: faker.lorem.words(20),
+      usage: faker.word.verb(),
+      created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
+    } as BuildingLevelDTO);
+
+  return Array.from({ length }).map(() =>
+    createRowData()
+  ) as BuildingLevelDTO[];
 };
 
 export const mockDefectData = (length: number): DefectDTO[] => {

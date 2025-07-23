@@ -1,6 +1,7 @@
-import { Text, TextAreaField } from "@aws-amplify/ui-react";
+import { TextAreaField } from "@aws-amplify/ui-react";
 import { Control, useController } from "react-hook-form";
 import { InputType } from "types/formType";
+import Label from "./Label";
 
 type Props = {
   inputData: InputType;
@@ -21,16 +22,7 @@ const TextAreaInput = ({ inputData, control }: Props) => {
     <TextAreaField
       {...field}
       name={inputData.name}
-      label={
-        <Text>
-          {inputData.label}
-          {inputData.required && (
-            <Text as="span" fontSize="0.8rem" color="red" marginLeft={5}>
-              (required)
-            </Text>
-          )}
-        </Text>
-      }
+      label={<Label label={inputData.label} required={inputData.required} />}
       rows={6}
       isRequired={inputData.required}
       hasError={!!error}

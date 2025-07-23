@@ -16,7 +16,7 @@ const Form = ({ formData }: Props) => {
   const { tokens } = useTheme();
 
   return (
-    <>
+    <Flex flex={1} direction="column" gap={14}>
       <Flex alignItems="center" justifyContent="space-between">
         <h2>{formData.title}</h2>
 
@@ -43,7 +43,7 @@ const Form = ({ formData }: Props) => {
           <FormFields inputData={formData.inputs} control={control} />
         </View>
       </Flex>
-    </>
+    </Flex>
   );
 };
 

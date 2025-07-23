@@ -1,5 +1,11 @@
 import Layout from "@components/Layout";
-import { AddBuilding, AddBuildingType, Building } from "@pages/building";
+import {
+  AddBuilding,
+  AddBuildingLevel,
+  AddBuildingSide,
+  AddBuildingType,
+  Building,
+} from "@pages/building";
 import Dashboard from "@pages/dashboard";
 import { AddDefect, AddDefectType, Defect } from "@pages/master";
 import Profile from "@pages/profile";
@@ -38,6 +44,8 @@ function BuildingRoute() {
       <Route index element={<Building />} />
       <Route path="form" element={<AddBuilding />} />
       <Route path="type-form" element={<AddBuildingType />} />
+      <Route path="side-form" element={<AddBuildingSide />} />
+      <Route path="level-form" element={<AddBuildingLevel />} />
       <Route path="*" element={<Navigate to="/not-found" />} />
     </Routes>
   );
