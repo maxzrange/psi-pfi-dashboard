@@ -37,3 +37,14 @@ export type SearchType = {
   changeSearch: (val: string) => void;
   resetSearch: () => void;
 };
+
+export type OneThemeDataType = {
+  label: string;
+  value: string;
+  active: boolean;
+};
+
+export type OneThemeType = {
+  data: OneThemeDataType[];
+  onClick: (value: string) => void;
+};

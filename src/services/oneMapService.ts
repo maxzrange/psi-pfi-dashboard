@@ -2,6 +2,7 @@ import {
   LoginOneMapDTO,
   SearchAddressDTO,
   SecondThemeDTO,
+  ThemeDTO,
 } from "@interfaces/oneMapInterface";
 import { ONE_API_ENDPOINT } from "@utils/configs/api";
 import { axiosOneInstance } from "@utils/configs/axios";
@@ -34,13 +35,11 @@ export const searchAddress = async (
   }
 };
 
-export const retrieveTheme = async (
-  params: string[]
-): Promise<SecondThemeDTO[][]> => {
+export const retrieveTheme = async (params: string[]): Promise<ThemeDTO[]> => {
   try {
     const resLogin = await loginOneMap();
 
-    const resultData: SecondThemeDTO[][] = [];
+    const resultData: ThemeDTO[] = [];
 
     for (const param of params) {
       const response = await axiosOneInstance.get(
@@ -54,7 +53,10 @@ export const retrieveTheme = async (
 
       const newData = response.data.SrchResults.slice(1) as SecondThemeDTO[];
 
-      resultData.push(newData);
+      resultData.push({
+        noColor: param === "tra_poly",
+        data: newData,
+      });
     }
 
     return resultData;

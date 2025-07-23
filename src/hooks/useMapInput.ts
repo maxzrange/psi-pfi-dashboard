@@ -27,15 +27,7 @@ const useMapInput = (inputData: InputType, control: Control<any, any>) => {
     useOneMapController();
 
   const searchAddress = useSearchAddressService();
-  const retrieveTheme = useRetrieveThemeService([
-    "tra_poly",
-    "boundary_5km",
-    "danger_areas",
-    "prohibited_areas",
-    "restricted_areaspoly",
-    "drone_no_fly",
-    "mha_uav_2015",
-  ]);
+  const retrieveTheme = useRetrieveThemeService();
 
   const onFly = (lng: number, lat: number) => {
     const map = mapRef.current?.getMap();

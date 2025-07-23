@@ -1,6 +1,7 @@
 import { SelectField } from "@aws-amplify/ui-react";
 import { Control, useController } from "react-hook-form";
 import { InputType } from "types/formType";
+import Label from "./Label";
 
 type Props = {
   inputData: InputType;
@@ -21,7 +22,7 @@ const DropdownInput = ({ inputData, control }: Props) => {
     <SelectField
       {...field}
       value={field.value ? field.value.label : ""}
-      label={inputData.label}
+      label={<Label label={inputData.label} required={inputData.required} />}
       onChange={field.onChange}
       name={inputData.name}
       hasError={!!error}

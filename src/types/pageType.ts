@@ -9,7 +9,7 @@ export type TableType = {
 
 export type RowType = {
   type: "text" | "success" | "pending" | "failed";
-  value: string;
+  value: string | number;
 };
 
 export type RowFuncType = {

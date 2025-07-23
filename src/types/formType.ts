@@ -22,7 +22,9 @@ export type InputType = {
     | "auto"
     | "password"
     | "confirm"
-    | "phone";
+    | "phone"
+    | "number"
+    | "date";
   name: string;
   label: string;
   required: boolean;
