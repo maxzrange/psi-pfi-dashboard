@@ -9,7 +9,11 @@ export const generateEncryption = (data: string): string => {
 };
 
 export const generateDecryption = (data: string): string => {
-  const decrypted = CryptoJS.AES.decrypt(data, SECRET_KEY!);
+  try {
+    const decrypted = CryptoJS.AES.decrypt(data, SECRET_KEY!);
 
-  return decrypted.toString(CryptoJS.enc.Utf8);
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  } catch (error) {
+    return "error";
+  }
 };

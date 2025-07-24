@@ -20,8 +20,12 @@ export const useAuth = create<AuthType>((set) => ({
 
     if (token) {
       const tokenString = generateDecryption(token);
-      const decoded: TokenDTO = jwtDecode(tokenString);
-      set({ token: tokenString, username: decoded.sub });
+      if (tokenString !== "error") {
+        const decoded: TokenDTO = jwtDecode(tokenString);
+        set({ token: tokenString, username: decoded.sub });
+      } else {
+        localStorage.removeItem("@token");
+      }
     }
   },
 }));
