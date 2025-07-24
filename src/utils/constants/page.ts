@@ -6,20 +6,21 @@ export const buildingData: TableType[] = [
     title: "Building",
     addDest: "/building/form",
     tableHeaders: [
+      "Project",
       "Name",
       "Address",
       "Year Built",
       "Building Type",
       "Area (sq meter)",
       "Number of Levels",
-      "Number of Elevation",
+      "Number of Sides",
       "Created At",
     ],
   },
   {
     title: "Building Type",
     addDest: "/building/type-form",
-    tableHeaders: ["Name", "Description", "Created At"],
+    tableHeaders: ["Name", "Created At"],
   },
   {
     title: "Building Side",

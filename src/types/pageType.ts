@@ -39,3 +39,9 @@ export type ConfirmationType = {
   subTitle: string;
   onConfirm?: () => void;
 };
+
+export type ProfileType = {
+  name: string;
+  role: string;
+  profilePic: string;
+};

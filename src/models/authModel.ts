@@ -12,20 +12,21 @@ const useAuthModel = () => {
     useMutation({
       mutationKey: ["register"],
       mutationFn: (body: RegisterInput) => register(body),
-      onMutate,
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
       onError: (error) => onError(error.message),
       onSuccess: (res) => {
         onSuccess(res.message);
         nav("/login");
       },
-      onSettled,
     });
 
   const useLogin = () =>
     useMutation({
       mutationKey: ["login"],
       mutationFn: (body: LoginInput) => login(body),
-      onMutate,
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
       onError: (error) => onError(error.message),
       onSuccess: (res) => {
         const decoded: TokenDTO = jwtDecode(res.data.access_token);
@@ -36,21 +37,20 @@ const useAuthModel = () => {
         auth.setToken(res.data.access_token, decoded.sub);
         onSuccess(res.message);
       },
-      onSettled,
     });
 
   const useLogout = () =>
     useMutation({
       mutationKey: ["logout"],
       mutationFn: () => logout(auth.token),
-      onMutate,
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
       onError: (error) => onError(error.message),
       onSuccess: (res) => {
         localStorage.removeItem("@token");
         auth.resetToken();
         onSuccess(res.message);
       },
-      onSettled,
     });
 
   return {

@@ -3,13 +3,15 @@ import BasicTable from "./BasicTable";
 import { FetchDataType, TableType } from "types/pageType";
 import { PageHeader } from "@components/Header";
 import "./Table.css";
+import TablePlaceholder from "./TablePlaceholder";
 
 type Props = {
   tableData: TableType[];
   fetchData: FetchDataType[][];
+  isLoading?: boolean;
 };
 
-const Tables = ({ tableData, fetchData }: Props) => {
+const Tables = ({ tableData, fetchData, isLoading }: Props) => {
   return (
     <>
       <Tabs defaultValue="tab1" className="table-tab">
@@ -27,10 +29,14 @@ const Tables = ({ tableData, fetchData }: Props) => {
               <PageHeader label={item.title} dest={item.addDest} />
 
               <ScrollView width="100%">
-                <BasicTable
-                  headerData={item.tableHeaders}
-                  rowData={fetchData[index]}
-                />
+                {isLoading ? (
+                  <TablePlaceholder />
+                ) : (
+                  <BasicTable
+                    headerData={item.tableHeaders}
+                    rowData={fetchData[index]}
+                  />
+                )}
               </ScrollView>
             </Flex>
           </TabItem>

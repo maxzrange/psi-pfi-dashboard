@@ -1,5 +1,6 @@
-import { Button, Flex } from "@aws-amplify/ui-react";
+import { Button, Flex, Placeholder } from "@aws-amplify/ui-react";
 import useAuthController from "@controllers/authController";
+import useUserController from "@controllers/userController";
 import { useConfirmationModal } from "@stores/modalStore";
 import { IoLogOut } from "react-icons/io5";
 
@@ -9,6 +10,9 @@ const SidebarProfile = () => {
   );
 
   const { logoutService } = useAuthController();
+  const { useGetUserProfileService } = useUserController();
+
+  const { finalData, isLoading } = useGetUserProfileService();
 
   return (
     <Flex
@@ -17,38 +21,54 @@ const SidebarProfile = () => {
       style={{ borderTop: "1px solid #E3E4E5" }}
       gap={12}
     >
-      <img
-        alt="avatar"
-        src={"https://i.pravatar.cc/150?img=3"}
-        width={40}
-        height={40}
-        style={{ borderRadius: "50%" }}
-      />
+      {isLoading ? (
+        <>
+          <Placeholder width={40} height={40} borderRadius="50%" />
 
-      <Flex direction="column" flex={1} gap="0">
-        <p className="body-sm med">John Doe</p>
+          <Flex direction="column" flex={1} gap="1px">
+            <Placeholder width="100%" height={17} />
 
-        <p className="body-xs reg">Employee</p>
-      </Flex>
+            <Placeholder width="100%" height={14.5} />
+          </Flex>
 
-      <Button
-        alignItems="center"
-        justifyContent="center"
-        variation="menu"
-        width={32}
-        height={32}
-        onClick={() =>
-          showConfirmationModal({
-            title: "Logout",
-            subTitle: "Are you sure you want to logout?",
-            onConfirm: logoutService,
-          })
-        }
-      >
-        <Flex>
-          <IoLogOut size={18} />
-        </Flex>
-      </Button>
+          <Placeholder width={32} height={32} />
+        </>
+      ) : (
+        <>
+          <img
+            alt="avatar"
+            src={finalData.profilePic}
+            width={40}
+            height={40}
+            style={{ borderRadius: "50%" }}
+          />
+
+          <Flex direction="column" flex={1} gap="0">
+            <p className="body-sm med">{finalData.name}</p>
+
+            <p className="body-xs reg">{finalData.role}</p>
+          </Flex>
+
+          <Button
+            alignItems="center"
+            justifyContent="center"
+            variation="menu"
+            width={32}
+            height={32}
+            onClick={() =>
+              showConfirmationModal({
+                title: "Logout",
+                subTitle: "Are you sure you want to logout?",
+                onConfirm: logoutService,
+              })
+            }
+          >
+            <Flex>
+              <IoLogOut size={18} />
+            </Flex>
+          </Button>
+        </>
+      )}
     </Flex>
   );
 };

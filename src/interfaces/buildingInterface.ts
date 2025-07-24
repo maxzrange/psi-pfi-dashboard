@@ -2,7 +2,7 @@ import { DropdownType, MapType } from "types/formType";
 
 export interface BuildingTypeInput {
   name: string;
-  description: string;
+  description?: string;
 }
 
 export interface BuildingTypeDTO extends BuildingTypeInput {
@@ -13,21 +13,34 @@ export interface BuildingTypeDTO extends BuildingTypeInput {
 export interface BuildingInput extends Omit<BuildingTypeInput, "description"> {
   address: string;
   year_built: string;
-  building_type_id: DropdownType | null;
-  area: number;
-  levels: number;
-  elevation: number;
-  facade?: string;
-  user_id?: DropdownType | null;
+  building_type: DropdownType | null;
+  area_sq_meters: number;
+  levels_count: number;
+  sides_count: number;
+  owner_id: DropdownType | null;
+  project_id: DropdownType | null;
   location: MapType | null;
-  cons_status: number;
-  cons_start: string;
-  cons_end: string;
+  status_construction: number;
+  construction_start_date: string;
+  construction_end_date: string;
 }
 
-export interface BuildingDTO extends Omit<BuildingInput, "building_type_id"> {
+export interface BuildingDTO {
   id: string;
+  name: string;
+  address: string;
+  year_built: string;
   building_type: string;
+  area_sq_meters: number;
+  levels_count: number;
+  sides_count: number;
+  owner_id: string;
+  project_id: string;
+  latitude: number;
+  longitude: number;
+  status_construction: number;
+  construction_start_date: string;
+  construction_end_date: string;
   created_at: string;
 }
 

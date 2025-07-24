@@ -8,4 +8,6 @@ export const API_ENDPOINT = {
   login: "/login",
   register: "/user",
   logout: "/logout",
+  getBuildingTypes: "/buildingtypes",
+  addBuildingType: "/buildingtype",
 };

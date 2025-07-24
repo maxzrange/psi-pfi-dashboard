@@ -249,7 +249,31 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "number",
-      name: "area",
+      name: "year_built",
+      label: "Year Built",
+      required: true,
+      rules: {
+        required: "Year built must be filled!",
+      },
+    },
+    {
+      type: "auto",
+      name: "building_type",
+      label: "Building Type",
+      required: true,
+      rules: {
+        required: "Building type must be filled!",
+      },
+      items: [
+        { id: "0", label: "" },
+        { id: "1", label: "Type A" },
+        { id: "2", label: "Type B" },
+        { id: "3", label: "Type C" },
+      ],
+    },
+    {
+      type: "number",
+      name: "area_sq_meters",
       label: "Area (sq meter)",
       required: true,
       rules: {
@@ -262,7 +286,7 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "number",
-      name: "levels",
+      name: "levels_count",
       label: "Number of Levels",
       required: true,
       rules: {
@@ -271,22 +295,16 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "number",
-      name: "elevation",
-      label: "Number of Elevations",
+      name: "sides_count",
+      label: "Number of Sides",
       required: true,
       rules: {
         required: "Number of elevations must be filled!",
       },
     },
     {
-      type: "text",
-      name: "facade",
-      label: "Facade",
-      required: false,
-    },
-    {
       type: "auto",
-      name: "user_id",
+      name: "owner_id",
       label: "Owner",
       required: false,
       items: [
@@ -294,6 +312,21 @@ export const buildingForm: FormType<BuildingInput> = {
         { id: "1", label: "Tio" },
         { id: "2", label: "Novriadi" },
         { id: "3", label: "Putra" },
+      ],
+    },
+    {
+      type: "auto",
+      name: "project_id",
+      label: "Project",
+      required: true,
+      rules: {
+        required: "Project must be chosen!",
+      },
+      items: [
+        { id: "0", label: "" },
+        { id: "1", label: "Project A" },
+        { id: "2", label: "Project B" },
+        { id: "3", label: "Project C" },
       ],
     },
     {
@@ -307,7 +340,7 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "number",
-      name: "cons_status",
+      name: "status_construction",
       label: "Construction Status (%)",
       required: true,
       rules: {
@@ -316,7 +349,7 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "date",
-      name: "cons_start",
+      name: "construction_start_date",
       label: "Construction Start Date",
       required: true,
       rules: {
@@ -325,7 +358,7 @@ export const buildingForm: FormType<BuildingInput> = {
     },
     {
       type: "date",
-      name: "cons_end",
+      name: "construction_end_date",
       label: "Construction End Date",
       required: true,
       rules: {
@@ -337,16 +370,16 @@ export const buildingForm: FormType<BuildingInput> = {
     name: "",
     address: "",
     year_built: "",
-    building_type_id: null,
-    area: 0,
-    levels: 0,
-    elevation: 0,
-    facade: "",
-    user_id: null,
+    building_type: null,
+    area_sq_meters: 0,
+    levels_count: 0,
+    sides_count: 0,
+    owner_id: null,
+    project_id: null,
     location: null,
-    cons_status: 0,
-    cons_start: moment().format("YYYY-MM-DD"),
-    cons_end: moment().format("YYYY-MM-DD"),
+    status_construction: 0,
+    construction_start_date: moment().format("YYYY-MM-DD"),
+    construction_end_date: moment().format("YYYY-MM-DD"),
   },
 };
 
@@ -364,7 +397,7 @@ export const buildingTypeForm: FormType<BuildingTypeInput> = {
     },
     {
       type: "textarea",
-      name: "decription",
+      name: "description",
       label: "Decription",
       required: true,
       rules: {

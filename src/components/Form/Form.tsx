@@ -6,9 +6,10 @@ import { useForm } from "react-hook-form";
 
 type Props = {
   formData: FormType<any>;
+  onSubmit?: (body: any) => void;
 };
 
-const Form = ({ formData }: Props) => {
+const Form = ({ formData, onSubmit }: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: formData.defaultValues,
   });
@@ -22,7 +23,9 @@ const Form = ({ formData }: Props) => {
 
         <Flex>
           <FormActions
-            formOnSubmit={handleSubmit((data) => console.log(data))}
+            formOnSubmit={handleSubmit((data) => {
+              if (onSubmit) onSubmit(data);
+            })}
           />
         </Flex>
       </Flex>
