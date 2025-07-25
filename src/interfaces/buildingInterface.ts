@@ -7,6 +7,8 @@ export interface BuildingTypeInput {
 
 export interface BuildingTypeDTO extends BuildingTypeInput {
   id: string;
+  is_deleted: boolean;
+  deleted_at: string | null;
   created_at: string;
 }
 

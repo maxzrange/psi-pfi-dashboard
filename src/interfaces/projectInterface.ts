@@ -1,22 +1,12 @@
-import { ComboBoxOption } from "@aws-amplify/ui-react";
-import { DropdownType, MapType } from "types/formType";
-
 export interface ProjectInput {
   name: string;
   description: string;
-  location: MapType | null;
-  customer: ComboBoxOption | null;
-  status: DropdownType | null;
+  status: string;
 }
 
-export interface ProjectDTO {
+export interface ProjectDTO extends Omit<ProjectInput, "status"> {
   id: string;
-  name: string;
-  description: string;
-  latitude: string;
-  longtitude: string;
-  status?: number;
-  customer_id: string;
+  status: number;
   created_at: string;
   created_by: string;
 }

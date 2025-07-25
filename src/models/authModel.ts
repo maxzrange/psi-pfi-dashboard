@@ -14,7 +14,7 @@ const useAuthModel = () => {
       mutationFn: (body: RegisterInput) => register(body),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
-      onError: (error) => onError(error.message),
+      onError: (error) => onError(error),
       onSuccess: (res) => {
         onSuccess(res.message);
         nav("/login");
@@ -27,7 +27,7 @@ const useAuthModel = () => {
       mutationFn: (body: LoginInput) => login(body),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
-      onError: (error) => onError(error.message),
+      onError: (error) => onError(error),
       onSuccess: (res) => {
         const decoded: TokenDTO = jwtDecode(res.data.access_token);
         localStorage.setItem(
@@ -45,7 +45,7 @@ const useAuthModel = () => {
       mutationFn: () => logout(auth.token),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
-      onError: (error) => onError(error.message),
+      onError: (error) => onError(error),
       onSuccess: (res) => {
         localStorage.removeItem("@token");
         auth.resetToken();

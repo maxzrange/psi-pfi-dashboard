@@ -3,6 +3,7 @@ import {
   mockBuildingLevelData,
   mockBuildingSideData,
 } from "@data/mock";
+import useHelper from "@hooks/useHelper";
 import {
   BuildingDTO,
   BuildingInput,
@@ -25,100 +26,126 @@ const useBuildingController = () => {
 
   const nav = useNavigate();
 
+  const { onError } = useHelper();
+
   const {
     useGetBuildings,
     useGetBuildingTypeDetail,
     useGetBuildingTypeEdit,
     useAddBuildingType,
+    useUpdateBuildingType,
+    useDeleteBuildingType,
   } = useBuildingModel();
 
   const getBuildingTypeDetailMutation = useGetBuildingTypeDetail();
   const getBuildingTypeEditMutation = useGetBuildingTypeEdit();
   const addBuildingTypeMutation = useAddBuildingType();
+  const updateBuildingTypeMutation = useUpdateBuildingType();
+  const deleteBuildingTypeMutation = useDeleteBuildingType();
 
   const useGetBuildingsService = () => {
     const responses = useGetBuildings();
 
     const isLoading = responses.some((res) => res.isLoading);
     const isNotExist = responses.some((res) => res.data === undefined);
+    const error = responses.find((res) => res.error !== null && res);
 
     let finalData: FetchDataType[][] = [];
 
     if (!isLoading && !isNotExist) {
+      if (error) {
+        onError(error.error!);
+      }
+
       const building: BuildingDTO[] = mockBuildingData(10);
       const buildingSide: BuildingSideDTO[] = mockBuildingSideData(10);
       const buildingLevel: BuildingLevelDTO[] = mockBuildingLevelData(10);
 
       if (building && buildingLevel) {
-        const buildingData: FetchDataType[] = building.map((item) => ({
-          id: item.id,
-          row: [
-            { type: "text", value: item.project_id },
-            { type: "text", value: item.name },
-            { type: "text", value: item.address },
-            { type: "text", value: item.year_built },
-            { type: "text", value: item.building_type },
-            { type: "text", value: item.area_sq_meters },
-            { type: "text", value: item.levels_count },
-            { type: "text", value: item.sides_count },
-            { type: "text", value: item.created_at },
-          ],
-          functions: [
-            {
-              type: "edit",
-              onClick: () => {
-                const data = mockBuildingData(1);
-
-                const defaultValues: BuildingInput = {
-                  name: data[0].name,
-                  address: data[0].address,
-                  year_built: data[0].year_built,
-                  building_type: { id: "4", label: data[0].building_type },
-                  area_sq_meters: data[0].area_sq_meters,
-                  levels_count: data[0].levels_count,
-                  sides_count: data[0].sides_count,
-                  owner_id: { id: "1", label: "Tio" },
-                  project_id: { id: "4", label: data[0].project_id },
-                  location: {
-                    lat: data[0].latitude,
-                    lng: data[0].longitude,
-                    area: "-",
-                    description: "-",
-                  },
-                  status_construction: data[0].status_construction,
-                  construction_start_date: data[0].construction_start_date,
-                  construction_end_date: data[0].construction_end_date,
-                };
-
-                nav(
-                  `/building/form?data=${encodeURIComponent(
-                    generateEncryption(JSON.stringify(defaultValues))
-                  )}`
-                );
+        const buildingData: FetchDataType[] = responses[0].data!.data.data.map(
+          (item) => ({
+            id: item.id,
+            row: [
+              { type: "text", value: item.project_id },
+              { type: "text", value: item.name },
+              { type: "text", value: item.address },
+              { type: "text", value: item.year_built },
+              { type: "text", value: item.building_type },
+              { type: "text", value: item.area_sq_meters },
+              { type: "text", value: item.levels_count },
+              { type: "text", value: item.sides_count },
+              {
+                type: "text",
+                value: moment(item.created_at).format("ddd, DD MMM YYYY"),
               },
-            },
-            {
-              type: "delete",
-              onClick: () => {
-                const data = mockBuildingData(1);
+            ],
+            functions: [
+              {
+                type: "edit",
+                onClick: () => {
+                  const data = mockBuildingData(1);
 
-                showConfirmationModal({
-                  title: "Delete Building",
-                  subTitle: `Are you sure you want to delete |"${data[0].name}"| building? This action cannot be undo!`,
-                });
+                  const defaultValues: BuildingInput = {
+                    name: data[0].name,
+                    address: data[0].address,
+                    year_built: data[0].year_built,
+                    building_type: { id: "4", label: data[0].building_type },
+                    area_sq_meters: data[0].area_sq_meters,
+                    levels_count: data[0].levels_count,
+                    sides_count: data[0].sides_count,
+                    owner_id: { id: "1", label: "Tio" },
+                    project_id: { id: "4", label: data[0].project_id },
+                    location: {
+                      lat: data[0].latitude,
+                      lng: data[0].longitude,
+                      area: "-",
+                      description: "-",
+                    },
+                    status_construction: data[0].status_construction,
+                    construction_start_date: data[0].construction_start_date,
+                    construction_end_date: data[0].construction_end_date,
+                  };
+
+                  nav(
+                    `/building/form?data=${encodeURIComponent(
+                      generateEncryption(JSON.stringify(defaultValues))
+                    )}`
+                  );
+                },
               },
-            },
-          ],
-        }));
+              {
+                type: "delete",
+                onClick: () => {
+                  const data = mockBuildingData(1);
+
+                  showConfirmationModal({
+                    title: "Delete Building",
+                    subTitle: `Are you sure you want to delete |"${data[0].name}"| building? This action cannot be undo!`,
+                  });
+                },
+              },
+            ],
+          })
+        );
 
         const buildingTypeData: FetchDataType[] =
-          responses[0].data!.data.data.map((item) => ({
+          responses[1].data!.data.data.map((item) => ({
             id: item.id,
             row: [
               { type: "text", value: item.name },
               {
                 type: "text",
                 value: moment(item.created_at).format("ddd, DD MMM YYYY"),
+              },
+              {
+                type: item.is_deleted ? "failed" : "success",
+                value: item.is_deleted ? "Deleted" : "Active",
+              },
+              {
+                type: "text",
+                value: item.deleted_at
+                  ? moment(item.deleted_at).format("ddd, DD MMM YYYY")
+                  : "-",
               },
             ],
             functions: [
@@ -132,14 +159,13 @@ const useBuildingController = () => {
               },
               {
                 type: "delete",
-                onClick: () => {
-                  const data = mockBuildingData(1);
-
+                onClick: () =>
                   showConfirmationModal({
                     title: "Delete Building Type",
-                    subTitle: `Are you sure you want to delete |"${data[0].name}"| type? This action cannot be undo!`,
-                  });
-                },
+                    subTitle: `Are you sure you want to delete |"${item.name}"| type? This action cannot be undo!`,
+                    onConfirm: () =>
+                      deleteBuildingTypeMutation.mutate(item.name),
+                  }),
               },
             ],
           }));
@@ -254,6 +280,8 @@ const useBuildingController = () => {
   return {
     useGetBuildingsService,
     addBuildingTypeService: (body: any) => addBuildingTypeMutation.mutate(body),
+    updateBuildingTypeService: (data: { body: any; name: string }) =>
+      updateBuildingTypeMutation.mutate(data),
   };
 };
 

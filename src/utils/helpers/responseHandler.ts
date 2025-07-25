@@ -13,10 +13,8 @@ export const successResponse = <T>(
 export const errorResponse = (error: any): ResType => {
   const axiosError = error as AxiosError<any, any>;
 
-  console.log(axiosError.response?.data);
-
   return {
-    status: axiosError.response!.status,
+    status: axiosError.response?.status ?? 999,
     message:
       axiosError.response && axiosError.response.data
         ? axiosError.status === 422 &&

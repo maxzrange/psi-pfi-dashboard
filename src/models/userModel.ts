@@ -9,6 +9,8 @@ const useUserModel = () => {
     useQuery({
       queryKey: ["getUserProfile"],
       queryFn: () => getUserProfile(username),
+      retry: false,
+      refetchOnWindowFocus: false,
     });
 
   return {

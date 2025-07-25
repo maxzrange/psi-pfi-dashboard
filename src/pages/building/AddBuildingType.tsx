@@ -7,7 +7,8 @@ import { useSearchParams } from "react-router-dom";
 const AddBuildingType = () => {
   const [searchParams] = useSearchParams();
 
-  const { addBuildingTypeService } = useBuildingController();
+  const { addBuildingTypeService, updateBuildingTypeService } =
+    useBuildingController();
 
   return (
     <Form
@@ -19,7 +20,17 @@ const AddBuildingType = () => {
             )
           : buildingTypeForm.defaultValues,
       }}
-      onSubmit={addBuildingTypeService}
+      onSubmit={(data) => {
+        if (searchParams.get("data")) {
+          const param = JSON.parse(
+            generateDecryption(decodeURIComponent(searchParams.get("data")!))
+          );
+
+          updateBuildingTypeService({ body: data, name: param.name });
+        } else {
+          addBuildingTypeService(data);
+        }
+      }}
     />
   );
 };

@@ -3,6 +3,7 @@ import {
   LoginDTO,
   LoginInput,
   LogoutDTO,
+  RefreshDTO,
   RegisterDTO,
   RegisterInput,
 } from "@interfaces/authInterface";
@@ -56,6 +57,22 @@ export const logout = async (token: string): Promise<ResType<LogoutDTO>> => {
     );
 
     return successResponse<LogoutDTO>(response, "Logout success!");
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
+export const refresh = async (): Promise<ResType<RefreshDTO>> => {
+  try {
+    const response = await axiosInstance.post(
+      API_ENDPOINT.refresh,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return successResponse<RefreshDTO>(response, "Login success!");
   } catch (error) {
     throw errorResponse(error);
   }

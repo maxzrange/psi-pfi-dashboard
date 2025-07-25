@@ -13,9 +13,14 @@ export interface RegisterInput extends LoginInput {
   confirm_password: string;
 }
 
-export interface LoginDTO {
+export interface RefreshDTO {
   access_token: string;
   token_type: string;
+}
+
+export interface LoginDTO extends RefreshDTO {
+  refresh_token: string;
+  username: string;
 }
 
 export interface TokenDTO {

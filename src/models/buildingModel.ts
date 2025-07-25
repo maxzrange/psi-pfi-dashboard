@@ -1,23 +1,34 @@
 import useHelper from "@hooks/useHelper";
-import { BuildingTypeInput } from "@interfaces/buildingInterface";
+import {
+  BuildingInput,
+  BuildingTypeInput,
+} from "@interfaces/buildingInterface";
 import {
   addBuildingType,
+  deleteBuildingType,
+  getBuildings,
   getBuildingTypeDetail,
   getBuildingTypes,
+  updateBuildingType,
 } from "@services/buildingService";
 import { useDetailModal } from "@stores/modalStore";
 import { useMutation, useQueries } from "@tanstack/react-query";
+import { queryClient } from "@utils/configs/client";
 import { generateEncryption } from "@utils/helpers/generator";
 import moment from "moment";
 
 const useBuildingModel = () => {
-  const showDetailModal = useDetailModal((state) => state.showModal);
+  const detailModal = useDetailModal();
 
   const { auth, nav, onMutate, onSettled, onError, onSuccess } = useHelper();
 
   const useGetBuildings = () =>
     useQueries({
       queries: [
+        {
+          queryKey: ["getBuildings"],
+          queryFn: () => getBuildings(auth.token),
+        },
         {
           queryKey: ["getBuildingTypes"],
           queryFn: () => getBuildingTypes(auth.token),
@@ -31,9 +42,9 @@ const useBuildingModel = () => {
       mutationFn: (name: string) => getBuildingTypeDetail(name, auth.token),
       onMutate: () => onMutate("modal"),
       onSettled: () => onSettled("modal"),
-      onError: (error) => onError(error.message),
+      onError,
       onSuccess: (res) => {
-        showDetailModal({
+        detailModal.showModal({
           title: "Building Type Detail",
           data: [
             { type: "text", label: "Name", value: res.data.name },
@@ -54,11 +65,11 @@ const useBuildingModel = () => {
 
   const useGetBuildingTypeEdit = () =>
     useMutation({
-      mutationKey: ["getBuildingTypEdit"],
+      mutationKey: ["getBuildingTypeEdit"],
       mutationFn: (name: string) => getBuildingTypeDetail(name, auth.token),
       onMutate: () => onMutate("modal"),
       onSettled: () => onSettled("modal"),
-      onError: (error) => onError(error.message),
+      onError,
       onSuccess: (res) => {
         const defaultValues: BuildingTypeInput = {
           name: res.data.name,
@@ -79,18 +90,52 @@ const useBuildingModel = () => {
         addBuildingType(body, auth.token),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
-      onError: (error) => onError(error.message),
+      onError,
       onSuccess: (res) => {
         onSuccess(res.message);
         nav("/building");
       },
     });
 
+  const useUpdateBuildingType = () =>
+    useMutation({
+      mutationKey: ["updateBuildingType"],
+      mutationFn: (data: { body: BuildingInput; name: string }) =>
+        updateBuildingType(data.body, data.name, auth.token),
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
+      onError,
+      onSuccess: (res) => {
+        onSuccess(res.message);
+        nav("/building");
+        queryClient.refetchQueries({ queryKey: ["getBuildingTypes"] });
+      },
+    });
+
+  const useDeleteBuildingType = () =>
+    useMutation({
+      mutationKey: ["deleteBuildingType"],
+      mutationFn: (name: string) => deleteBuildingType(name, auth.token),
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
+      onError: (error) => {
+        detailModal.hideModal();
+        onError(error);
+      },
+      onSuccess: (res) => {
+        detailModal.hideModal();
+        onSuccess(res.message);
+        queryClient.refetchQueries({ queryKey: ["getBuildingTypes"] });
+      },
+    });
+
   return {
     useGetBuildings,
-    useAddBuildingType,
     useGetBuildingTypeDetail,
     useGetBuildingTypeEdit,
+    useAddBuildingType,
+    useUpdateBuildingType,
+    useDeleteBuildingType,
   };
 };
 

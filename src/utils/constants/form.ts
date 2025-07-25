@@ -180,34 +180,12 @@ export const projectForm: FormType<ProjectInput> = {
       rules: { required: "Description must be filled!" },
     },
     {
-      type: "map",
-      name: "location",
-      label: "Location",
-      required: true,
-      rules: {
-        required: "Location must be chosen!",
-      },
-    },
-    {
-      type: "auto",
-      name: "customer",
-      label: "Customer",
-      required: true,
-      items: [
-        { id: "1", label: "Tio" },
-        { id: "2", label: "Novriadi" },
-        { id: "3", label: "Putra" },
-      ],
-      rules: {
-        required: "Customer must be chosen!",
-      },
-    },
-    {
       type: "dropdown",
       name: "status",
       label: "Status",
       required: true,
       items: [
+        { label: "", id: "" },
         { label: "Pending", id: "1" },
         { label: "Rejected", id: "2" },
         { label: "Accepted", id: "3" },
@@ -220,9 +198,7 @@ export const projectForm: FormType<ProjectInput> = {
   defaultValues: {
     name: "",
     description: "",
-    location: null,
-    customer: null,
-    status: null,
+    status: "",
   },
 };
 

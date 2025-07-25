@@ -1,10 +1,14 @@
 import { Button, Flex, Placeholder } from "@aws-amplify/ui-react";
 import useAuthController from "@controllers/authController";
 import useUserController from "@controllers/userController";
+import { useAuth } from "@stores/authStore";
 import { useConfirmationModal } from "@stores/modalStore";
+import { useEffect } from "react";
 import { IoLogOut } from "react-icons/io5";
 
 const SidebarProfile = () => {
+  const setUserId = useAuth((state) => state.setUserId);
+
   const showConfirmationModal = useConfirmationModal(
     (state) => state.showModal
   );
@@ -13,6 +17,12 @@ const SidebarProfile = () => {
   const { useGetUserProfileService } = useUserController();
 
   const { finalData, isLoading } = useGetUserProfileService();
+
+  useEffect(() => {
+    if (finalData.id) {
+      setUserId(finalData.id);
+    }
+  }, [finalData.id]);
 
   return (
     <Flex

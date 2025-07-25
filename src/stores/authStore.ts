@@ -13,7 +13,9 @@ export const useOneAuth = create<OneAuthType>((set) => ({
 export const useAuth = create<AuthType>((set) => ({
   token: "",
   username: "",
+  userId: null,
   setToken: (token, username) => set({ token, username }),
+  setUserId: (id: number) => set({ userId: id }),
   resetToken: () => set({ token: "", username: "" }),
   checkIsLoggedIn: () => {
     const token = localStorage.getItem("@token");
