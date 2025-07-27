@@ -15,10 +15,8 @@ export const mockProjectsData = (length: number): ProjectDTO[] => {
       id: faker.string.uuid(),
       name: faker.company.catchPhrase(),
       description: faker.lorem.words(20),
-      latitude: faker.location.latitude().toString(),
-      longtitude: faker.location.longitude().toString(),
+      address_detail: faker.location.latitude().toString(),
       status: faker.helpers.arrayElement([1, 2, 3]),
-      customer_id: faker.string.uuid(),
       created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
       created_by: faker.person.fullName(),
     } as ProjectDTO;

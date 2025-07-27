@@ -16,6 +16,8 @@ export interface RegisterInput extends LoginInput {
 export interface LoginDTO {
   access_token: string;
   token_type: string;
+  username: string;
+  refresh_token: string;
 }
 
 export interface TokenDTO {
