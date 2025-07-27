@@ -11,7 +11,7 @@ export const projectAdd = async (
   try {
     const mapBody = {
       name: body.name,
-      desciption: body.description,
+      description: body.description,
       address: body.address_detail,
       status: body.status,
     };
@@ -21,5 +21,24 @@ export const projectAdd = async (
     return successResponse<ProjectDTO>(response, "Project success!");
   } catch (error) {
     throw errorResponse(error);
+  }
+};
+
+export const projectList = async (): Promise<ResType<ProjectDTO>> => {
+  try {
+    const response = await axiosInstance.get(API_PROJECT.project_list);
+
+    return successResponse<ProjectDTO>(response, "Login success!");
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
+export const getAllProjects = async (): Promise<ResType<ProjectDTO[]>> => {
+  try {
+    const res = await axiosInstance.get(API_PROJECT.project_list); 
+    return successResponse<ProjectDTO[]>(res, "Projects fetched");
+  } catch (err) {
+    throw errorResponse(err);
   }
 };

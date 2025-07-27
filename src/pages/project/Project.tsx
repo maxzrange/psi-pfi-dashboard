@@ -5,7 +5,7 @@ import { projectData } from "@utils/constants/page";
 const Project = () => {
   const { useGetProjectsService } = useProjectController();
 
-  const { finalData } = useGetProjectsService();
+  const { finalData, } = useGetProjectsService();
 
   return <Tables tableData={projectData} fetchData={finalData} />;
 };
