@@ -38,7 +38,7 @@ export const projectData: TableType[] = [
   {
     title: "Project",
     addDest: "/project/form",
-    tableHeaders: ["Title", "Description", "Contact", "Status"],
+    tableHeaders: ["Title", "Description", "Address", "Status"],
   },
 ];
 

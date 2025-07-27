@@ -9,3 +9,8 @@ export const API_ENDPOINT = {
   register: "/user",
   logout: "/logout",
 };
+
+export const API_PROJECT = {
+  project: "/project",
+  project_list: "/projects"
+};

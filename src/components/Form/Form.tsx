@@ -6,24 +6,32 @@ import { useForm } from "react-hook-form";
 
 type Props = {
   formData: FormType<any>;
+  onSubmit?: (data: any) => Promise<void>;
 };
 
-const Form = ({ formData }: Props) => {
+
+const Form = ({ formData, onSubmit }: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: formData.defaultValues,
   });
 
   const { tokens } = useTheme();
 
+  const handleSubmitToApi = async (data: any) => {
+  if (typeof onSubmit === "function") {
+    await onSubmit(data); // ✅ use the destructured prop directly
+  } else {
+    console.log("Form submitted:", data);
+  }
+};
+ 
   return (
     <Flex flex={1} direction="column" gap={14}>
       <Flex alignItems="center" justifyContent="space-between">
         <h2>{formData.title}</h2>
 
         <Flex>
-          <FormActions
-            formOnSubmit={handleSubmit((data) => console.log(data))}
-          />
+          <FormActions formOnSubmit={handleSubmit(handleSubmitToApi)} />
         </Flex>
       </Flex>
 
@@ -46,5 +54,6 @@ const Form = ({ formData }: Props) => {
     </Flex>
   );
 };
+
 
 export default Form;

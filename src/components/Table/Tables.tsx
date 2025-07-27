@@ -29,7 +29,7 @@ const Tables = ({ tableData, fetchData }: Props) => {
               <ScrollView width="100%">
                 <BasicTable
                   headerData={item.tableHeaders}
-                  rowData={fetchData[index]}
+                  rowData={fetchData[index] ?? []}
                 />
               </ScrollView>
             </Flex>

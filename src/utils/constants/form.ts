@@ -179,28 +179,13 @@ export const projectForm: FormType<ProjectInput> = {
       required: true,
       rules: { required: "Description must be filled!" },
     },
+   
     {
-      type: "map",
-      name: "location",
-      label: "Location",
+      type: "textarea",
+      name: "address_detail",
+      label: "Address",
       required: true,
-      rules: {
-        required: "Location must be chosen!",
-      },
-    },
-    {
-      type: "auto",
-      name: "customer",
-      label: "Customer",
-      required: true,
-      items: [
-        { id: "1", label: "Tio" },
-        { id: "2", label: "Novriadi" },
-        { id: "3", label: "Putra" },
-      ],
-      rules: {
-        required: "Customer must be chosen!",
-      },
+      rules: { required: "Address must be filled!" },
     },
     {
       type: "dropdown",
@@ -220,8 +205,7 @@ export const projectForm: FormType<ProjectInput> = {
   defaultValues: {
     name: "",
     description: "",
-    location: null,
-    customer: null,
+    address_detail: null,
     status: null,
   },
 };
