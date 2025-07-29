@@ -8,12 +8,13 @@ import {
   updateProject,
 } from "@services/projectService";
 import { useDetailModal } from "@stores/modalStore";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { queryClient } from "@utils/configs/client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 
 const useProjectModel = () => {
   const detailModal = useDetailModal();
+
+  const queryClient = useQueryClient();
 
   const { auth, nav, onMutate, onSettled, onError, onSuccess } = useHelper();
 
@@ -26,7 +27,7 @@ const useProjectModel = () => {
   const useGetProjectEdit = () =>
     useMutation({
       mutationKey: ["getProjectEdit"],
-      mutationFn: (name: string) => getProjectDetail(name, auth.token),
+      mutationFn: (name: string) => getProjectDetail(name),
       onMutate: () => onMutate("modal"),
       onSettled: () => onSettled("modal"),
       onError,
@@ -56,40 +57,38 @@ const useProjectModel = () => {
   const useAddProject = () =>
     useMutation({
       mutationKey: ["addProject"],
-      mutationFn: (body: ProjectInput) =>
-        addProject(body, auth.userId, auth.token),
+      mutationFn: (body: ProjectInput) => addProject(body, auth.userId),
       onMutate: () => onMutate("button"),
-      onSettled: () => onSettled("button"),
       onError,
       onSuccess: (res) => {
-        onSuccess(res.message);
-        nav("/project");
         queryClient.refetchQueries({
           queryKey: ["getProjects"],
-          exact: true,
         });
+        nav("/project");
+        onSuccess(res.message);
       },
+      onSettled: () => onSettled("button"),
     });
 
   const useUpdateProject = () =>
     useMutation({
       mutationKey: ["updatedProject"],
       mutationFn: (data: { name: string; body: ProjectInput }) =>
-        updateProject(data.name, data.body, auth.token),
+        updateProject(data.name, data.body),
       onMutate: () => onMutate("button"),
-      onSettled: () => onSettled("button"),
       onError,
       onSuccess: (res) => {
-        onSuccess(res.message);
-        nav("/project");
         queryClient.invalidateQueries({ queryKey: ["getProjects"] });
+        nav("/project");
+        onSuccess(res.message);
       },
+      onSettled: () => onSettled("button"),
     });
 
   const useDeleteProject = () =>
     useMutation({
       mutationKey: ["deleteProject"],
-      mutationFn: (name: string) => deleteProject(name, auth.token),
+      mutationFn: (name: string) => deleteProject(name),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
       onError: (error) => {
@@ -97,9 +96,9 @@ const useProjectModel = () => {
         detailModal.hideModal();
       },
       onSuccess: async (res) => {
-        onSuccess(res.message);
         detailModal.hideModal();
-        queryClient.refetchQueries({ queryKey: ["getProjects"], exact: true });
+        onSuccess(res.message);
+        queryClient.invalidateQueries({ queryKey: ["getProjects"] });
       },
     });
 

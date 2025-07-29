@@ -1,4 +1,6 @@
 import { refresh } from "@services/authService";
+import { useAuth } from "@stores/authStore";
+import { generateEncryption } from "@utils/helpers/generator";
 import axios from "axios";
 
 export const axiosOneInstance = axios.create({
@@ -19,14 +21,30 @@ export const axiosInstance = axios.create({
   timeout: 60000,
 });
 
+axiosInstance.interceptors.request.use((config) => {
+  const token = useAuth.getState().token;
+
+  const skipAuth = config.skipAuth ?? false;
+
+  if (!skipAuth && token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 let isRefreshing = false;
 
 axiosInstance.interceptors.response.use(
   (res) => res,
   async (err) => {
+    const username = useAuth.getState().username;
+    const setToken = useAuth.getState().setToken;
+
     const originalRequest = err.config;
 
-    if (err.response.status === 401) {
+    if (err.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       if (!isRefreshing) {
@@ -37,9 +55,11 @@ axiosInstance.interceptors.response.use(
 
           const newToken = res.data.access_token;
 
-          axiosInstance.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${newToken}`;
+          localStorage.setItem("@token", generateEncryption(newToken));
+
+          setToken(newToken, username);
+
+          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
         } catch (error) {
           Promise.reject(error);
         } finally {

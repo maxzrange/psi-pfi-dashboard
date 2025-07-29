@@ -42,7 +42,7 @@ const useAuthModel = () => {
   const useLogout = () =>
     useMutation({
       mutationKey: ["logout"],
-      mutationFn: () => logout(auth.token),
+      mutationFn: () => logout(),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
       onError: (error) => onError(error),

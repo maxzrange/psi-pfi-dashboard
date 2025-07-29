@@ -1,5 +1,6 @@
 import { To } from "react-router-dom";
 import { MapType } from "./formType";
+import { IconType } from "react-icons";
 
 export type TableType = {
   title: string;
@@ -13,7 +14,9 @@ export type RowType = {
 };
 
 export type RowFuncType = {
-  type: "edit" | "detail" | "delete";
+  type: "edit" | "detail" | "delete" | "custom";
+  icon?: IconType;
+  label?: string;
   onClick: () => void;
 };
 

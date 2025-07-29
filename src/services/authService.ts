@@ -22,7 +22,9 @@ export const register = async (
       password: body.password,
     };
 
-    const response = await axiosInstance.post(API_ENDPOINT.register, mapBody);
+    const response = await axiosInstance.post(API_ENDPOINT.register, mapBody, {
+      skipAuth: true,
+    });
 
     return successResponse<RegisterDTO>(response, "Registration success!");
   } catch (error) {
@@ -34,6 +36,7 @@ export const login = async (body: LoginInput): Promise<ResType<LoginDTO>> => {
   try {
     const response = await axiosInstance.post(API_ENDPOINT.login, body, {
       withCredentials: true,
+      skipAuth: true,
     });
 
     return successResponse<LoginDTO>(response, "Login success!");
@@ -42,16 +45,12 @@ export const login = async (body: LoginInput): Promise<ResType<LoginDTO>> => {
   }
 };
 
-export const logout = async (token: string): Promise<ResType<LogoutDTO>> => {
+export const logout = async (): Promise<ResType<LogoutDTO>> => {
   try {
-    console.log(token);
     const response = await axiosInstance.post(
       API_ENDPOINT.logout,
       {},
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         withCredentials: true,
       }
     );
@@ -68,6 +67,7 @@ export const refresh = async (): Promise<ResType<RefreshDTO>> => {
       API_ENDPOINT.refresh,
       {},
       {
+        skipAuth: true,
         withCredentials: true,
       }
     );

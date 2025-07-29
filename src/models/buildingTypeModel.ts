@@ -7,19 +7,20 @@ import {
   updateBuildingType,
 } from "@services/buildingTypeService";
 import { useDetailModal } from "@stores/modalStore";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@utils/configs/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 
 const useBuildingTypeModel = () => {
   const hideDetailModal = useDetailModal((state) => state.hideModal);
 
-  const { nav, auth, onMutate, onSettled, onError, onSuccess } = useHelper();
+  const queryClient = useQueryClient();
+
+  const { nav, onMutate, onSettled, onError, onSuccess } = useHelper();
 
   const useGetBuildingTypeEdit = () =>
     useMutation({
       mutationKey: ["getBuildingTypeEdit"],
-      mutationFn: (name: string) => getBuildingTypeDetail(name, auth.token),
+      mutationFn: (name: string) => getBuildingTypeDetail(name),
       onMutate: () => onMutate("modal"),
       onSettled: () => onSettled("modal"),
       onError,
@@ -40,8 +41,7 @@ const useBuildingTypeModel = () => {
   const useAddBuildingType = () =>
     useMutation({
       mutationKey: ["addBuildingType"],
-      mutationFn: (body: BuildingTypeInput) =>
-        addBuildingType(body, auth.token),
+      mutationFn: (body: BuildingTypeInput) => addBuildingType(body),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
       onError,
@@ -56,21 +56,21 @@ const useBuildingTypeModel = () => {
     useMutation({
       mutationKey: ["updateBuildingType"],
       mutationFn: (data: { name: string; body: BuildingTypeInput }) =>
-        updateBuildingType(data.name, data.body, auth.token),
+        updateBuildingType(data.name, data.body),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
       onError,
       onSuccess: (res) => {
         nav("/building");
-        queryClient.invalidateQueries({ queryKey: ["getBuildingTypes"] });
         onSuccess(res.message);
+        queryClient.invalidateQueries({ queryKey: ["getBuildingTypes"] });
       },
     });
 
   const useDeleteBuildingType = () =>
     useMutation({
       mutationKey: ["deleteBuildingType"],
-      mutationFn: (name: string) => deleteBuildingType(name, auth.token),
+      mutationFn: (name: string) => deleteBuildingType(name),
       onMutate: () => onMutate("button"),
       onSettled: () => onSettled("button"),
       onError: (err) => {
@@ -79,8 +79,8 @@ const useBuildingTypeModel = () => {
       },
       onSuccess: (res) => {
         hideDetailModal();
-        queryClient.invalidateQueries({ queryKey: ["getBuildingTypes"] });
         onSuccess(res.message);
+        queryClient.invalidateQueries({ queryKey: ["getBuildingTypes"] });
       },
     });
 

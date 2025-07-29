@@ -19,6 +19,12 @@ declare module "@tanstack/react-query" {
   }
 }
 
+declare module "axios" {
+  export interface AxiosRequestConfig {
+    skipAuth?: boolean;
+  }
+}
+
 export default function App() {
   const { isPreparing, isLoggedIn } = usePrepare();
 

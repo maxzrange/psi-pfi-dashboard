@@ -7,15 +7,11 @@ import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
 import { PaginationType, ResType } from "types/resType";
 
-export const getBuildingSides = async (
-  token: string
-): Promise<ResType<PaginationType<BuildingSideDTO[]>>> => {
+export const getBuildingSides = async (): Promise<
+  ResType<PaginationType<BuildingSideDTO[]>>
+> => {
   try {
-    const response = await axiosInstance.get(API_ENDPOINT.getBuildingSides, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.get(API_ENDPOINT.getBuildingSides);
 
     return successResponse<PaginationType<BuildingSideDTO[]>>(
       response,
@@ -27,8 +23,7 @@ export const getBuildingSides = async (
 };
 
 export const addBuildingSide = async (
-  body: BuildingSideInput,
-  token: string
+  body: BuildingSideInput
 ): Promise<ResType<BuildingSideInput>> => {
   try {
     const mapBody = {
@@ -38,12 +33,7 @@ export const addBuildingSide = async (
 
     const response = await axiosInstance.post(
       API_ENDPOINT.addBuildingSide,
-      mapBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      mapBody
     );
 
     return successResponse<BuildingSideInput>(response, "Building side added!");
@@ -54,8 +44,7 @@ export const addBuildingSide = async (
 
 export const updateBuildingSide = async (
   name: string,
-  body: BuildingSideInput,
-  token: string
+  body: BuildingSideInput
 ): Promise<ResType<{ message: string }>> => {
   try {
     const mapBody = {
@@ -65,12 +54,7 @@ export const updateBuildingSide = async (
 
     const response = await axiosInstance.patch(
       `${API_ENDPOINT.addBuildingSide}/${encodeURIComponent(name)}`,
-      mapBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      mapBody
     );
 
     return successResponse<{ message: string }>(

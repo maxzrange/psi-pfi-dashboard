@@ -20,7 +20,7 @@ const SuggestionInput = ({ inputData, control }: Props) => {
     control,
     rules: {
       ...inputData.rules,
-      validate: () => sugg === "" || "Customer not registered!",
+      validate: () => sugg !== "" || `${inputData.label} not registered!`,
     },
   });
 

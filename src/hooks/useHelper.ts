@@ -1,7 +1,7 @@
 import { useAuth, useOneAuth } from "@stores/authStore";
 import { useLoadingModal } from "@stores/modalStore";
 import { useLoading } from "@stores/pageStore";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ResType } from "types/resType";
 
@@ -12,6 +12,7 @@ const useHelper = () => {
   const auth = useAuth();
 
   const nav = useNavigate();
+  const location = useLocation();
 
   const onMutate = (type: "modal" | "button") => {
     if (type === "modal") {
@@ -44,6 +45,7 @@ const useHelper = () => {
     oneToken,
     auth,
     nav,
+    location,
     onMutate,
     onSettled,
     onSuccess,
