@@ -1,22 +1,19 @@
 import { Flex } from "@aws-amplify/ui-react";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { DetailItemType } from "types/pageType";
-import { motion, useAnimate } from "motion/react";
-import "./Accordion.css";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 
 type Props = {
   viewData: DetailItemType[];
 };
 
 const Accordion = ({ viewData }: Props) => {
-  const [scope, animate] = useAnimate();
+  const [showData, setShowData] = useState(false);
 
-  const onHandleClick = () =>
-    animate(
-      scope.current,
-      { height: "100%" },
-      { duration: 0.5, ease: "easeInOut" }
-    );
+  const MotionFlex = motion.create(Flex);
+
+  const onHandleAccordion = () => setShowData(!showData);
 
   return (
     <Flex
@@ -30,7 +27,7 @@ const Accordion = ({ viewData }: Props) => {
       <Flex
         style={{ cursor: "pointer", borderBottom: "1px solid #E2E8F0" }}
         padding={14}
-        onClick={onHandleClick}
+        onClick={onHandleAccordion}
       >
         <p className="body-sm med" style={{ flex: 1 }}>
           Project
@@ -39,30 +36,40 @@ const Accordion = ({ viewData }: Props) => {
         <IoIosArrowDropdown />
       </Flex>
 
-      <motion.div ref={scope} className="box-desc">
-        {viewData.map((item, index) => (
-          <Flex
-            key={index.toString()}
-            padding={
-              index === 0
-                ? "13px 19px 6px 19px"
-                : index === viewData.length - 1
-                ? "6px 19px 13px 19px"
-                : "6px 19px"
-            }
+      <AnimatePresence>
+        {showData && (
+          <MotionFlex
+            direction="column"
+            overflow="hidden"
+            initial={{ height: 0 }}
+            animate={{ height: 190 }}
+            exit={{ height: 0 }}
           >
-            <Flex width={100} justifyContent="space-between">
-              <p className="body-sm reg">{item.label}</p>
+            {viewData.map((item, index) => (
+              <Flex
+                key={index.toString()}
+                padding={
+                  index === 0
+                    ? "13px 19px 6px 19px"
+                    : index === viewData.length - 1
+                    ? "6px 19px 13px 19px"
+                    : "6px 19px"
+                }
+              >
+                <Flex width={100} justifyContent="space-between">
+                  <p className="body-sm reg">{item.label}</p>
 
-              <p className="body-sm reg">:</p>
-            </Flex>
+                  <p className="body-sm reg">:</p>
+                </Flex>
 
-            <p className="body-sm bold" style={{ flex: 1 }}>
-              {item.value as string}
-            </p>
-          </Flex>
-        ))}
-      </motion.div>
+                <p className="body-sm bold" style={{ flex: 1 }}>
+                  {item.value as string}
+                </p>
+              </Flex>
+            ))}
+          </MotionFlex>
+        )}
+      </AnimatePresence>
     </Flex>
   );
 };
