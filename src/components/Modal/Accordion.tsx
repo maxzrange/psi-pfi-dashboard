@@ -9,8 +9,6 @@ type Props = {
 };
 
 const Accordion = ({ viewData }: Props) => {
-  const MotionFlex = motion.create(Flex);
-
   const [scope, animate] = useAnimate();
 
   const onHandleClick = () =>
