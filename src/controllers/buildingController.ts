@@ -12,12 +12,21 @@ const useBuildingController = () => {
 
   const { onError } = useHelper();
 
-  const { useGetBuildings, useGetBuildingDetail } = useBuildingModel();
+  const {
+    useGetBuildings,
+    useGetBuildingDetail,
+    useGetBuildingEdit,
+    useAddBuilding,
+    useUpdateBuilding,
+  } = useBuildingModel();
 
   const { getBuildingTypeEditService, deleteBuildingTypeService } =
     useBuildingTypeController();
 
   const getBuildingDetailMutation = useGetBuildingDetail();
+  const getBuildingEditMutation = useGetBuildingEdit();
+  const addBuildingMutation = useAddBuilding();
+  const updateBuildingMutation = useUpdateBuilding();
 
   const useGetBuildingsService = () => {
     const responses = useGetBuildings();
@@ -32,7 +41,7 @@ const useBuildingController = () => {
       if (error) {
         onError(error.error!);
       } else {
-        const buildingData: FetchDataType[] = responses[0].data!.data.data.map(
+        const buildingData: FetchDataType[] = responses[0].data!.data!.data.map(
           (item) => ({
             id: item.id,
             row: [
@@ -65,7 +74,10 @@ const useBuildingController = () => {
                 type: "detail",
                 onClick: () => getBuildingDetailMutation.mutate(item.id),
               },
-              { type: "edit", onClick: () => console.log("Edit") },
+              {
+                type: "edit",
+                onClick: () => getBuildingEditMutation.mutate(item.id),
+              },
               { type: "delete", onClick: () => console.log("Delete") },
             ],
           })
@@ -116,6 +128,9 @@ const useBuildingController = () => {
 
   return {
     useGetBuildingsService,
+    addBuildingService: (body: any) => addBuildingMutation.mutate(body),
+    updateBuildingService: (data: { name: string; body: any }) =>
+      updateBuildingMutation.mutate(data),
   };
 };
 

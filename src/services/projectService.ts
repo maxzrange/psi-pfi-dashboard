@@ -20,17 +20,11 @@ export const getProjects = async (): Promise<
 };
 
 export const getProjectDetail = async (
-  name: string,
-  token: string
+  name: string
 ): Promise<ResType<ProjectDTO>> => {
   try {
     const response = await axiosInstance.get(
-      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`
     );
 
     return successResponse<ProjectDTO>(response, "Data fetched!");
@@ -41,8 +35,7 @@ export const getProjectDetail = async (
 
 export const addProject = async (
   body: ProjectInput,
-  userId: number | null,
-  token: string
+  userId: number | null
 ): Promise<ResType<ProjectDTO>> => {
   try {
     const mapBody = {
@@ -51,15 +44,7 @@ export const addProject = async (
       created_by: userId,
     };
 
-    const response = await axiosInstance.post(
-      API_ENDPOINT.addProject,
-      mapBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axiosInstance.post(API_ENDPOINT.addProject, mapBody);
 
     return successResponse<ProjectDTO>(response, "Project added!");
   } catch (error) {
@@ -69,8 +54,7 @@ export const addProject = async (
 
 export const updateProject = async (
   name: string,
-  body: ProjectInput,
-  token: string
+  body: ProjectInput
 ): Promise<ResType<{ message: string }>> => {
   try {
     const mapBody = {
@@ -80,12 +64,7 @@ export const updateProject = async (
 
     const response = await axiosInstance.patch(
       `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
-      mapBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      mapBody
     );
 
     return successResponse<{ message: string }>(response, "Project updated!");
@@ -95,17 +74,11 @@ export const updateProject = async (
 };
 
 export const deleteProject = async (
-  name: string,
-  token: string
+  name: string
 ): Promise<ResType<{ message: string }>> => {
   try {
     const response = await axiosInstance.delete(
-      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`
     );
 
     return successResponse<{ message: string }>(response, "Project deleted!");

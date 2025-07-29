@@ -2,11 +2,17 @@ import useProjectModel from "@models/projectModel";
 import { useConfirmationModal } from "@stores/modalStore";
 import moment from "moment";
 import { FetchDataType } from "types/pageType";
+import { FaRegBuilding } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { generateEncryption } from "@utils/helpers/generator";
+import { buildingForm } from "@utils/constants/form";
 
 const useProjectController = () => {
   const showConfirmationModal = useConfirmationModal(
     (state) => state.showModal
   );
+
+  const nav = useNavigate();
 
   const {
     useGetProjects,
@@ -56,6 +62,22 @@ const useProjectController = () => {
             },
           ],
           functions: [
+            {
+              type: "custom",
+              icon: FaRegBuilding,
+              label: "Add Building",
+              onClick: () =>
+                nav(
+                  `/building/form?relate=${encodeURIComponent(
+                    generateEncryption(
+                      JSON.stringify({
+                        ...buildingForm.defaultValues,
+                        project_id: { id: "1", label: "Project A" },
+                      })
+                    )
+                  )}`
+                ),
+            },
             {
               type: "edit",
               onClick: () => getProjectEditMutation.mutate(item.name),

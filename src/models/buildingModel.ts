@@ -1,30 +1,39 @@
 import useHelper from "@hooks/useHelper";
-import { getBuildingDetail, getBuildings } from "@services/buildingService";
+import { BuildingInput } from "@interfaces/buildingInterface";
+import {
+  addBuilding,
+  getBuildingDetail,
+  getBuildings,
+  updateBuilding,
+} from "@services/buildingService";
 import { getBuildingSides } from "@services/buildingSideService";
 import { getBuildingTypes } from "@services/buildingTypeService";
 import { useDetailModal } from "@stores/modalStore";
-import { useMutation, useQueries } from "@tanstack/react-query";
+import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import { generateEncryption } from "@utils/helpers/generator";
 import moment from "moment";
 
 const useBuildingModel = () => {
   const showDetailModal = useDetailModal((state) => state.showModal);
 
-  const { auth, onMutate, onSettled, onError } = useHelper();
+  const queryClient = useQueryClient();
+
+  const { nav, onMutate, onSettled, onError, onSuccess } = useHelper();
 
   const useGetBuildings = () =>
     useQueries({
       queries: [
         {
           queryKey: ["getBuildings"],
-          queryFn: () => getBuildings(auth.token),
+          queryFn: () => getBuildings(),
         },
         {
           queryKey: ["getBuildingTypes"],
-          queryFn: () => getBuildingTypes(auth.token),
+          queryFn: () => getBuildingTypes(),
         },
         {
           queryKey: ["getBuildingSides"],
-          queryFn: () => getBuildingSides(auth.token),
+          queryFn: () => getBuildingSides(),
         },
       ],
     });
@@ -32,7 +41,7 @@ const useBuildingModel = () => {
   const useGetBuildingDetail = () =>
     useMutation({
       mutationKey: ["getBuildingDetail"],
-      mutationFn: (id: number) => getBuildingDetail(id, auth.token),
+      mutationFn: (id: number) => getBuildingDetail(id),
       onMutate: () => onMutate("modal"),
       onSettled: () => onSettled("modal"),
       onError,
@@ -125,9 +134,82 @@ const useBuildingModel = () => {
       },
     });
 
+  const useGetBuildingEdit = () =>
+    useMutation({
+      mutationKey: ["getBuildingEdit"],
+      mutationFn: (id: number) => getBuildingDetail(id),
+      onMutate: () => onMutate("modal"),
+      onSettled: () => onSettled("modal"),
+      onError,
+      onSuccess: (res) => {
+        const defaultValues: BuildingInput = {
+          name: res.data.name,
+          address: res.data.address,
+          year_built: res.data.year_built.toString(),
+          building_type: { id: "1", label: "Type A" },
+          area_sq_meters: res.data.area_sq_meters,
+          levels_count: res.data.levels_count,
+          sides_count: res.data.sides_count,
+          owner_id: { id: "1", label: "Tio" },
+          project_id: { id: "1", label: "Project A" },
+          location: {
+            lat: res.data.latitude,
+            lng: res.data.longitude,
+            area: "-",
+            description: "-",
+          },
+          status_construction: res.data.status_construction,
+          construction_start_date: moment(
+            res.data.construction_start_date.slice(0, 10)
+          ).format("YYYY-MM-DD"),
+          construction_end_date: moment(
+            res.data.construction_end_date.slice(0, 10)
+          ).format("YYYY-MM-DD"),
+        };
+
+        nav(
+          `/building/form?data=${encodeURIComponent(
+            generateEncryption(JSON.stringify(defaultValues))
+          )}`
+        );
+      },
+    });
+
+  const useAddBuilding = () =>
+    useMutation({
+      mutationKey: ["addBuilding"],
+      mutationFn: (body: BuildingInput) => addBuilding(body),
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
+      onError,
+      onSuccess: (res) => {
+        onSuccess(res.message);
+        nav("/building");
+        queryClient.invalidateQueries({ queryKey: ["getBuildings"] });
+      },
+    });
+
+  const useUpdateBuilding = () =>
+    useMutation({
+      mutationKey: ["updateBuilding"],
+      mutationFn: (data: { name: string; body: BuildingInput }) =>
+        updateBuilding(data.name, data.body),
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
+      onError,
+      onSuccess: (res) => {
+        onSuccess(res.message);
+        nav("/building");
+        queryClient.invalidateQueries({ queryKey: ["getBuildings"] });
+      },
+    });
+
   return {
     useGetBuildings,
     useGetBuildingDetail,
+    useGetBuildingEdit,
+    useAddBuilding,
+    useUpdateBuilding,
   };
 };
 

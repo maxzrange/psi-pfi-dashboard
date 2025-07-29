@@ -7,7 +7,11 @@ import {
   Text,
 } from "@aws-amplify/ui-react";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import {
+  MdDeleteOutline,
+  MdDisabledByDefault,
+  MdOutlineEdit,
+} from "react-icons/md";
 import { RowFuncType } from "types/pageType";
 import { CiMenuKebab } from "react-icons/ci";
 
@@ -28,27 +32,35 @@ const CustomTableFunc = ({ funcData }: Props) => {
           </MenuButton>
         }
       >
-        {funcData.map((func, index) => (
-          <MenuItem key={index.toString()} onClick={() => func.onClick()}>
-            <Flex alignItems="center">
-              {func.type === "detail" ? (
-                <AiOutlineExclamationCircle />
-              ) : func.type === "edit" ? (
-                <MdOutlineEdit />
-              ) : (
-                <MdDeleteOutline />
-              )}
+        {funcData.map((func, index) => {
+          const Icon = func.icon ?? MdDisabledByDefault;
 
-              <Text marginTop={-3}>
-                {func.type === "detail"
-                  ? "Detail"
-                  : func.type === "edit"
-                  ? "Edit"
-                  : "Delete"}
-              </Text>
-            </Flex>
-          </MenuItem>
-        ))}
+          return (
+            <MenuItem key={index.toString()} onClick={() => func.onClick()}>
+              <Flex alignItems="center">
+                {func.type === "detail" ? (
+                  <AiOutlineExclamationCircle />
+                ) : func.type === "edit" ? (
+                  <MdOutlineEdit />
+                ) : func.type === "custom" ? (
+                  <Icon />
+                ) : (
+                  <MdDeleteOutline />
+                )}
+
+                <Text marginTop={-3}>
+                  {func.type === "detail"
+                    ? "Detail"
+                    : func.type === "edit"
+                    ? "Edit"
+                    : func.type === "delete"
+                    ? "Delete"
+                    : func.label}
+                </Text>
+              </Flex>
+            </MenuItem>
+          );
+        })}
       </Menu>
     </TableCell>
   );

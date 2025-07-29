@@ -7,15 +7,11 @@ import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
 import { PaginationType, ResType } from "types/resType";
 
-export const getBuildingTypes = async (
-  token: string
-): Promise<ResType<PaginationType<BuildingTypeDTO[]>>> => {
+export const getBuildingTypes = async (): Promise<
+  ResType<PaginationType<BuildingTypeDTO[]>>
+> => {
   try {
-    const response = await axiosInstance.get(API_ENDPOINT.getBuildingTypes, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosInstance.get(API_ENDPOINT.getBuildingTypes);
 
     return successResponse<PaginationType<BuildingTypeDTO[]>>(
       response,
@@ -27,17 +23,11 @@ export const getBuildingTypes = async (
 };
 
 export const getBuildingTypeDetail = async (
-  name: string,
-  token: string
+  name: string
 ): Promise<ResType<BuildingTypeDTO>> => {
   try {
     const response = await axiosInstance.get(
-      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`
     );
 
     return successResponse<BuildingTypeDTO>(response, "Data fetched!");
@@ -47,18 +37,12 @@ export const getBuildingTypeDetail = async (
 };
 
 export const addBuildingType = async (
-  body: BuildingTypeInput,
-  token: string
+  body: BuildingTypeInput
 ): Promise<ResType<BuildingTypeDTO>> => {
   try {
     const response = await axiosInstance.post(
       API_ENDPOINT.addBuildingType,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      body
     );
 
     return successResponse<BuildingTypeDTO>(response, "Building type added!");
@@ -69,18 +53,12 @@ export const addBuildingType = async (
 
 export const updateBuildingType = async (
   name: string,
-  body: BuildingTypeInput,
-  token: string
+  body: BuildingTypeInput
 ): Promise<ResType<{ message: string }>> => {
   try {
     const response = await axiosInstance.patch(
       `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      body
     );
 
     return successResponse<{ message: string }>(
@@ -93,17 +71,11 @@ export const updateBuildingType = async (
 };
 
 export const deleteBuildingType = async (
-  name: string,
-  token: string
+  name: string
 ): Promise<ResType<{ message: string }>> => {
   try {
     const response = await axiosInstance.delete(
-      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`
     );
 
     return successResponse<{ message: string }>(
