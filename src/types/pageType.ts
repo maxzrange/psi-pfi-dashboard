@@ -18,15 +18,15 @@ export type RowFuncType = {
 };
 
 export type FetchDataType = {
-  id: string;
+  id: number;
   row: RowType[];
   functions: RowFuncType[];
 };
 
 export type DetailItemType = {
-  type: "text" | "textarea" | "map";
+  type: "text" | "textarea" | "map" | "accordion";
   label: string;
-  value: string | MapType;
+  value: string | MapType | Partial<DetailItemType>[];
 };
 
 export type DetailType = {
@@ -38,4 +38,10 @@ export type ConfirmationType = {
   title: string;
   subTitle: string;
   onConfirm?: () => void;
+};
+
+export type ProfileType = {
+  name: string;
+  role: string;
+  profilePic: string;
 };

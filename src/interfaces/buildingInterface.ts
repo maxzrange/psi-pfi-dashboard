@@ -1,57 +1,41 @@
 import { DropdownType, MapType } from "types/formType";
+import { ProjectDTO } from "./projectInterface";
 
-export interface BuildingTypeInput {
+export interface BuildingInput {
   name: string;
-  description: string;
-}
-
-export interface BuildingTypeDTO extends BuildingTypeInput {
-  id: string;
-  created_at: string;
-}
-
-export interface BuildingInput extends Omit<BuildingTypeInput, "description"> {
   address: string;
   year_built: string;
-  building_type_id: DropdownType | null;
-  area: number;
-  levels: number;
-  elevation: number;
-  facade?: string;
-  user_id?: DropdownType | null;
+  building_type: DropdownType | null;
+  area_sq_meters: number;
+  levels_count: number;
+  sides_count: number;
+  owner_id: DropdownType | null;
+  project_id: DropdownType | null;
   location: MapType | null;
-  cons_status: number;
-  cons_start: string;
-  cons_end: string;
+  status_construction: number;
+  construction_start_date: string;
+  construction_end_date: string;
 }
 
-export interface BuildingDTO extends Omit<BuildingInput, "building_type_id"> {
-  id: string;
-  building_type: string;
+export interface BuildingDTO {
+  id: number;
+  name: string;
+  address: string;
+  year_built: number;
+  building_type: number;
+  area_sq_meters: number;
+  levels_count: number;
+  sides_count: number;
+  owner_id: number;
+  project_id: number;
+  latitude: number;
+  longitude: number;
+  status_construction: number;
+  construction_start_date: string;
+  construction_end_date: string;
   created_at: string;
-}
-
-export interface BuildingSideInput extends BuildingTypeInput {
-  building_id: DropdownType | null;
-  orientation: number;
-}
-
-export interface BuildingSideDTO
-  extends Omit<BuildingSideInput, "building_id"> {
-  id: string;
-  building: string;
-  created_at: string;
-}
-
-export interface BuildingLevelInput
-  extends Omit<Omit<BuildingSideInput, "name">, "orientation"> {
-  level_num: number;
-  usage: string;
-}
-
-export interface BuildingLevelDTO
-  extends Omit<BuildingLevelInput, "building_id"> {
-  id: string;
-  building: string;
-  created_at: string;
+  updated_at: string | null;
+  is_deleted: boolean;
+  deleted_at: string | null;
+  project: ProjectDTO | null;
 }

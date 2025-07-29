@@ -5,9 +5,15 @@ import { buildingData } from "@utils/constants/page";
 const Building = () => {
   const { useGetBuildingsService } = useBuildingController();
 
-  const { finalData } = useGetBuildingsService();
+  const { finalData, isLoading } = useGetBuildingsService();
 
-  return <Tables tableData={buildingData} fetchData={finalData} />;
+  return (
+    <Tables
+      tableData={buildingData}
+      fetchData={finalData}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default Building;

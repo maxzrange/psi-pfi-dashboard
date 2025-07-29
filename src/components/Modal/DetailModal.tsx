@@ -3,6 +3,9 @@ import ModalContainer from "./ModalContainer";
 import { AnimatePresence } from "motion/react";
 import { Flex, Text, TextAreaField, TextField } from "@aws-amplify/ui-react";
 import Map, { Marker } from "react-map-gl/maplibre";
+import { MapType } from "types/formType";
+import Accordion from "./Accordion";
+import { DetailItemType } from "types/pageType";
 
 const DetailModal = () => {
   const detailModal = useDetailModal();
@@ -34,20 +37,28 @@ const DetailModal = () => {
 
                     <Map
                       initialViewState={{
-                        latitude: 1.2868,
-                        longitude: 103.8545,
+                        latitude: (item.value as MapType).lat,
+                        longitude: (item.value as MapType).lng,
                         zoom: 15,
                       }}
                       mapStyle={`https://api.maptiler.com/maps/streets/style.json?key=${process.env.REACT_APP_MAPTILER_KEY}`}
                       style={{ width: "100%", height: 450 }}
                     >
                       <Marker
-                        latitude={1.2868}
-                        longitude={103.8545}
+                        latitude={(item.value as MapType).lat}
+                        longitude={(item.value as MapType).lng}
                         color="red"
                       />
                     </Map>
                   </Flex>
+                );
+
+              if (item.type === "accordion")
+                return (
+                  <Accordion
+                    key={index.toString()}
+                    viewData={item.value as DetailItemType[]}
+                  />
                 );
 
               return (

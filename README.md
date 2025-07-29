@@ -56,6 +56,7 @@ npm install
 
 ```env
 REACT_APP_API_URL=
+REACT_APP_ONE_API_URL=https://www.onemap.gov.sg/api
 REACT_APP_SECRET_KEY=
 REACT_APP_MAPTILER_KEY=
 REACT_APP_ONE_MAP_EMAIL=

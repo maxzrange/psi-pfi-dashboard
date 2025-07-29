@@ -19,8 +19,8 @@ const useOneMapModel = () => {
     useMutation({
       mutationKey: ["loginOneMap"],
       mutationFn: () => loginOneMap(),
-      onMutate,
-      onSettled,
+      onMutate: () => onMutate("modal"),
+      onSettled: () => onSettled("modal"),
       onSuccess: (response) => {
         localStorage.setItem("@one-token", response.access_token);
         setOneToken(response.access_token);

@@ -14,7 +14,9 @@ export type OneAuthType = {
 
 export type AuthType = Omit<OneAuthType, "setToken"> & {
   username: string;
+  userId: number | null;
   setToken: (token: string, username: string) => void;
+  setUserId: (id: number) => void;
   checkIsLoggedIn: () => void;
 };
 

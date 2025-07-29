@@ -47,7 +47,6 @@ const TextInput = ({ inputData, control }: Props) => {
         {...field}
         name={inputData.name}
         label={<Label label={inputData.label} required={inputData.required} />}
-        type="text"
         isRequired={inputData.required}
         hasError={!!error}
         errorMessage={error?.message as string}

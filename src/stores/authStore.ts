@@ -13,15 +13,21 @@ export const useOneAuth = create<OneAuthType>((set) => ({
 export const useAuth = create<AuthType>((set) => ({
   token: "",
   username: "",
+  userId: null,
   setToken: (token, username) => set({ token, username }),
+  setUserId: (id: number) => set({ userId: id }),
   resetToken: () => set({ token: "", username: "" }),
   checkIsLoggedIn: () => {
     const token = localStorage.getItem("@token");
 
     if (token) {
       const tokenString = generateDecryption(token);
-      const decoded: TokenDTO = jwtDecode(tokenString);
-      set({ token: tokenString, username: decoded.sub });
+      if (tokenString !== "error") {
+        const decoded: TokenDTO = jwtDecode(tokenString);
+        set({ token: tokenString, username: decoded.sub });
+      } else {
+        localStorage.removeItem("@token");
+      }
     }
   },
 }));
