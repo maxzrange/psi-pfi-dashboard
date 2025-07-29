@@ -1,5 +1,5 @@
 import { Form } from "@components/Form";
-import useBuildingController from "@controllers/buildingController";
+import useBuildingTypeController from "@controllers/buildingTypeController";
 import { buildingTypeForm } from "@utils/constants/form";
 import { generateDecryption } from "@utils/helpers/generator";
 import { useSearchParams } from "react-router-dom";
@@ -8,7 +8,7 @@ const AddBuildingType = () => {
   const [searchParams] = useSearchParams();
 
   const { addBuildingTypeService, updateBuildingTypeService } =
-    useBuildingController();
+    useBuildingTypeController();
 
   return (
     <Form

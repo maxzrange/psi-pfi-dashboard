@@ -3,13 +3,13 @@ import {
   LoginInput,
   RegisterInput,
 } from "@interfaces/authInterface";
+import { BuildingTypeInput } from "@interfaces/buildingTypeInterface";
 import { DefectInput } from "@interfaces/defectInterface";
 import moment from "moment";
 import {
   BuildingInput,
   BuildingLevelInput,
   BuildingSideInput,
-  BuildingTypeInput,
 } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
@@ -180,6 +180,12 @@ export const projectForm: FormType<ProjectInput> = {
       rules: { required: "Description must be filled!" },
     },
     {
+      type: "textarea",
+      name: "address_detail",
+      label: "Address",
+      required: false,
+    },
+    {
       type: "dropdown",
       name: "status",
       label: "Status",
@@ -198,6 +204,7 @@ export const projectForm: FormType<ProjectInput> = {
   defaultValues: {
     name: "",
     description: "",
+    address_detail: "",
     status: "",
   },
 };

@@ -21,7 +21,6 @@ const DropdownInput = ({ inputData, control }: Props) => {
   return (
     <SelectField
       {...field}
-      value={field.value ? field.value.label : ""}
       label={<Label label={inputData.label} required={inputData.required} />}
       onChange={field.onChange}
       name={inputData.name}

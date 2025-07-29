@@ -25,7 +25,8 @@ const ModalFooter = ({ onSubmit, onClose }: Props) => {
       </Button>
 
       <Button
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           if (onClose && onSubmit) {
             onSubmit();
             onClose();

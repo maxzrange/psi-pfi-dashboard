@@ -1,23 +1,24 @@
-import { mockProjectsData } from "@data/mock";
-import { ProjectInput } from "@interfaces/projectInterface";
 import useProjectModel from "@models/projectModel";
-import { useConfirmationModal, useDetailModal } from "@stores/modalStore";
-import { generateEncryption } from "@utils/helpers/generator";
+import { useConfirmationModal } from "@stores/modalStore";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 import { FetchDataType } from "types/pageType";
 
 const useProjectController = () => {
-  const showDetailModal = useDetailModal((state) => state.showModal);
   const showConfirmationModal = useConfirmationModal(
     (state) => state.showModal
   );
 
-  const nav = useNavigate();
+  const {
+    useGetProjects,
+    useGetProjectEdit,
+    useAddProject,
+    useUpdateProject,
+    useDeleteProject,
+  } = useProjectModel();
 
-  const { useGetProjects, useAddProject, useDeleteProject } = useProjectModel();
-
+  const getProjectEditMutation = useGetProjectEdit();
   const addProjectMutation = useAddProject();
+  const updateProjectMutation = useUpdateProject();
   const deleteProjectMutation = useDeleteProject();
 
   const useGetProjectsService = () => {
@@ -32,6 +33,7 @@ const useProjectController = () => {
           row: [
             { type: "text", value: item.name },
             { type: "text", value: item.description },
+            { type: "text", value: item.address_detail || "-" },
             {
               type: "text",
               value: moment(item.created_at).format("ddd, DD MMM YYYY"),
@@ -55,50 +57,8 @@ const useProjectController = () => {
           ],
           functions: [
             {
-              type: "detail",
-              onClick: () => {
-                const data = mockProjectsData(1);
-
-                showDetailModal({
-                  title: "Project Detail",
-                  data: [
-                    { type: "text", label: "Title", value: data[0].name },
-                    {
-                      type: "textarea",
-                      label: "Description",
-                      value: data[0].description,
-                    },
-                    {
-                      type: "text",
-                      label: "PIC",
-                      value: data[0].created_by,
-                    },
-                    {
-                      type: "text",
-                      label: "Created",
-                      value: data[0].created_at,
-                    },
-                  ],
-                });
-              },
-            },
-            {
               type: "edit",
-              onClick: () => {
-                const data = mockProjectsData(1);
-
-                const defaultValues: ProjectInput = {
-                  name: data[0].name,
-                  description: data[0].description,
-                  status: data[0].status.toString(),
-                };
-
-                nav(
-                  `/project/form?data=${encodeURIComponent(
-                    generateEncryption(JSON.stringify(defaultValues))
-                  )}`
-                );
-              },
+              onClick: () => getProjectEditMutation.mutate(item.name),
             },
             {
               type: "delete",
@@ -122,6 +82,8 @@ const useProjectController = () => {
   return {
     useGetProjectsService,
     addProjectService: (body: any) => addProjectMutation.mutate(body),
+    updateProjectService: (data: { name: string; body: any }) =>
+      updateProjectMutation.mutate(data),
   };
 };
 

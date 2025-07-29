@@ -36,9 +36,9 @@ const BasicTable = ({ headerData, rowData }: Props) => {
         </TableHead>
 
         <TableBody>
-          {rowData.map((item) => {
+          {rowData.map((item, index) => {
             return (
-              <TableRow key={item.id}>
+              <TableRow key={index.toString()}>
                 <CustomTableRow rowData={item.row} />
 
                 <CustomTableFunc funcData={item.functions} />

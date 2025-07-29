@@ -1,16 +1,23 @@
-import { ProjectDTO, ProjectInput } from "@interfaces/projectInterface";
+import {
+  BuildingTypeDTO,
+  BuildingTypeInput,
+} from "@interfaces/buildingTypeInterface";
 import { API_ENDPOINT } from "@utils/configs/api";
 import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
 import { PaginationType, ResType } from "types/resType";
 
-export const getProjects = async (): Promise<
-  ResType<PaginationType<ProjectDTO[]>>
-> => {
+export const getBuildingTypes = async (
+  token: string
+): Promise<ResType<PaginationType<BuildingTypeDTO[]>>> => {
   try {
-    const response = await axiosInstance.get(API_ENDPOINT.getProjects);
+    const response = await axiosInstance.get(API_ENDPOINT.getBuildingTypes, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    return successResponse<PaginationType<ProjectDTO[]>>(
+    return successResponse<PaginationType<BuildingTypeDTO[]>>(
       response,
       "Data fetched!"
     );
@@ -19,13 +26,13 @@ export const getProjects = async (): Promise<
   }
 };
 
-export const getProjectDetail = async (
+export const getBuildingTypeDetail = async (
   name: string,
   token: string
-): Promise<ResType<ProjectDTO>> => {
+): Promise<ResType<BuildingTypeDTO>> => {
   try {
     const response = await axiosInstance.get(
-      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
+      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,27 +40,20 @@ export const getProjectDetail = async (
       }
     );
 
-    return successResponse<ProjectDTO>(response, "Data fetched!");
+    return successResponse<BuildingTypeDTO>(response, "Data fetched!");
   } catch (error) {
     throw errorResponse(error);
   }
 };
 
-export const addProject = async (
-  body: ProjectInput,
-  userId: number | null,
+export const addBuildingType = async (
+  body: BuildingTypeInput,
   token: string
-): Promise<ResType<ProjectDTO>> => {
+): Promise<ResType<BuildingTypeDTO>> => {
   try {
-    const mapBody = {
-      ...body,
-      status: Number(body.status),
-      created_by: userId,
-    };
-
     const response = await axiosInstance.post(
-      API_ENDPOINT.addProject,
-      mapBody,
+      API_ENDPOINT.addBuildingType,
+      body,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,26 +61,21 @@ export const addProject = async (
       }
     );
 
-    return successResponse<ProjectDTO>(response, "Project added!");
+    return successResponse<BuildingTypeDTO>(response, "Building type added!");
   } catch (error) {
     throw errorResponse(error);
   }
 };
 
-export const updateProject = async (
+export const updateBuildingType = async (
   name: string,
-  body: ProjectInput,
+  body: BuildingTypeInput,
   token: string
 ): Promise<ResType<{ message: string }>> => {
   try {
-    const mapBody = {
-      ...body,
-      status: Number(body.status),
-    };
-
     const response = await axiosInstance.patch(
-      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
-      mapBody,
+      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
+      body,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,19 +83,22 @@ export const updateProject = async (
       }
     );
 
-    return successResponse<{ message: string }>(response, "Project updated!");
+    return successResponse<{ message: string }>(
+      response,
+      "Building type updated!"
+    );
   } catch (error) {
     throw errorResponse(error);
   }
 };
 
-export const deleteProject = async (
+export const deleteBuildingType = async (
   name: string,
   token: string
 ): Promise<ResType<{ message: string }>> => {
   try {
     const response = await axiosInstance.delete(
-      `${API_ENDPOINT.addProject}/${encodeURIComponent(name)}`,
+      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -108,7 +106,10 @@ export const deleteProject = async (
       }
     );
 
-    return successResponse<{ message: string }>(response, "Project deleted!");
+    return successResponse<{ message: string }>(
+      response,
+      "Building type deleted!"
+    );
   } catch (error) {
     throw errorResponse(error);
   }

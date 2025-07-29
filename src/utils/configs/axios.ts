@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
   async (err) => {
     const originalRequest = err.config;
 
-    if (err.response.status === 401 && !originalRequest._retry) {
+    if (err.response.status === 401) {
       originalRequest._retry = true;
 
       if (!isRefreshing) {

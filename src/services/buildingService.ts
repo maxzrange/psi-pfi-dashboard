@@ -1,8 +1,4 @@
-import {
-  BuildingDTO,
-  BuildingTypeDTO,
-  BuildingTypeInput,
-} from "@interfaces/buildingInterface";
+import { BuildingDTO } from "@interfaces/buildingInterface";
 import { API_ENDPOINT } from "@utils/configs/api";
 import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
@@ -27,32 +23,13 @@ export const getBuildings = async (
   }
 };
 
-export const getBuildingTypes = async (
+export const getBuildingDetail = async (
+  id: number,
   token: string
-): Promise<ResType<PaginationType<BuildingTypeDTO[]>>> => {
-  try {
-    const response = await axiosInstance.get(API_ENDPOINT.getBuildingTypes, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    return successResponse<PaginationType<BuildingTypeDTO[]>>(
-      response,
-      "Data fetched!"
-    );
-  } catch (error) {
-    throw errorResponse(error);
-  }
-};
-
-export const getBuildingTypeDetail = async (
-  name: string,
-  token: string
-): Promise<ResType<BuildingTypeDTO>> => {
+): Promise<ResType<BuildingDTO>> => {
   try {
     const response = await axiosInstance.get(
-      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
+      `${API_ENDPOINT.addBuilding}/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,80 +37,7 @@ export const getBuildingTypeDetail = async (
       }
     );
 
-    return successResponse<BuildingTypeDTO>(response, "Data fetched!");
-  } catch (error) {
-    throw errorResponse(error);
-  }
-};
-
-export const addBuildingType = async (
-  body: BuildingTypeInput,
-  token: string
-): Promise<ResType<Omit<BuildingTypeDTO, "description">>> => {
-  try {
-    const response = await axiosInstance.post(
-      API_ENDPOINT.addBuildingType,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return successResponse<Omit<BuildingTypeDTO, "description">>(
-      response,
-      "Building type added!"
-    );
-  } catch (error) {
-    throw errorResponse(error);
-  }
-};
-
-export const updateBuildingType = async (
-  body: BuildingTypeInput,
-  name: string,
-  token: string
-): Promise<ResType<{ message: string }>> => {
-  try {
-    const response = await axiosInstance.patch(
-      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return successResponse<{ message: string }>(
-      response,
-      "Building type updated!"
-    );
-  } catch (error) {
-    throw errorResponse(error);
-  }
-};
-
-export const deleteBuildingType = async (
-  name: string,
-  token: string
-): Promise<ResType<{ message: string }>> => {
-  try {
-    const response = await axiosInstance.delete(
-      `${API_ENDPOINT.addBuildingType}/${encodeURIComponent(name)}`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return successResponse<{ message: string }>(
-      response,
-      "Building type deleted!"
-    );
+    return successResponse<BuildingDTO>(response, "Data fetched!");
   } catch (error) {
     throw errorResponse(error);
   }

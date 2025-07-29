@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 const AddProject = () => {
   const [searchParams] = useSearchParams();
 
-  const { addProjectService } = useProjectController();
+  const { addProjectService, updateProjectService } = useProjectController();
 
   return (
     <Form
@@ -19,7 +19,17 @@ const AddProject = () => {
             )
           : projectForm.defaultValues,
       }}
-      onSubmit={addProjectService}
+      onSubmit={(data) => {
+        if (searchParams.get("data")) {
+          const param = JSON.parse(
+            generateDecryption(decodeURIComponent(searchParams.get("data")!))
+          );
+
+          updateProjectService({ body: data, name: param.name });
+        } else {
+          addProjectService(data);
+        }
+      }}
     />
   );
 };
