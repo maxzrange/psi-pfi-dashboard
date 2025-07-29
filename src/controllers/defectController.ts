@@ -20,7 +20,7 @@ const useDefectController = () => {
     if (defect)
       finalData = [
         defect.map((item) => ({
-          id: item.id,
+          id: 0,
           row: [
             { type: "text", value: item.name },
             { type: "text", value: item.created_at },

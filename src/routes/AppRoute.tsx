@@ -1,7 +1,6 @@
 import Layout from "@components/Layout";
 import {
   AddBuilding,
-  AddBuildingLevel,
   AddBuildingSide,
   AddBuildingType,
   Building,
@@ -45,7 +44,6 @@ function BuildingRoute() {
       <Route path="form" element={<AddBuilding />} />
       <Route path="type-form" element={<AddBuildingType />} />
       <Route path="side-form" element={<AddBuildingSide />} />
-      <Route path="level-form" element={<AddBuildingLevel />} />
       <Route path="*" element={<Navigate to="/not-found" />} />
     </Routes>
   );

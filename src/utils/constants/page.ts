@@ -28,11 +28,6 @@ export const buildingData: TableType[] = [
     addDest: "/building/side-form",
     tableHeaders: ["Name", "Building", "Orientation", "Created At"],
   },
-  {
-    title: "Building Level",
-    addDest: "/building/level-form",
-    tableHeaders: ["Name", "Level Number", "Primary Usage", "Created At"],
-  },
 ];
 
 // Project table

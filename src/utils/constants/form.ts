@@ -3,14 +3,11 @@ import {
   LoginInput,
   RegisterInput,
 } from "@interfaces/authInterface";
+import { BuildingSideInput } from "@interfaces/buildingSideInterface";
 import { BuildingTypeInput } from "@interfaces/buildingTypeInterface";
 import { DefectInput } from "@interfaces/defectInterface";
 import moment from "moment";
-import {
-  BuildingInput,
-  BuildingLevelInput,
-  BuildingSideInput,
-} from "src/interfaces/buildingInterface";
+import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
 
@@ -398,20 +395,6 @@ export const buildingSideForm: FormType<BuildingSideInput> = {
   title: "Add Building Side",
   inputs: [
     {
-      type: "auto",
-      name: "building_id",
-      label: "Building",
-      required: true,
-      rules: {
-        required: "Building must be chosen!",
-      },
-      items: [
-        { id: "1", label: "Building A" },
-        { id: "2", label: "Building B" },
-        { id: "3", label: "Building C" },
-      ],
-    },
-    {
       type: "text",
       name: "name",
       label: "Name",
@@ -421,36 +404,6 @@ export const buildingSideForm: FormType<BuildingSideInput> = {
       },
     },
     {
-      type: "textarea",
-      name: "description",
-      label: "Description",
-      required: true,
-      rules: {
-        required: "Description must be filled!",
-      },
-    },
-    {
-      type: "number",
-      name: "orientation",
-      label: "Orientation Degree",
-      required: true,
-      rules: {
-        required: "Orientation degree must be filled!",
-      },
-    },
-  ],
-  defaultValues: {
-    building_id: null,
-    name: "",
-    description: "",
-    orientation: 0,
-  },
-};
-
-export const buildingLevelForm: FormType<BuildingLevelInput> = {
-  title: "Add Building Level",
-  inputs: [
-    {
       type: "auto",
       name: "building_id",
       label: "Building",
@@ -464,39 +417,10 @@ export const buildingLevelForm: FormType<BuildingLevelInput> = {
         { id: "3", label: "Building C" },
       ],
     },
-    {
-      type: "number",
-      name: "level_num",
-      label: "Level Number",
-      required: true,
-      rules: {
-        required: "Level number must be filled!",
-      },
-    },
-    {
-      type: "textarea",
-      name: "description",
-      label: "Description",
-      required: true,
-      rules: {
-        required: "Description must be filled!",
-      },
-    },
-    {
-      type: "text",
-      name: "usage",
-      label: "Primary Usage",
-      required: true,
-      rules: {
-        required: "Primary usage must be filled!",
-      },
-    },
   ],
   defaultValues: {
+    name: "",
     building_id: null,
-    level_num: 0,
-    description: "",
-    usage: "",
   },
 };
 
