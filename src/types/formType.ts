@@ -8,11 +8,6 @@ export type MapType = {
   description: string;
 };
 
-export type DropdownType = {
-  label: string;
-  id: string | number;
-};
-
 export type InputType = {
   type:
     | "text"

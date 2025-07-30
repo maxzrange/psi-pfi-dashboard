@@ -4,10 +4,11 @@ import {
   addBuildingType,
   deleteBuildingType,
   getBuildingTypeDetail,
+  getBuildingTypes,
   updateBuildingType,
 } from "@services/buildingTypeService";
 import { useDetailModal } from "@stores/modalStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 
 const useBuildingTypeModel = () => {
@@ -16,6 +17,12 @@ const useBuildingTypeModel = () => {
   const queryClient = useQueryClient();
 
   const { nav, onMutate, onSettled, onError, onSuccess } = useHelper();
+
+  const useGetBuildingTypeDropdown = () =>
+    useQuery({
+      queryKey: ["getBuildingTypeDropdown"],
+      queryFn: () => getBuildingTypes(),
+    });
 
   const useGetBuildingTypeEdit = () =>
     useMutation({
@@ -47,6 +54,10 @@ const useBuildingTypeModel = () => {
       onError,
       onSuccess: (res) => {
         nav("/building");
+        queryClient.removeQueries({
+          queryKey: ["getBuildingTypes"],
+          exact: true,
+        });
         queryClient.invalidateQueries({ queryKey: ["getBuildingTypes"] });
         onSuccess(res.message);
       },
@@ -85,6 +96,7 @@ const useBuildingTypeModel = () => {
     });
 
   return {
+    useGetBuildingTypeDropdown,
     useGetBuildingTypeEdit,
     useAddBuildingType,
     useUpdateBuildingType,

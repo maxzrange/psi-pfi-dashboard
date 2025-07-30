@@ -26,7 +26,7 @@ export const buildingData: TableType[] = [
   {
     title: "Building Elevation",
     addDest: "/building/side-form",
-    tableHeaders: ["Name", "Building", "Orientation", "Created At"],
+    tableHeaders: ["Name", "Description", "Orientation", "Created At"],
   },
 ];
 

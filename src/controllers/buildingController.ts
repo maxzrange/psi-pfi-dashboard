@@ -4,6 +4,7 @@ import { useConfirmationModal } from "@stores/modalStore";
 import moment from "moment";
 import { FetchDataType } from "types/pageType";
 import useBuildingTypeController from "./buildingTypeController";
+import useBuildingSideController from "./buildingSideController";
 
 const useBuildingController = () => {
   const showConfirmationModal = useConfirmationModal(
@@ -22,6 +23,9 @@ const useBuildingController = () => {
 
   const { getBuildingTypeEditService, deleteBuildingTypeService } =
     useBuildingTypeController();
+
+  const { getBuildingSideEditService, deleteBuildingSideService } =
+    useBuildingSideController();
 
   const getBuildingDetailMutation = useGetBuildingDetail();
   const getBuildingEditMutation = useGetBuildingEdit();
@@ -111,11 +115,39 @@ const useBuildingController = () => {
             ],
           }));
 
+        const buildingSideData: FetchDataType[] =
+          responses[2].data!.data.data.map((item) => ({
+            id: item.id,
+            row: [
+              { type: "text", value: item.name },
+              { type: "text", value: item.description || "-" },
+              { type: "text", value: `${item.orientation_degrees}°` },
+              {
+                type: "text",
+                value: moment(item.created_at).format("ddd, DD MMM YYYY"),
+              },
+            ],
+            functions: [
+              {
+                type: "edit",
+                onClick: () => getBuildingSideEditService(item.name),
+              },
+              {
+                type: "delete",
+                onClick: () =>
+                  showConfirmationModal({
+                    title: "Delete Building Side",
+                    subTitle: `Are you sure you want to delete |"${item.name}"| side? This action cannot be undo!`,
+                    onConfirm: () => deleteBuildingSideService(item.name),
+                  }),
+              },
+            ],
+          }));
+
         finalData = [
           buildingData,
           buildingTypeData,
-          [],
-          [],
+          buildingSideData,
         ] as FetchDataType[][];
       }
     }

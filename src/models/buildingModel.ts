@@ -150,8 +150,11 @@ const useBuildingModel = () => {
           area_sq_meters: res.data.area_sq_meters,
           levels_count: res.data.levels_count,
           sides_count: res.data.sides_count,
-          owner_id: { id: "1", label: "Tio" },
-          project_id: { id: "1", label: "Project A" },
+          owner: "",
+          project_id: {
+            id: res.data.project!.id.toString(),
+            label: res.data.project!.name,
+          },
           location: {
             lat: res.data.latitude,
             lng: res.data.longitude,

@@ -1,20 +1,21 @@
-import { DropdownType, MapType } from "types/formType";
+import { MapType } from "types/formType";
 import { ProjectDTO } from "./projectInterface";
+import { ComboBoxOption } from "@aws-amplify/ui-react";
 
 export interface BuildingInput {
   name: string;
   address: string;
   year_built: string;
-  building_type: DropdownType | null;
+  building_type: ComboBoxOption | null;
   area_sq_meters: number;
   levels_count: number;
   sides_count: number;
-  owner_id: DropdownType | null;
-  project_id: DropdownType | null;
+  owner: string;
+  project_id: ComboBoxOption | null;
   location: MapType | null;
   status_construction: number;
-  construction_start_date: string;
-  construction_end_date: string;
+  construction_start_date: string | null;
+  construction_end_date: string | null;
 }
 
 export interface BuildingDTO {
