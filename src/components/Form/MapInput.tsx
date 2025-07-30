@@ -19,7 +19,7 @@ const MapInput = ({ inputData, control }: Props) => {
     showDetail,
     mapRef,
     field,
-    // error,
+    error,
     searchAddress,
     retrieveTheme,
     onMark,
@@ -40,6 +40,8 @@ const MapInput = ({ inputData, control }: Props) => {
         onChange={(e) => debouncedSearch(e.target.value)}
         onSelect={onSelect}
         onFocus={onHideDetail}
+        hasError={!!error}
+        errorMessage={error?.message as string}
       />
 
       <Flex flex={1} position="relative">

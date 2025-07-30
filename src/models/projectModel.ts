@@ -24,6 +24,12 @@ const useProjectModel = () => {
       queryFn: () => getProjects(),
     });
 
+  const useGetProjectDropdown = () =>
+    useQuery({
+      queryKey: ["getProjectDropdown"],
+      queryFn: () => getProjects(),
+    });
+
   const useGetProjectEdit = () =>
     useMutation({
       mutationKey: ["getProjectEdit"],
@@ -104,6 +110,7 @@ const useProjectModel = () => {
 
   return {
     useGetProjects,
+    useGetProjectDropdown,
     useGetProjectEdit,
     useAddProject,
     useUpdateProject,

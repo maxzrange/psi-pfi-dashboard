@@ -6,6 +6,8 @@ import { FaRegBuilding } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { generateEncryption } from "@utils/helpers/generator";
 import { buildingForm } from "@utils/constants/form";
+import useHelper from "@hooks/useHelper";
+import { ComboBoxOption } from "@aws-amplify/ui-react";
 
 const useProjectController = () => {
   const showConfirmationModal = useConfirmationModal(
@@ -14,8 +16,11 @@ const useProjectController = () => {
 
   const nav = useNavigate();
 
+  const { onError } = useHelper();
+
   const {
     useGetProjects,
+    useGetProjectDropdown,
     useGetProjectEdit,
     useAddProject,
     useUpdateProject,
@@ -101,8 +106,33 @@ const useProjectController = () => {
     };
   };
 
+  const useGetProjectDropdownService = () => {
+    const { data, isLoading, isError, error } = useGetProjectDropdown();
+
+    let finalData: ComboBoxOption[] = [];
+
+    if (!isLoading) {
+      if (isError) {
+        onError(error);
+      } else if (data) {
+        finalData = data.data.data.map(
+          (item) =>
+            ({
+              id: item.id.toString(),
+              label: item.name,
+            } as ComboBoxOption)
+        );
+      }
+    }
+
+    return {
+      finalData,
+    };
+  };
+
   return {
     useGetProjectsService,
+    useGetProjectDropdownService,
     addProjectService: (body: any) => addProjectMutation.mutate(body),
     updateProjectService: (data: { name: string; body: any }) =>
       updateProjectMutation.mutate(data),

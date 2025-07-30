@@ -22,6 +22,20 @@ export const getBuildingSides = async (): Promise<
   }
 };
 
+export const getBuildingSideDetail = async (
+  name: string
+): Promise<ResType<BuildingSideDTO>> => {
+  try {
+    const response = await axiosInstance.get(
+      `${API_ENDPOINT.addBuildingSide}/${encodeURIComponent(name)}`
+    );
+
+    return successResponse<BuildingSideDTO>(response, "Data fetched!");
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
 export const addBuildingSide = async (
   body: BuildingSideInput
 ): Promise<ResType<BuildingSideInput>> => {
@@ -60,6 +74,23 @@ export const updateBuildingSide = async (
     return successResponse<{ message: string }>(
       response,
       "Building side updated!"
+    );
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
+export const deleteBuildingSide = async (
+  name: string
+): Promise<ResType<{ message: string }>> => {
+  try {
+    const response = await axiosInstance.delete(
+      `${API_ENDPOINT.addBuildingSide}/${encodeURIComponent(name)}`
+    );
+
+    return successResponse<{ message: string }>(
+      response,
+      "Building side deleted!"
     );
   } catch (error) {
     throw errorResponse(error);
