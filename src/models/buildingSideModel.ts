@@ -29,7 +29,6 @@ const useBuildingSideModel = () => {
       onSuccess: (res) => {
         const defaultValues: BuildingSideInput = {
           name: res.data.name,
-          building_id: { id: "1", label: "Building A" },
           description: res.data.description || "",
           orientation_degrees: res.data.orientation_degrees,
         };

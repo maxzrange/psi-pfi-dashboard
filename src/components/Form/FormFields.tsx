@@ -6,6 +6,7 @@ import DropdownInput from "./DropdownInput";
 import SuggestionInput from "./SuggestionInput";
 import TextAreaInput from "./TextAreaInput";
 import TextInput from "./TextInput";
+import TabInput from "./TabInput";
 
 interface FormFieldProps {
   inputData: InputType[];
@@ -51,6 +52,15 @@ const FormFields = (props: FormFieldProps) => {
               <MapInput
                 key={index.toString()}
                 inputData={input}
+                control={control}
+              />
+            );
+
+          if (input.type === "tab")
+            return (
+              <TabInput
+                key={index.toString()}
+                tabData={input}
                 control={control}
               />
             );

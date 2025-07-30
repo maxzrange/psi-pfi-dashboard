@@ -3,6 +3,7 @@ import { API_ENDPOINT } from "@utils/configs/api";
 import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
 import { PaginationType, ResType } from "types/resType";
+import { addBuildingSide } from "./buildingSideService";
 
 export const getBuildings = async (): Promise<
   ResType<PaginationType<BuildingDTO[]>>
@@ -41,15 +42,24 @@ export const addBuilding = async (
       ...body,
       year_built: Number(body.year_built),
       building_type: body.building_type ? body.building_type.id : null,
+      owner_id: 1,
       project_id: body.project_id ? body.project_id.id : null,
       latitude: body.location ? body.location.lat : null,
       longitude: body.location ? body.location.lng : null,
+      buildingData: null,
     };
 
     const response = await axiosInstance.post(
       API_ENDPOINT.addBuilding,
       mapBody
     );
+
+    body.buildingData[0].forEach(async (val) => {
+      await addBuildingSide({
+        ...val,
+        building_id: response.data.id,
+      });
+    });
 
     return successResponse<BuildingDTO>(response, "Building added!");
   } catch (error) {

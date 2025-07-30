@@ -3,7 +3,6 @@ import {
   LoginInput,
   RegisterInput,
 } from "@interfaces/authInterface";
-import { BuildingSideInput } from "@interfaces/buildingSideInterface";
 import { BuildingTypeInput } from "@interfaces/buildingTypeInterface";
 import { DefectInput } from "@interfaces/defectInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
@@ -340,6 +339,92 @@ export const buildingForm: FormType<BuildingInput> = {
         required: "Construction end date must be filled!",
       },
     },
+    {
+      type: "tab",
+      name: "buildingData",
+      label: "Building Data",
+      required: true,
+      tabData: [
+        {
+          title: "Sides",
+          name: "sides",
+          inputs: [
+            {
+              type: "text",
+              name: "name",
+              label: "Name",
+              required: true,
+              rules: {
+                required: "Name must be filled!",
+              },
+            },
+            {
+              type: "text",
+              name: "description",
+              label: "Description",
+              required: true,
+              rules: {
+                required: "Description must be filled!",
+              },
+            },
+            {
+              type: "number",
+              name: "orientation_degrees",
+              label: "Orientation Degrees",
+              required: true,
+              rules: {
+                required: "Orientation degrees must be filled!",
+                min: {
+                  value: 1,
+                  message: "Orientation degrees must be filled!",
+                },
+                pattern: {
+                  value: /^\d+(\.\d{2})?$/,
+                  message: "Orientation degrees must be a number or decimal!",
+                },
+              },
+            },
+          ],
+          defaultValues: {
+            name: "",
+            description: "",
+            orientation_degrees: 0,
+          },
+        },
+        {
+          title: "Levels",
+          name: "levels",
+          inputs: [
+            {
+              type: "text",
+              name: "level_name",
+              label: "Name",
+              required: true,
+            },
+            {
+              type: "text",
+              name: "description",
+              label: "Description",
+              required: true,
+            },
+            {
+              type: "text",
+              name: "primary_usage",
+              label: "Usage",
+              required: true,
+            },
+          ],
+          defaultValues: {
+            level_name: "",
+            description: "",
+            primary_usage: "",
+          },
+        },
+      ],
+      rules: {
+        required: "Sides and levels must at least 1!",
+      },
+    },
   ],
   defaultValues: {
     name: "",
@@ -355,6 +440,7 @@ export const buildingForm: FormType<BuildingInput> = {
     status_construction: 0,
     construction_start_date: null,
     construction_end_date: null,
+    buildingData: [[], []],
   },
 };
 
@@ -383,68 +469,6 @@ export const buildingTypeForm: FormType<BuildingTypeInput> = {
   defaultValues: {
     name: "",
     description: "",
-  },
-};
-
-export const buildingSideForm: FormType<BuildingSideInput> = {
-  title: "Add Building Side",
-  inputs: [
-    {
-      type: "text",
-      name: "name",
-      label: "Name",
-      required: true,
-      rules: {
-        required: "Name must be filled!",
-      },
-    },
-    {
-      type: "auto",
-      name: "building_id",
-      label: "Building",
-      required: true,
-      rules: {
-        required: "Building must be chosen!",
-      },
-      items: [
-        { id: "0", label: "" },
-        { id: "1", label: "Building A" },
-        { id: "2", label: "Building B" },
-        { id: "3", label: "Building C" },
-      ],
-    },
-    {
-      type: "textarea",
-      name: "description",
-      label: "Description",
-      required: true,
-      rules: {
-        required: "Description must be filled!",
-      },
-    },
-    {
-      type: "number",
-      name: "orientation_degrees",
-      label: "Orientation Degrees",
-      required: true,
-      rules: {
-        required: "Orientation degrees must be filled!",
-        min: {
-          value: 1,
-          message: "Orientation degrees must be filled!",
-        },
-        pattern: {
-          value: /^\d+(\.\d{2})?$/,
-          message: "Orientation degrees must be a number or decimal!",
-        },
-      },
-    },
-  ],
-  defaultValues: {
-    name: "",
-    building_id: null,
-    description: "",
-    orientation_degrees: 0,
   },
 };
 

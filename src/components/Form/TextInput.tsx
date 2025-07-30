@@ -7,9 +7,11 @@ import { ChangeEvent } from "react";
 type Props = {
   inputData: InputType;
   control: Control<any, any>;
+  flex?: number;
+  withLabel?: boolean;
 };
 
-const TextInput = ({ inputData, control }: Props) => {
+const TextInput = ({ inputData, control, flex, withLabel = true }: Props) => {
   const password = useWatch({ control, name: "password" });
 
   const {
@@ -56,8 +58,10 @@ const TextInput = ({ inputData, control }: Props) => {
   return (
     <TextField
       {...field}
+      flex={flex}
       name={inputData.name}
       label={<Label label={inputData.label} required={inputData.required} />}
+      labelHidden={!withLabel}
       type={inputData.type === "date" ? "date" : "text"}
       inputMode={
         inputData.type === "phone"

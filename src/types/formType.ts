@@ -8,6 +8,13 @@ export type MapType = {
   description: string;
 };
 
+export type TabType = {
+  title: string;
+  name: string;
+  inputs: InputType[];
+  defaultValues: any;
+};
+
 export type InputType = {
   type:
     | "text"
@@ -19,12 +26,14 @@ export type InputType = {
     | "confirm"
     | "phone"
     | "number"
-    | "date";
+    | "date"
+    | "tab";
   name: string;
   label: string;
   required: boolean;
   items?: ComboBoxOption[];
   rules?: RegisterOptions<any, string>;
+  tabData?: TabType[];
 };
 
 export type FormType<T> = {

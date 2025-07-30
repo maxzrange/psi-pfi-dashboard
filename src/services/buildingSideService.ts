@@ -40,14 +40,9 @@ export const addBuildingSide = async (
   body: BuildingSideInput
 ): Promise<ResType<BuildingSideInput>> => {
   try {
-    const mapBody = {
-      ...body,
-      building_id: body.building_id ? body.building_id.id : null,
-    };
-
     const response = await axiosInstance.post(
       API_ENDPOINT.addBuildingSide,
-      mapBody
+      body
     );
 
     return successResponse<BuildingSideInput>(response, "Building side added!");
@@ -61,14 +56,9 @@ export const updateBuildingSide = async (
   body: BuildingSideInput
 ): Promise<ResType<{ message: string }>> => {
   try {
-    const mapBody = {
-      ...body,
-      building_id: body.building_id ? body.building_id.id : null,
-    };
-
     const response = await axiosInstance.patch(
       `${API_ENDPOINT.addBuildingSide}/${encodeURIComponent(name)}`,
-      mapBody
+      body
     );
 
     return successResponse<{ message: string }>(
