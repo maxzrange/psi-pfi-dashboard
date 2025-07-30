@@ -168,6 +168,7 @@ const useBuildingModel = () => {
           construction_end_date: moment(
             res.data.construction_end_date.slice(0, 10)
           ).format("YYYY-MM-DD"),
+          buildingData: [[], []],
         };
 
         nav(

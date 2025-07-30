@@ -1,8 +1,5 @@
-import { ComboBoxOption } from "@aws-amplify/ui-react";
-
 export interface BuildingSideInput {
   name: string;
-  building_id: ComboBoxOption | null;
   description: string;
   orientation_degrees: number;
 }

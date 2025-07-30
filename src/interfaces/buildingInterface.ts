@@ -1,6 +1,8 @@
 import { MapType } from "types/formType";
 import { ProjectDTO } from "./projectInterface";
 import { ComboBoxOption } from "@aws-amplify/ui-react";
+import { BuildingSideInput } from "./buildingSideInterface";
+import { BuildingLevelInput } from "./buildingLevelInterface";
 
 export interface BuildingInput {
   name: string;
@@ -16,6 +18,7 @@ export interface BuildingInput {
   status_construction: number;
   construction_start_date: string | null;
   construction_end_date: string | null;
+  buildingData: [BuildingSideInput[], BuildingLevelInput[]];
 }
 
 export interface BuildingDTO {
