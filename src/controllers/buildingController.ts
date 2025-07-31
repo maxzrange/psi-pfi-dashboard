@@ -4,7 +4,6 @@ import { useConfirmationModal } from "@stores/modalStore";
 import moment from "moment";
 import { FetchDataType } from "types/pageType";
 import useBuildingTypeController from "./buildingTypeController";
-import useBuildingSideController from "./buildingSideController";
 
 const useBuildingController = () => {
   const showConfirmationModal = useConfirmationModal(
@@ -19,18 +18,17 @@ const useBuildingController = () => {
     useGetBuildingEdit,
     useAddBuilding,
     useUpdateBuilding,
+    useDeleteBuilding,
   } = useBuildingModel();
 
   const { getBuildingTypeEditService, deleteBuildingTypeService } =
     useBuildingTypeController();
 
-  const { getBuildingSideEditService, deleteBuildingSideService } =
-    useBuildingSideController();
-
   const getBuildingDetailMutation = useGetBuildingDetail();
   const getBuildingEditMutation = useGetBuildingEdit();
   const addBuildingMutation = useAddBuilding();
   const updateBuildingMutation = useUpdateBuilding();
+  const deleteBuildingMutation = useDeleteBuilding();
 
   const useGetBuildingsService = () => {
     const responses = useGetBuildings();
@@ -55,7 +53,7 @@ const useBuildingController = () => {
               { type: "text", value: item.area_sq_meters },
               { type: "text", value: item.levels_count },
               { type: "text", value: item.sides_count },
-              { type: "text", value: `${item.status_construction * 100}%` },
+              { type: "text", value: `${item.status_construction}%` },
               {
                 type: "text",
                 value: moment(item.construction_start_date).format(
@@ -82,7 +80,15 @@ const useBuildingController = () => {
                 type: "edit",
                 onClick: () => getBuildingEditMutation.mutate(item.id),
               },
-              { type: "delete", onClick: () => console.log("Delete") },
+              {
+                type: "delete",
+                onClick: () =>
+                  showConfirmationModal({
+                    title: "Delete Building",
+                    subTitle: `Are you sure you want to delete |"${item.name}"| building? This action cannot be undo!`,
+                    onConfirm: () => deleteBuildingMutation.mutate(item.name),
+                  }),
+              },
             ],
           })
         );
@@ -115,40 +121,7 @@ const useBuildingController = () => {
             ],
           }));
 
-        const buildingSideData: FetchDataType[] =
-          responses[2].data!.data.data.map((item) => ({
-            id: item.id,
-            row: [
-              { type: "text", value: item.name },
-              { type: "text", value: item.description || "-" },
-              { type: "text", value: `${item.orientation_degrees}°` },
-              {
-                type: "text",
-                value: moment(item.created_at).format("ddd, DD MMM YYYY"),
-              },
-            ],
-            functions: [
-              {
-                type: "edit",
-                onClick: () => getBuildingSideEditService(item.name),
-              },
-              {
-                type: "delete",
-                onClick: () =>
-                  showConfirmationModal({
-                    title: "Delete Building Side",
-                    subTitle: `Are you sure you want to delete |"${item.name}"| side? This action cannot be undo!`,
-                    onConfirm: () => deleteBuildingSideService(item.name),
-                  }),
-              },
-            ],
-          }));
-
-        finalData = [
-          buildingData,
-          buildingTypeData,
-          buildingSideData,
-        ] as FetchDataType[][];
+        finalData = [buildingData, buildingTypeData] as FetchDataType[][];
       }
     }
 

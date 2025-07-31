@@ -17,16 +17,19 @@ export const API_ENDPOINT = {
   addProject: "/project",
   getBuildingSides: "/buildingsides",
   addBuildingSide: "/buildingside",
+  getBuildingLevels: "/buildinglevels",
+  addBuildingLevel: "/buildinglevel",
+  getDefectTypes: "/defecttypes",
+  addDefectType: "/defecttype",
+  getDefects: "/defect",
 };
 
 export const API_PROJECT = {
   project: "/project",
-  project_list: "/projects"
+  project_list: "/projects",
 };
-
 
 export const API_BUILDING = {
   building_type: "/buildingtype",
-  project_list: "/projects"
+  project_list: "/projects",
 };
-

@@ -2,19 +2,23 @@ import useHelper from "@hooks/useHelper";
 import { BuildingInput } from "@interfaces/buildingInterface";
 import {
   addBuilding,
+  deleteBuilding,
   getBuildingDetail,
   getBuildings,
   updateBuilding,
 } from "@services/buildingService";
 import { getBuildingSides } from "@services/buildingSideService";
 import { getBuildingTypes } from "@services/buildingTypeService";
-import { useDetailModal } from "@stores/modalStore";
+import { useConfirmationModal, useDetailModal } from "@stores/modalStore";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 import moment from "moment";
 
 const useBuildingModel = () => {
   const showDetailModal = useDetailModal((state) => state.showModal);
+  const hideConfirmationModal = useConfirmationModal(
+    (state) => state.hideModal
+  );
 
   const queryClient = useQueryClient();
 
@@ -208,12 +212,30 @@ const useBuildingModel = () => {
       },
     });
 
+  const useDeleteBuilding = () =>
+    useMutation({
+      mutationKey: ["deleteBuilding"],
+      mutationFn: (name: string) => deleteBuilding(name),
+      onMutate: () => onMutate("button"),
+      onSettled: () => onSettled("button"),
+      onError: (err) => {
+        hideConfirmationModal();
+        onError(err);
+      },
+      onSuccess: (res) => {
+        hideConfirmationModal();
+        queryClient.invalidateQueries({ queryKey: ["getBuildings"] });
+        onSuccess(res.message);
+      },
+    });
+
   return {
     useGetBuildings,
     useGetBuildingDetail,
     useGetBuildingEdit,
     useAddBuilding,
     useUpdateBuilding,
+    useDeleteBuilding,
   };
 };
 

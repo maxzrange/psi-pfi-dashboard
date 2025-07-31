@@ -23,11 +23,6 @@ export const buildingData: TableType[] = [
     addDest: "/building/type-form",
     tableHeaders: ["Name", "Description", "Created At"],
   },
-  {
-    title: "Building Elevation",
-    addDest: "/building/side-form",
-    tableHeaders: ["Name", "Description", "Orientation", "Created At"],
-  },
 ];
 
 // Project table
@@ -49,6 +44,6 @@ export const defectData: TableType[] = [
   {
     title: "Defect Type",
     addDest: "/defect/type-form",
-    tableHeaders: ["Name", "Created AT"],
+    tableHeaders: ["Name", "Created At"],
   },
 ];

@@ -4,6 +4,7 @@ import { axiosInstance } from "@utils/configs/axios";
 import { errorResponse, successResponse } from "@utils/helpers/responseHandler";
 import { PaginationType, ResType } from "types/resType";
 import { addBuildingSide } from "./buildingSideService";
+import { addBuildingLevel } from "./buildingLevelService";
 
 export const getBuildings = async (): Promise<
   ResType<PaginationType<BuildingDTO[]>>
@@ -61,6 +62,13 @@ export const addBuilding = async (
       });
     });
 
+    body.buildingData[1].forEach(async (val) => {
+      await addBuildingLevel({
+        ...val,
+        building_id: response.data.id,
+      });
+    });
+
     return successResponse<BuildingDTO>(response, "Building added!");
   } catch (error) {
     throw errorResponse(error);
@@ -87,6 +95,20 @@ export const updateBuilding = async (
     );
 
     return successResponse<{ message: string }>(response, "Building updated!");
+  } catch (error) {
+    throw errorResponse(error);
+  }
+};
+
+export const deleteBuilding = async (
+  name: string
+): Promise<ResType<{ message: string }>> => {
+  try {
+    const response = await axiosInstance.delete(
+      `${API_ENDPOINT.addBuilding}/${encodeURIComponent(name)}`
+    );
+
+    return successResponse<{ message: string }>(response, "Building deleted!");
   } catch (error) {
     throw errorResponse(error);
   }
