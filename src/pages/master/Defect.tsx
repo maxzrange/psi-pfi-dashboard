@@ -5,9 +5,15 @@ import { defectData } from "@utils/constants/page";
 const Defect = () => {
   const { useGetDefectsService } = useDefectController();
 
-  const { finalData } = useGetDefectsService();
+  const { finalData, isLoading } = useGetDefectsService();
 
-  return <Tables tableData={defectData} fetchData={finalData} />;
+  return (
+    <Tables
+      tableData={defectData}
+      fetchData={finalData}
+      isLoading={isLoading}
+    />
+  );
 };
 
 export default Defect;

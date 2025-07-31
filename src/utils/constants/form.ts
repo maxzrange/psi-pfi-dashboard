@@ -5,6 +5,7 @@ import {
 } from "@interfaces/authInterface";
 import { BuildingTypeInput } from "@interfaces/buildingTypeInterface";
 import { DefectInput } from "@interfaces/defectInterface";
+import { DefectTypeInput } from "@interfaces/defectTypeInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
 import { AuthFormType, FormType } from "types/formType";
@@ -346,7 +347,7 @@ export const buildingForm: FormType<BuildingInput> = {
       required: true,
       tabData: [
         {
-          title: "Sides",
+          title: "Elevations",
           name: "sides",
           inputs: [
             {
@@ -486,14 +487,10 @@ export const defectForm: FormType<DefectInput> = {
     },
     {
       type: "auto",
-      name: "defectType",
+      name: "defect_type_id",
       label: "Defect Type",
       required: true,
-      items: [
-        { id: "1", label: "Crack" },
-        { id: "2", label: "Leak" },
-        { id: "3", label: "Burst" },
-      ],
+      items: [{ id: "0", label: "" }],
       rules: {
         required: "Defect type must be chosen!",
       },
@@ -501,11 +498,11 @@ export const defectForm: FormType<DefectInput> = {
   ],
   defaultValues: {
     name: "",
-    defectType: null,
+    defect_type_id: null,
   },
 };
 
-export const defectTypeForm: FormType<Omit<DefectInput, "defectType">> = {
+export const defectTypeForm: FormType<DefectTypeInput> = {
   title: "Add Defect Type",
   inputs: [
     {

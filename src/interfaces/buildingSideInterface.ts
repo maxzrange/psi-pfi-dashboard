@@ -1,6 +1,7 @@
 export interface BuildingSideInput {
   name: string;
   description: string;
+  building_id?: number;
   orientation_degrees: number;
 }
 

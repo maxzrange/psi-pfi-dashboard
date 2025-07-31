@@ -2,15 +2,11 @@ import { ComboBoxOption } from "@aws-amplify/ui-react";
 
 export interface DefectInput {
   name: string;
-  defectType: ComboBoxOption | null;
+  defect_type_id: ComboBoxOption | null;
 }
 
-export interface DefectTypeDTO {
-  id: string;
-  name: string;
+export interface DefectDTO extends Omit<DefectInput, "defect_type_id"> {
+  id: number;
+  defect_type_id: number;
   created_at: string;
-}
-
-export interface DefectDTO extends DefectTypeDTO {
-  defect_type_id: string;
 }

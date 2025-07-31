@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker/locale/en";
 import { BuildingDTO } from "@interfaces/buildingInterface";
-import { DefectDTO } from "@interfaces/defectInterface";
 import { ProjectDTO } from "@interfaces/projectInterface";
 import moment from "moment";
 
@@ -87,14 +86,14 @@ export const mockBuildingData = (length: number): BuildingDTO[] => {
 //   ) as BuildingLevelDTO[];
 // };
 
-export const mockDefectData = (length: number): DefectDTO[] => {
-  const createRowData = () =>
-    ({
-      id: faker.string.uuid(),
-      name: faker.word.adjective(),
-      defect_type_id: faker.string.uuid(),
-      created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
-    } as DefectDTO);
+// export const mockDefectData = (length: number): DefectDTO[] => {
+//   const createRowData = () =>
+//     ({
+//       id: faker.string.uuid(),
+//       name: faker.word.adjective(),
+//       defect_type_id: faker.string.uuid(),
+//       created_at: moment(faker.date.past()).format("MM-DD-YYYY"),
+//     } as DefectDTO);
 
-  return Array.from({ length }).map(() => createRowData()) as DefectDTO[];
-};
+//   return Array.from({ length }).map(() => createRowData()) as DefectDTO[];
+// };
