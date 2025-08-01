@@ -1,7 +1,12 @@
 import Layout from "@components/Layout";
 import { AddBuilding, AddBuildingType, Building } from "@pages/building";
 import Dashboard from "@pages/dashboard";
-import { AddDefect, AddDefectType, Defect } from "@pages/master";
+import {
+  AddDefect,
+  AddDefectPicture,
+  AddDefectType,
+  Defect,
+} from "@pages/master";
 import Profile from "@pages/profile";
 import { AddProject, Project } from "@pages/project";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
@@ -49,6 +54,7 @@ function DefectRoute() {
       <Route index element={<Defect />} />
       <Route path="form" element={<AddDefect />} />
       <Route path="/type-form" element={<AddDefectType />} />
+      <Route path="/pic-form" element={<AddDefectPicture />} />
       <Route path="*" element={<Navigate to="/not-found" />} />
     </Routes>
   );

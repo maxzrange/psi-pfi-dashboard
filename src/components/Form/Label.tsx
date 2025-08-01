@@ -7,14 +7,17 @@ type Props = {
 
 const Label = ({ label, required }: Props) => {
   return (
-    <Text>
+    <p
+      className="body-sm med"
+      style={{ color: "var(--amplify-components-field-label-color)" }}
+    >
       {label}
       {required && (
         <Text as="span" fontSize="0.8rem" color="red" marginLeft={5}>
           (required)
         </Text>
       )}
-    </Text>
+    </p>
   );
 };
 

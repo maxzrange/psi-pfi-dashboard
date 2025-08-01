@@ -7,9 +7,10 @@ import { useForm } from "react-hook-form";
 type Props = {
   formData: FormType<any>;
   onSubmit?: (body: any) => void;
+  onPreview?: (data?: any) => void;
 };
 
-const Form = ({ formData, onSubmit }: Props) => {
+const Form = ({ formData, onSubmit, onPreview }: Props) => {
   const { control, handleSubmit } = useForm({
     defaultValues: formData.defaultValues,
   });
@@ -25,6 +26,9 @@ const Form = ({ formData, onSubmit }: Props) => {
           <FormActions
             formOnSubmit={handleSubmit((data) => {
               if (onSubmit) onSubmit(data);
+            })}
+            formOnPreview={handleSubmit((data) => {
+              if (onPreview) onPreview(data);
             })}
           />
         </Flex>

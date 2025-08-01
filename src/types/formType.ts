@@ -8,11 +8,21 @@ export type MapType = {
   description: string;
 };
 
-export type TabType = {
+export type ImageType = {
+  name: string;
+  preview: string;
+};
+
+export type CartType = {
+  background?: string;
+  title: string;
+  defaultValues: any;
+  inputs: InputType[];
+};
+
+export type TabType = CartType & {
   title: string;
   name: string;
-  inputs: InputType[];
-  defaultValues: any;
 };
 
 export type InputType = {
@@ -27,13 +37,18 @@ export type InputType = {
     | "phone"
     | "number"
     | "date"
-    | "tab";
+    | "tab"
+    | "cart"
+    | "range"
+    | "gallery";
   name: string;
   label: string;
   required: boolean;
   items?: ComboBoxOption[];
   rules?: RegisterOptions<any, string>;
   tabData?: TabType[];
+  cartData?: CartType;
+  rangeData?: [InputType, InputType];
 };
 
 export type FormType<T> = {

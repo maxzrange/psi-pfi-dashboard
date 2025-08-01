@@ -7,6 +7,8 @@ import SuggestionInput from "./SuggestionInput";
 import TextAreaInput from "./TextAreaInput";
 import TextInput from "./TextInput";
 import TabInput from "./TabInput";
+import CartInput from "./CartInput";
+import GalleryInput from "./GalleryInput";
 
 interface FormFieldProps {
   inputData: InputType[];
@@ -61,6 +63,24 @@ const FormFields = (props: FormFieldProps) => {
               <TabInput
                 key={index.toString()}
                 tabData={input}
+                control={control}
+              />
+            );
+
+          if (input.type === "cart")
+            return (
+              <CartInput
+                key={index.toString()}
+                cartData={input}
+                control={control}
+              />
+            );
+
+          if (input.type === "gallery")
+            return (
+              <GalleryInput
+                key={index.toString()}
+                inputData={input}
                 control={control}
               />
             );

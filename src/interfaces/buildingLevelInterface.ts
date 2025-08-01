@@ -4,3 +4,7 @@ export interface BuildingLevelInput {
   primary_usage: string;
   building_id?: number;
 }
+
+export interface BuildingLevelDTO extends BuildingLevelInput {
+  id: number;
+}

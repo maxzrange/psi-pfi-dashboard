@@ -48,3 +48,16 @@ export type ProfileType = {
   role: string;
   profilePic: string;
 };
+
+export type DocumentTableType = {
+  images: string[];
+  detail: string;
+  observation: string;
+  defect: string;
+};
+
+export type DocumentType = Omit<DocumentTableType, "images"> & {
+  title: string;
+  image: string[];
+  table: DocumentTableType[];
+};

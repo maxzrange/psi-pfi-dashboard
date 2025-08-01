@@ -5,9 +5,10 @@ import { MouseEvent } from "react";
 
 interface FormActionsProps {
   formOnSubmit: () => void;
+  formOnPreview?: () => void;
 }
 
-const FormActions = ({ formOnSubmit }: FormActionsProps) => {
+const FormActions = ({ formOnSubmit, formOnPreview }: FormActionsProps) => {
   const loading = useLoading((state) => state.show);
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
@@ -17,7 +18,7 @@ const FormActions = ({ formOnSubmit }: FormActionsProps) => {
 
   return (
     <>
-      <Button>Preview</Button>
+      <Button onClick={formOnPreview}>Preview</Button>
 
       <Button
         type="submit"

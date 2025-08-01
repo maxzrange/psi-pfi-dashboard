@@ -4,6 +4,7 @@ import { useConfirmationModal } from "@stores/modalStore";
 import moment from "moment";
 import { FetchDataType } from "types/pageType";
 import useBuildingTypeController from "./buildingTypeController";
+import { ComboBoxOption } from "@aws-amplify/ui-react";
 
 const useBuildingController = () => {
   const showConfirmationModal = useConfirmationModal(
@@ -14,6 +15,7 @@ const useBuildingController = () => {
 
   const {
     useGetBuildings,
+    useGetBuildingDropdown,
     useGetBuildingDetail,
     useGetBuildingEdit,
     useAddBuilding,
@@ -131,8 +133,30 @@ const useBuildingController = () => {
     };
   };
 
+  const useGetBuildingDropdownService = () => {
+    const { data, isLoading, isError, error } = useGetBuildingDropdown();
+
+    let finalData: ComboBoxOption[] = [];
+
+    if (!isLoading) {
+      if (isError) {
+        onError(error);
+      } else if (data) {
+        finalData = data.data.data.map((item) => ({
+          id: item.id.toString(),
+          label: item.name,
+        }));
+      }
+    }
+
+    return {
+      finalData,
+    };
+  };
+
   return {
     useGetBuildingsService,
+    useGetBuildingDropdownService,
     addBuildingService: (body: any) => addBuildingMutation.mutate(body),
     updateBuildingService: (data: { name: string; body: any }) =>
       updateBuildingMutation.mutate(data),

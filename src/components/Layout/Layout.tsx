@@ -5,7 +5,11 @@ import { ReactNode } from "react";
 import SideBar from "@components/SideBar";
 import Footer from "@components/Footer";
 import { baseConfig } from "@utils/constants/config";
-import { ConfirmationModal, DetailModal } from "@components/Modal";
+import {
+  ConfirmationModal,
+  DetailModal,
+  DocumentModal,
+} from "@components/Modal";
 
 export interface LayoutProps {
   children?: ReactNode;
@@ -16,6 +20,7 @@ const Layout = () => {
     <div className="layout-container">
       <DetailModal />
       <ConfirmationModal />
+      <DocumentModal />
 
       {/* {baseConfig.header && <Header />} */}
 
