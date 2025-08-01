@@ -1,6 +1,7 @@
 import {
   ConfirmationModalType,
   DetailModalType,
+  DocumentModalType,
   LoadingType,
 } from "types/stateType";
 import { create } from "zustand";
@@ -23,4 +24,12 @@ export const useLoadingModal = create<LoadingType>((set) => ({
   show: false,
   showLoading: () => set({ show: true }),
   hideLoading: () => set({ show: false }),
+}));
+
+export const useDocumentModal = create<DocumentModalType>((set) => ({
+  show: false,
+  type: null,
+  data: null,
+  showModal: (data, type) => set({ show: true, data, type }),
+  hideModal: () => set({ show: false, data: null }),
 }));

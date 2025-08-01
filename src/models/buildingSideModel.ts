@@ -4,10 +4,11 @@ import {
   addBuildingSide,
   deleteBuildingSide,
   getBuildingSideDetail,
+  getBuildingSides,
   updateBuildingSide,
 } from "@services/buildingSideService";
 import { useConfirmationModal } from "@stores/modalStore";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 
 const useBuildingSideModel = () => {
@@ -18,6 +19,12 @@ const useBuildingSideModel = () => {
   const { nav, onMutate, onSettled, onError, onSuccess } = useHelper();
 
   const queryClient = useQueryClient();
+
+  const useGetBuildingSideDropdown = () =>
+    useQuery({
+      queryKey: ["getBuildingSideDropdown"],
+      queryFn: () => getBuildingSides(),
+    });
 
   const useGetBuildingSideEdit = () =>
     useMutation({
@@ -88,6 +95,7 @@ const useBuildingSideModel = () => {
     });
 
   return {
+    useGetBuildingSideDropdown,
     useGetBuildingSideEdit,
     useAddBuildingSide,
     useUpdateBuildingSide,

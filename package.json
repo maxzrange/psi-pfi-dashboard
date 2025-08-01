@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^5.3.3",
+    "@react-pdf/renderer": "^4.3.0",
     "@tanstack/react-query": "^5.81.5",
     "apexcharts": "^5.2.0",
     "aws-amplify": "^5.3.27",

@@ -1,4 +1,4 @@
-import { ConfirmationType, DetailType } from "./pageType";
+import { ConfirmationType, DetailType, DocumentType } from "./pageType";
 
 export type LoadingType = {
   show: boolean;
@@ -49,4 +49,12 @@ export type OneThemeDataType = {
 export type OneThemeType = {
   data: OneThemeDataType[];
   onClick: (value: string) => void;
+};
+
+export type DocumentModalType = {
+  show: boolean;
+  type: "defect" | "building" | null;
+  data: DocumentType[] | null;
+  showModal: (data: DocumentType[], type: "defect" | "building" | null) => void;
+  hideModal: () => void;
 };

@@ -4,7 +4,7 @@ import {
   RegisterInput,
 } from "@interfaces/authInterface";
 import { BuildingTypeInput } from "@interfaces/buildingTypeInterface";
-import { DefectInput } from "@interfaces/defectInterface";
+import { DefectInput, DefectPicIput } from "@interfaces/defectInterface";
 import { DefectTypeInput } from "@interfaces/defectTypeInterface";
 import { BuildingInput } from "src/interfaces/buildingInterface";
 import { ProjectInput } from "src/interfaces/projectInterface";
@@ -517,5 +517,88 @@ export const defectTypeForm: FormType<DefectTypeInput> = {
   ],
   defaultValues: {
     name: "",
+  },
+};
+
+export const defectPicForm: FormType<DefectPicIput> = {
+  title: "Add Defect Picture",
+  inputs: [
+    {
+      type: "auto",
+      name: "building_id",
+      label: "Building",
+      required: true,
+      items: [{ id: "0", label: "" }],
+    },
+    {
+      type: "cart",
+      name: "reports",
+      label: "Report Cart",
+      required: true,
+      cartData: {
+        title: "Report",
+        inputs: [
+          {
+            type: "auto",
+            name: "side_id",
+            label: "Elevation",
+            required: true,
+            items: [{ id: "0", label: "" }],
+          },
+          {
+            type: "gallery",
+            name: "side_image",
+            label: "Elevation Picture",
+            required: true,
+          },
+          {
+            type: "cart",
+            name: "levels",
+            label: "Elevations",
+            required: true,
+            cartData: {
+              title: "Level",
+              background: "var(--amplify-colors-background-secondary)",
+              inputs: [
+                {
+                  type: "auto",
+                  name: "level_from_id",
+                  label: "Level From",
+                  required: true,
+                  items: [{ id: "0", label: "" }],
+                },
+                {
+                  type: "auto",
+                  name: "level_to_id",
+                  label: "Label To",
+                  required: false,
+                  items: [{ id: "0", label: "" }],
+                },
+                {
+                  type: "gallery",
+                  name: "images",
+                  label: "Pictures",
+                  required: true,
+                },
+              ],
+              defaultValues: {
+                level_from_id: null,
+                level_to_id: null,
+                images: [],
+              },
+            },
+          },
+        ],
+        defaultValues: {
+          side_id: null,
+          side_image: [],
+          levels: [],
+        },
+      },
+    },
+  ],
+  defaultValues: {
+    building_id: null,
+    reports: [],
   },
 };

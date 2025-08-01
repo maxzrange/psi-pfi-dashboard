@@ -10,7 +10,12 @@ import {
 import { getBuildingSides } from "@services/buildingSideService";
 import { getBuildingTypes } from "@services/buildingTypeService";
 import { useConfirmationModal, useDetailModal } from "@stores/modalStore";
-import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { generateEncryption } from "@utils/helpers/generator";
 import moment from "moment";
 
@@ -40,6 +45,12 @@ const useBuildingModel = () => {
           queryFn: () => getBuildingSides(),
         },
       ],
+    });
+
+  const useGetBuildingDropdown = () =>
+    useQuery({
+      queryKey: ["getBuildingDropdown"],
+      queryFn: () => getBuildings(),
     });
 
   const useGetBuildingDetail = () =>
@@ -231,6 +242,7 @@ const useBuildingModel = () => {
 
   return {
     useGetBuildings,
+    useGetBuildingDropdown,
     useGetBuildingDetail,
     useGetBuildingEdit,
     useAddBuilding,

@@ -4,13 +4,14 @@ import moment from "moment";
 import { FetchDataType } from "types/pageType";
 import useDefectTypeController from "./defectTypeController";
 import { useConfirmationModal } from "@stores/modalStore";
+import { MdDriveFolderUpload } from "react-icons/md";
 
 const useDefectController = () => {
   const showConfirmationModal = useConfirmationModal(
     (state) => state.showModal
   );
 
-  const { onError } = useHelper();
+  const { nav, onError } = useHelper();
 
   const { getDefectTypeEditService, deleteDefectTypeService } =
     useDefectTypeController();
@@ -53,6 +54,12 @@ const useDefectController = () => {
                 },
               ],
               functions: [
+                {
+                  type: "custom",
+                  icon: MdDriveFolderUpload,
+                  label: "Add Pictures",
+                  onClick: () => nav("/defect/pic-form"),
+                },
                 {
                   type: "edit",
                   onClick: () => getDefectEditMutation.mutate(item.name),
